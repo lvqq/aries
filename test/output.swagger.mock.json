@@ -1,0 +1,92 @@
+{
+  "POST /pet/{petId}/uploadImage": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "code": 0,
+      "type": "",
+      "message": ""
+    }
+  },
+  "GET /pet/findByStatus": {
+    "code": 0,
+    "msg": "success",
+    "data": [
+      ""
+    ]
+  },
+  "GET /pet/findByTags": {
+    "code": 0,
+    "msg": "success",
+    "data": [
+      ""
+    ]
+  },
+  "GET /pet/{petId}": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "id": 0,
+      "category": {
+        "id": 0,
+        "name": ""
+      },
+      "name": "doggie",
+      "photoUrls": [
+        ""
+      ],
+      "tags": [
+        ""
+      ],
+      "status": ""
+    }
+  },
+  "POST /store/order": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "id": 0,
+      "petId": 0,
+      "quantity": 0,
+      "shipDate": "",
+      "status": "",
+      "complete": true
+    }
+  },
+  "GET /store/order/{orderId}": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "id": 0,
+      "petId": 0,
+      "quantity": 0,
+      "shipDate": "",
+      "status": "",
+      "complete": true
+    }
+  },
+  "GET /store/inventory": {
+    "code": 0,
+    "msg": "success",
+    "data": {}
+  },
+  "GET /user/{username}": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "id": 0,
+      "username": "",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "userStatus": 0
+    }
+  },
+  "GET /user/login": {
+    "code": 0,
+    "msg": "success",
+    "data": ""
+  }
+}

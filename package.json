@@ -1,0 +1,38 @@
+{
+  "name": "@tooltik/aries",
+  "version": "0.1.0",
+  "description": "A swagger converter cli, support TypeScript declaration, markdown docs, mock js and so on",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "bin": {
+    "aries": "./bin/aries.js"
+  },
+  "scripts": {
+    "test:to-ts": "aries to-ts -u ./test/swagger.json -o ./test/output.swagger.types.ts",
+    "test:to-md": "aries to-md -u ./test/swagger.json -o ./test/output.swagger.docs.md",
+    "test:to-mock": "aries to-mock -u ./test/swagger.json -o ./test/output.swagger.mock.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvqq/aries.git"
+  },
+  "author": "lvqq",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lvqq/aries/issues"
+  },
+  "homepage": "https://github.com/lvqq/aries#readme",
+  "files": [
+    "src",
+    "bin"
+  ],
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "^8.3.0",
+    "dtsgenerator": "2.7.0",
+    "lodash.clonedeep": "^4.5.0",
+    "node-fetch": "2.6.6",
+    "ora": "5.4.1"
+  },
+  "keywords": ["aries", "swagger", "converter", "typescript", "markdown", "mock", "cli"]
+}
