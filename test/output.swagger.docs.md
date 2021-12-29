@@ -21,7 +21,8 @@ file | formData | N | file | file to upload
 ```
 {
   "petId": 0,
-  "additionalMetadata": ""
+  "additionalMetadata": "",
+  "file": ""
 }
 ```
 
@@ -173,7 +174,11 @@ status | query | Y | array | Status values that need to be considered for filter
 
 
 #### Request samples
-N/A
+```
+{
+  "status": ""
+}
+```
 
 ### 5.Response
 N/A
@@ -206,7 +211,11 @@ tags | query | Y | array | Tags to filter by
 
 
 #### Request samples
-N/A
+```
+{
+  "tags": ""
+}
+```
 
 ### 5.Response
 N/A

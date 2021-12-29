@@ -1,5 +1,6 @@
-module.exports = ({ description, requestUrl, requestMethod, request, requsetSample, response, responseSample }) =>
-`
+module.exports = ({
+  description, requestUrl, requestMethod, request, requsetSample, response, responseSample,
+}) => `
 ## ${requestUrl}
 ### 1.Interface description
 ${description}

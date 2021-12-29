@@ -1,3 +1,7 @@
+## v0.2.1
+- ⚡[chore] add eslint
+- 🐞[fix] fix eslint error and CRLF error
+
 ## v0.2.0
 - 🌟[feature] Converter support **to-schema**, generater schema json files
 

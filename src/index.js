@@ -3,4 +3,4 @@ module.exports = {
   toMd: require('./to-md'),
   toMock: require('./to-mock'),
   toSchema: require('./to-schema'),
-}
+};

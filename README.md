@@ -5,7 +5,11 @@ Aries is a swagger converter cli, support TypeScript declaration, markdown docs,
 
 ## Install
 ```
-npm install -D @tooltik/aries
+npm install @tooltik/aries --save-dev
+
+# or
+
+yarn add @tooltik/aries --dev
 ```
 
 ## Usage
@@ -19,6 +23,7 @@ Commands:
   to-ts [options]    Convert swagger to typescript declaration
   to-md [options]    Convert swagger to markdown docs
   to-mock [options]  Convert swagger to mock json
+  to-schema [options] Convert swagger to schema json
 ```
 
 #### to-ts
@@ -37,15 +42,6 @@ Options:
                         remote url
   -o --output <output>  Specify output file path, default is ./swagger.docs.md
                         (default: "./swagger.docs.md")
-```
-
-#### to-mock
-```
-Options:
-  -u, --url <url>       Swagger link to generate, support relative path or
-                        remote url
-  -o --output <output>  Specify output file path, default is ./swagger.mock.json
-                        (default: "./swagger.mock.js")
 ```
 
 #### to-mock

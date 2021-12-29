@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 const program = require('commander');
 const { version } = require('../package.json');
-const { toTs, toMd, toMock, toSchema } = require('../src');
+const {
+  toTs, toMd, toMock, toSchema,
+} = require('../src');
 const { generateOutputByPlugin } = require('../src/core');
 
-
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
-
 program
   .version(version)
-  .usage('<command> [options]')
+  .usage('<command> [options]');
 
 program
   .arguments('<command>')
   .action(() => {
-    program.outputHelp()
-  })
+    program.outputHelp();
+  });
 
 program
   .command('to-ts')
@@ -26,8 +26,8 @@ program
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.types.ts', './swagger.types.ts')
   .action(async (options) => {
-    await generateOutputByPlugin(toTs, options)
-  })
+    await generateOutputByPlugin(toTs, options);
+  });
 
 program
   .command('to-md')
@@ -35,8 +35,8 @@ program
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.docs.md', './swagger.docs.md')
   .action(async (options) => {
-    await generateOutputByPlugin(toMd, options)
-  })
+    await generateOutputByPlugin(toMd, options);
+  });
 
 program
   .command('to-mock')
@@ -44,8 +44,8 @@ program
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.mock.json', './swagger.mock.json')
   .action(async (options) => {
-    await generateOutputByPlugin(toMock, options)
-  })
+    await generateOutputByPlugin(toMock, options);
+  });
 
 program
   .command('to-schema')
@@ -53,8 +53,7 @@ program
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output directory path, default is ./schema', './schema')
   .action(async (options) => {
-    await generateOutputByPlugin(toSchema, options)
-  })
-
+    await generateOutputByPlugin(toSchema, options);
+  });
 
 program.parse(process.argv);
