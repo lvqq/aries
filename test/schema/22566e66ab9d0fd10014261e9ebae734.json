@@ -1,0 +1,6 @@
+{
+  "path": "/pet/{petId}",
+  "method": "delete",
+  "type": "object",
+  "properties": {}
+}

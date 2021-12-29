@@ -1,0 +1,6 @@
+{
+  "path": "/user/logout",
+  "method": "get",
+  "type": "object",
+  "properties": {}
+}

@@ -1,0 +1,6 @@
+{
+  "path": "/user/createWithList",
+  "method": "post",
+  "type": "array",
+  "items": {}
+}

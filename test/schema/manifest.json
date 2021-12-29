@@ -1,0 +1,104 @@
+{
+  "manifest": [
+    {
+      "path": "/pet/{petId}/uploadImage",
+      "method": "post",
+      "hash": "fff99840b87f5e78a9a0f3479e6f0bd6"
+    },
+    {
+      "path": "/pet",
+      "method": "post",
+      "hash": "11f030dd9749da201b2c77693ebefe5b"
+    },
+    {
+      "path": "/pet",
+      "method": "put",
+      "hash": "e6d4402096f7844ca85704b8a08d0f0d"
+    },
+    {
+      "path": "/pet/findByStatus",
+      "method": "get",
+      "hash": "a686a62dc38348c99ac50f48a677dd5f"
+    },
+    {
+      "path": "/pet/findByTags",
+      "method": "get",
+      "hash": "356cb8966c272bdd0d3c91b54edd041a"
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "get",
+      "hash": "7e38de8444d7e67af28ae0a0f9389a7a"
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "post",
+      "hash": "e47f71d1ab4d39caaa750a1351835e43"
+    },
+    {
+      "path": "/pet/{petId}",
+      "method": "delete",
+      "hash": "22566e66ab9d0fd10014261e9ebae734"
+    },
+    {
+      "path": "/store/order",
+      "method": "post",
+      "hash": "43c0fa9559e7adab637c3446b8c073c6"
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "get",
+      "hash": "1e64c1647f5b1a24126e65f835496b2c"
+    },
+    {
+      "path": "/store/order/{orderId}",
+      "method": "delete",
+      "hash": "eea62f5dbacab6ce79eb49a9bdd1d2c5"
+    },
+    {
+      "path": "/store/inventory",
+      "method": "get",
+      "hash": "1d129c576d554c11bb257c8db1da4a93"
+    },
+    {
+      "path": "/user/createWithArray",
+      "method": "post",
+      "hash": "628a67b3122d81971a107d4c8450fd0b"
+    },
+    {
+      "path": "/user/createWithList",
+      "method": "post",
+      "hash": "e1327e211bbcc3d7eb92e8d87b480a9f"
+    },
+    {
+      "path": "/user/{username}",
+      "method": "get",
+      "hash": "6b0a07af31c094dd9602d5056f5ff04c"
+    },
+    {
+      "path": "/user/{username}",
+      "method": "put",
+      "hash": "42b98051721ccf24e8de77cec4ea60b5"
+    },
+    {
+      "path": "/user/{username}",
+      "method": "delete",
+      "hash": "f9c4b044c416602d43bee9653d46d852"
+    },
+    {
+      "path": "/user/login",
+      "method": "get",
+      "hash": "faf88317d5975aef2e7b75a412533fa4"
+    },
+    {
+      "path": "/user/logout",
+      "method": "get",
+      "hash": "f1992f90d62df440a61411bd55fef57b"
+    },
+    {
+      "path": "/user",
+      "method": "post",
+      "hash": "0a1429a4bd61a416ce81b9ae7ea410f3"
+    }
+  ]
+}

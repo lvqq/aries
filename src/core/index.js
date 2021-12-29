@@ -1,9 +1,9 @@
 const path = require('path');
 const cwd = process.cwd();
-const fetch = require('node-fetch');
 const fs = require('fs');
 const chalk = require('chalk');
 const ora = require('ora');
+const axios = require('axios');
 
 
 /**
@@ -36,11 +36,11 @@ const generateOptions = async (options) => {
   // get swagger json
   let swagger;
   if(url.startsWith('http')) {
-    const res = await fetch(url, { method: 'get' })
-    if (!res.ok) {
+    try {
+      swagger = (await axios.get(url)).data
+    } catch(e) {
       throw new Error('error: fetch swagger json failed, check if url is valid')
     }
-    swagger = await res.json();
   } else {
     try {
       swagger = require(path.resolve(cwd, url))
@@ -72,7 +72,13 @@ const generateOutputByPlugin = async (fn, options) => {
   }
   if (params) {
     const output = await fn(params);
-    fs.writeFileSync(params.options.output, output, 'utf8');
+    if (Array.isArray(output)) {
+      output.forEach(item => {
+        fs.writeFileSync(path.join(params.options.output, item.filename), item.content)
+      })
+    } else {
+      fs.writeFileSync(params.options.output, output, 'utf8');
+    }
   }
 }
 

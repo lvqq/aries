@@ -1,0 +1,32 @@
+{
+  "path": "/store/order",
+  "method": "post",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "required": false
+    },
+    "petId": {
+      "type": "integer",
+      "required": false
+    },
+    "quantity": {
+      "type": "integer",
+      "required": false
+    },
+    "shipDate": {
+      "type": "string",
+      "required": false
+    },
+    "status": {
+      "type": "string",
+      "description": "Order Status",
+      "required": false
+    },
+    "complete": {
+      "type": "boolean",
+      "required": false
+    }
+  }
+}

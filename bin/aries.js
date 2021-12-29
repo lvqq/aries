@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const program = require('commander');
 const { version } = require('../package.json');
-const { toTs, toMd, toMock } = require('../src');
+const { toTs, toMd, toMock, toSchema } = require('../src');
 const { generateOutputByPlugin } = require('../src/core');
 
 
@@ -45,6 +45,15 @@ program
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.mock.json', './swagger.mock.json')
   .action(async (options) => {
     await generateOutputByPlugin(toMock, options)
+  })
+
+program
+  .command('to-schema')
+  .description('Convert swagger to schema json')
+  .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
+  .option('-o --output <output>', 'Specify output directory path, default is ./schema', './schema')
+  .action(async (options) => {
+    await generateOutputByPlugin(toSchema, options)
   })
 
 

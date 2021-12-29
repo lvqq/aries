@@ -1,4 +1,6 @@
 const cloneDeep = require('lodash.clonedeep')
+const crypto = require('crypto')
+
 /** 
  * parse schema by ref
  * @param schema
@@ -105,9 +107,16 @@ const getRequestData = (config, definitions) => {
   }
 }
 
+const createMD5Hash = (content) => {
+  const hash = crypto.createHash('md5')
+  hash.update(content)
+  return hash.digest('hex')
+}
+
 
 module.exports = {
   getSchemaByRef,
   getRequestData,
   getResponseData,
+  createMD5Hash,
 }

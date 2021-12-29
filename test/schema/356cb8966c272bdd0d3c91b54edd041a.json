@@ -1,0 +1,16 @@
+{
+  "path": "/pet/findByTags",
+  "method": "get",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "description": "Tags to filter by",
+      "required": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": true
+}

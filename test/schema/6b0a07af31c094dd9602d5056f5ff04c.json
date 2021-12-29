@@ -1,0 +1,6 @@
+{
+  "path": "/user/{username}",
+  "method": "get",
+  "type": "object",
+  "properties": {}
+}

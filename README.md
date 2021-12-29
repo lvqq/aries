@@ -39,7 +39,7 @@ Options:
                         (default: "./swagger.docs.md")
 ```
 
-### to-mock
+#### to-mock
 ```
 Options:
   -u, --url <url>       Swagger link to generate, support relative path or
@@ -48,15 +48,34 @@ Options:
                         (default: "./swagger.mock.js")
 ```
 
+#### to-mock
+```
+Options:
+  -u, --url <url>       Swagger link to generate, support relative path or
+                        remote url
+  -o --output <output>  Specify output file path, default is ./swagger.mock.json
+                        (default: "./swagger.mock.js")
+```
+
+#### to-schema
+```
+Options:
+  -u, --url <url>       Swagger link to generate, support relative path or
+                        remote url
+  -o --output <output>  Specify output directory path, default is ./schema
+                        (default: "./schema")
+```
+
 ### .ariesrc.js
 Add `.ariesrc.js` in your project root directory, support all options in command. e.g.
 
 ```
 // .ariesrc.js
 module.exports = {
-  output: './test/swagger.json'
+  url: './test/swagger.json'
 }
 ```
+
 
 ## LICENSE
 MIT

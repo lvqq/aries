@@ -1,0 +1,6 @@
+{
+  "path": "/pet/{petId}",
+  "method": "post",
+  "type": "object",
+  "properties": {}
+}

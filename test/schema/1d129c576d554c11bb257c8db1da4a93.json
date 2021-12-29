@@ -1,0 +1,6 @@
+{
+  "path": "/store/inventory",
+  "method": "get",
+  "type": "object",
+  "properties": {}
+}

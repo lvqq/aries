@@ -1,0 +1,6 @@
+{
+  "path": "/user/{username}",
+  "method": "delete",
+  "type": "object",
+  "properties": {}
+}
