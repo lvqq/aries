@@ -1,17 +1,14 @@
-const { getResponseData } = require('../utils');
+const SwaggerParserV2 = require('../core/parseV2');
 
 module.exports = ({
   swagger,
+  options,
 }) => {
-  const { paths, definitions } = swagger;
+  const { paths } = new SwaggerParserV2(swagger, options);
   const mockJson = {};
-  Object.keys(paths).forEach((apiPath) => {
-    Object.keys(paths[apiPath]).forEach((apiMethod) => {
-      const apiDefineObj = paths[apiPath][apiMethod];
-      const result = getResponseData(apiDefineObj, definitions);
-      if (result) {
-        mockJson[`${apiMethod.toLocaleUpperCase()} ${apiPath}`] = result;
-      }
+  Object.keys(paths).forEach((path) => {
+    Object.keys(paths[path]).forEach((method) => {
+      mockJson[`${method.toLocaleUpperCase()} ${path}`] = paths[path][method].mock.responses;
     });
   });
   return JSON.stringify(mockJson, null, 2);

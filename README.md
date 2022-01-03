@@ -23,7 +23,6 @@ Commands:
   to-ts [options]    Convert swagger to typescript declaration
   to-md [options]    Convert swagger to markdown docs
   to-mock [options]  Convert swagger to mock json
-  to-schema [options] Convert swagger to schema json
 ```
 
 #### to-ts
@@ -53,22 +52,25 @@ Options:
                         (default: "./swagger.mock.js")
 ```
 
-#### to-schema
-```
-Options:
-  -u, --url <url>       Swagger link to generate, support relative path or
-                        remote url
-  -o --output <output>  Specify output directory path, default is ./schema
-                        (default: "./schema")
-```
-
 ### .ariesrc.js
-Add `.ariesrc.js` in your project root directory, support all options in command. e.g.
+Add `.ariesrc.js` in your project root directory. Support all options in command
+
+#### Unique options
+Support only in `.ariesrc.js`
+##### autoMock
+Determine whether auto-mock when there is no example in schema, default is `True`. Affects `to-md` and `to-mock`
+
+##### resTemplate
+Custom the mock response data structor, default is `{"code":0,"msg":"success","data":$data}`.`$data` will be replaced by the mock data in `to-md/to-mock`
+
+e.g.
 
 ```
 // .ariesrc.js
 module.exports = {
-  url: './test/swagger.json'
+  url: './test/swagger.json',
+  autoMock: true,
+  resTemplate: '{"code":0,"msg":"success","data":$data}',
 }
 ```
 

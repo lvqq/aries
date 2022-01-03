@@ -31,7 +31,11 @@ const generateOptions = async (options) => {
   const params = mergeOptionsFromRc(options);
   const { url } = params;
   // validate url
-  if (!url) throw new Error('error: required swagger url not specified, add \'-u, --url <url>\' in command option or url config .ariesrc');
+  if (!url) {
+    throw new Error(
+      'error: required swagger url not specified, add \'-u, --url <url>\' in command option or url config .ariesrc',
+    );
+  }
   // get swagger json
   let swagger;
   if (url.startsWith('http')) {
@@ -67,6 +71,7 @@ const generateOutputByPlugin = async (fn, options) => {
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
   } catch (e) {
     spinner.fail(chalk.redBright('Fetch swagger json failed'));
+    // eslint-disable-next-line no-console
     console.log(chalk.redBright(e.message));
   }
   if (params) {
