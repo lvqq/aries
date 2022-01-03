@@ -1,6 +1,0 @@
-{
-  "path": "/pet/{petId}/uploadImage",
-  "method": "post",
-  "type": "object",
-  "properties": {}
-}

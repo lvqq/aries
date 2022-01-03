@@ -1,6 +1,0 @@
-{
-  "path": "/store/order/{orderId}",
-  "method": "delete",
-  "type": "object",
-  "properties": {}
-}

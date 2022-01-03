@@ -1,162 +1,115 @@
-const { getSchemaByRef, getRequestData, getResponseData } = require('../utils');
-const mdTemplate = require('./template');
-
-const getDescription = (config) => config.summary || '';
-
-const getRequestMethod = (method) => method.toLocaleUpperCase();
-
-const getRequestTableItem = (params) => `${params.name} | ${params.in || 'body'} | ${params.required ? 'Y' : 'N'} | ${params.type} | ${params.description || ''}\n`;
-
-const getResponseTableItem = (params) => `${params.name} | ${params.type} | ${params.example === undefined ? '' : params.example} | ${params.description || ''}\n`;
-
-const getTableList = (swagger, {
-  tableHead = '',
-  getTableItem,
-} = {}) => {
-  const tableList = [tableHead];
-  const {
-    type, properties, items, required,
-  } = swagger;
-  let obj = {};
-  if (type === 'object' && properties) {
-    obj = properties;
-  } else if (type === 'array' && items.type === 'object') {
-    obj = items.properties;
-  }
-  if (JSON.stringify(obj) === '{}') return [];
-  Object.keys(obj).forEach((key) => {
-    let tableItem = getTableItem({
-      ...obj[key],
-      name: key,
-      required: required && required.includes(key),
-    });
-    if (obj[key].type === 'object' || (obj[key].type === 'array' && obj[key].items.type === 'object')) {
-      tableList.push({
-        [key]: getTableList(obj[key], { tableHead, getTableItem }),
-      });
-    }
-    if (obj[key].type === 'array') {
-      tableItem = getTableItem({
-        ...obj[key],
-        name: key,
-        required: required && required.includes(key),
-        type: `${obj[key].items.type}[]`,
-        example: obj[key].items.example,
-      });
-    }
-    tableList.push(tableItem);
-  });
-  return tableList;
-};
-
-const getTableArr = (arr) => {
-  const dataList = [];
-  const table = arr.map((tableItem) => {
-    if (Object.prototype.toString.call(tableItem) === '[object Object]') {
-      dataList.push(tableItem);
-      return '';
-    }
-    return tableItem;
-  }).join('');
-  const itemTable = dataList[0] ? dataList.map((dataItem) => `
-**${Object.keys(dataItem)[0]}**
-${getTableArr(Object.values(dataItem)[0])}
-      `).join('') : '';
-  return `${table}${itemTable}`;
-};
-
-const getRequest = (config, definitions) => {
-  const { parameters } = config;
-  const requestTableHead = 'Param | Location | Required | Type | Remark\n---- | -------- | -------- | -------- | ----\n';
-  const queryTableList = [requestTableHead];
-  let bodyTableList = [];
-
-  parameters.forEach((params) => {
-    if (params.in === 'query') {
-      queryTableList.push(getRequestTableItem(params));
-    } else if (params.in === 'body') {
-      const schema = getSchemaByRef(params.schema, definitions);
-      bodyTableList = getTableList(schema, {
-        tableHead: requestTableHead,
-        getTableItem: getRequestTableItem,
-      });
-    } else if (params.in === 'path') {
-      queryTableList.push(getRequestTableItem(params));
-    } else if (params.in === 'formData') {
-      queryTableList.push(getRequestTableItem(params));
-    }
-  });
-  if (queryTableList.length === 1) {
-    if (bodyTableList[0]) {
-      return getTableArr(bodyTableList);
-    }
-    return 'N/A';
-  }
-  return queryTableList.join('');
-};
-
-const getRequsetSample = (config, definitions) => {
-  const data = getRequestData(config, definitions);
-  if (JSON.stringify(data) === '{}') {
-    return 'N/A';
-  }
-  return `\`\`\`\n${JSON.stringify(data, null, 2)}\n\`\`\``;
-};
-
-const getResponse = (config, definitions) => {
-  const responseTableHead = 'Name | Type | Value | Remak\n---- | -------- | -------- | ----\n';
-  const { responses } = config;
-  const responseStruct = {
-    ...responses.default,
-    ...responses['200'],
-  };
-  if (!responseStruct.schema) return '';
-  let tableList = [];
-  const schema = getSchemaByRef(responseStruct.schema, definitions);
-  const { type } = schema;
-  if (type === 'array' || type === 'object') {
-    tableList = getTableList(schema, { tableHead: responseTableHead, getTableItem: getResponseTableItem });
-  } else {
-    tableList.push(responseTableHead);
-    tableList.push(getResponseTableItem({
-      ...schema,
-      name: '-',
-    }));
-  }
-  return tableList[0] ? getTableArr(tableList) : 'N/A';
-};
-
-const getResponseSample = (config, definitions) => {
-  const data = getResponseData(config, definitions);
-  return `\`\`\`\n${JSON.stringify(data, null, 2)}\n\`\`\``;
-};
+const groupBy = require('lodash.groupby');
+const fromPairs = require('lodash.frompairs');
+const SwaggerParserV2 = require('../core/parseV2');
 
 module.exports = ({
   swagger,
+  options,
 }) => {
-  const { paths, definitions } = swagger;
-  const retVal = [];
-  Object.keys(paths).forEach((apiPath) => {
-    Object.keys(paths[apiPath]).forEach((apiMethod) => {
-      const apiDefineObj = paths[apiPath][apiMethod];
-
-      const description = getDescription(apiDefineObj);
-      const requestMethod = getRequestMethod(apiMethod);
-      const request = getRequest(apiDefineObj, definitions);
-      const requsetSample = getRequsetSample(apiDefineObj, definitions);
-      const response = getResponse(apiDefineObj, definitions);
-      const responseSample = getResponseSample(apiDefineObj, definitions);
-
-      retVal.push(mdTemplate({
-        description,
-        requestUrl: apiPath,
-        requestMethod,
-        request,
-        requsetSample,
-        response,
-        responseSample,
-      }));
+  const { paths } = new SwaggerParserV2(swagger, options);
+  const mdJson = swagger.tags && swagger.tags.length
+    ? fromPairs(swagger.tags.map((tag) => [tag.name, tag])) : {};
+  // handle tags
+  Object.keys(paths).forEach((path) => {
+    Object.keys(paths[path]).forEach((method) => {
+      const schema = paths[path][method];
+      const tagName = schema.tags && schema.tags[0] ? schema.tags[0] : '';
+      if (!mdJson[tagName]) {
+        mdJson[tagName] = {
+          name: tagName,
+        };
+      }
+      if (!mdJson[tagName].paths) {
+        mdJson[tagName].paths = [];
+      }
+      mdJson[tagName].paths.push({
+        ...schema,
+        path,
+        method,
+      });
     });
   });
-  return retVal.join('');
+
+  const requestTableHeader = 'Param | Required | Type | Remark\n---- | -------- | -------- | ----';
+
+  const generateParamsTableItem = (schema) => {
+    let required = 'N/A';
+    if (schema.required === true) required = 'Y';
+    if (schema.required === false) required = 'N';
+    return `${schema.name} | ${required} | ${schema.type} | ${schema.description || 'N/A'}`;
+  };
+
+  // generate param table markdown
+  const generateParamsTable = (schema, configs) => {
+    const { subParams = [], subTitle = true } = configs;
+    const subResults = [];
+    if (schema.type === 'object') {
+      subParams.push(`##### ${schema.name}\n${requestTableHeader}`);
+      subParams.push(Object.keys(schema.properties).map((name) => {
+        const subSchema = {
+          name,
+          ...schema.properties[name],
+        };
+        // handle required
+        if (Array.isArray(schema.required)) {
+          subSchema.required = schema.required.includes(name);
+        }
+        return generateParamsTable(subSchema, {
+          subParams: subResults,
+        });
+      }).concat(subResults).join('\n'));
+    }
+    if (schema.type === 'array') {
+      if (['object', 'array'].includes(schema.items.type)) {
+        subParams.push(generateParamsTable({
+          name: schema.name,
+          ...schema.items,
+        }, {
+          subParams: subResults,
+          subTitle: false,
+        }));
+        subParams.push(...subResults);
+      }
+      return generateParamsTableItem({
+        ...schema,
+        type: `${schema.items.type}[]`,
+      });
+    }
+    return subTitle ? generateParamsTableItem(schema) : '';
+  };
+
+  const generateParametersToMd = (parameters) => {
+    const paramsMap = groupBy(parameters, (parameter) => parameter.in);
+    return Object.keys(paramsMap).map((paramType) => {
+      const subParams = [];
+      return `#### ${paramType}\n${[
+        requestTableHeader,
+        ...paramsMap[paramType].map(
+          (param) => generateParamsTable(param, { subParams }),
+        ),
+        ...subParams,
+      ].join('\n')}`;
+    }).join('\n');
+  };
+
+  const generatePathsToMd = (requests, topIndex) => requests
+    .map((request, index) => `## ${topIndex}.${index + 1} ${request.method.toLocaleUpperCase()} ${request.path}\n${
+      request.description ? `${request.description}\n` : ''
+    }### Parameters\n${
+      generateParametersToMd(request.parameters) || 'N/A'
+    }\n### Request samples\n${
+      Object.keys(request.mock.parameters)
+        .map(
+          (type) => `#### ${type}\n\`\`\`\n${JSON.stringify(request.mock.parameters[type], null, 2)}\n\`\`\``,
+        ).join('\n')
+    }\n### Response samples\n${
+      `\`\`\`\n${JSON.stringify(request.mock.responses, null, 2)}\n\`\`\``
+    }`).join('\n');
+
+  const markdown = Object.values(mdJson)
+    .map((item, index) => `# ${index + 1}.${item.name}\n${
+      item.description ? `${item.description}\n` : ''
+    }${generatePathsToMd(item.paths, index + 1)}`);
+
+  return markdown.join('\n\n');
 };

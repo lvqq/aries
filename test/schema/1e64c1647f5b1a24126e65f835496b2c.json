@@ -1,6 +1,0 @@
-{
-  "path": "/store/order/{orderId}",
-  "method": "get",
-  "type": "object",
-  "properties": {}
-}

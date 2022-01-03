@@ -1,2 +1,5 @@
+// auto convert file line endings to lf
+*.js text eol=lf
+
 .husky/** linguist-vendored
 test/** linguist-generated
