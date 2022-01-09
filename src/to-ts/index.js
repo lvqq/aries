@@ -1,20 +1,16 @@
-const dtsgenerator = require('dtsgenerator');
+const SwaggerParserV2 = require('../core/parseV2');
 
 module.exports = async ({
   swagger,
   options,
 }) => {
-  const rawOutput = await dtsgenerator.default({
-    contents: [swagger],
-  });
-  const lines = rawOutput.split('\n');
-  return lines
-    // delete unused declaration
-    .slice(1, lines.findIndex((line) => line.includes('declare namespace Paths')) - 1)
-    // index fix
-    .map((line) => line.slice(4))
-    .join('\n')
-    .replace(/\n+/g, '\n')
-    // indet fix
-    .replace(/ {4}/g, '  ');
+  const { definitions } = new SwaggerParserV2(swagger, options);
+
+  return Object.keys(definitions).map((name) => {
+    const schema = definitions[name];
+    if (schema.type === 'object') {
+      return `export interface ${name} ${schema.ts}\n`;
+    }
+    return `export type ${name} = ${schema.ts};\n`;
+  }).join('');
 };

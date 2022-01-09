@@ -1,6 +1,6 @@
 ## v0.3.0
-- 🌟[feature] support `autoMock` config in `.ariesrc.js` to determine whether auto-mock when there is no example in schema
-- 🌟[feature] support `resTemplate` config in `.ariesrc.js` to custom the mock response data structor
+- 🌟[feature] support `autoMock` config in `.ariesrc.js` to determine whether mock automatically when there is no example in schema
+- 🌟[feature] support `resTemplate` config in `.ariesrc.js` to custom the mock response data struct
 - ⚡[refactor] rewrite parser 
 - ⚡[refactor] remove to-schema, an unnecessary feature
 - 🐞[fix] some cases convert missing in md/mock mode

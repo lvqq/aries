@@ -48,7 +48,10 @@ class SwaggerParserV2 {
    * parse all definitions
    */
   parseDefinitions() {
-    return mapValues(this.swagger.definitions, (schema) => this.parseSchema(schema));
+    return mapValues(this.swagger.definitions, (schema) => ({
+      ...this.parseSchema(schema),
+      ts: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
+    }));
   }
 
   /**
@@ -170,6 +173,66 @@ class SwaggerParserV2 {
     if (schema.type === 'number') return autoMock ? this.chance.integer() : 0;
     if (schema.type === 'boolean') return autoMock ? this.chance.bool() : true;
     return null;
+  }
+
+  /**
+   * generate ts declaration from schema
+   */
+  generateRemarkFromSchema(schema, split) {
+    const remarks = [];
+    if (schema.description || schema.example) {
+      remarks.push('/**');
+      if (schema.description) {
+        remarks.push(` * ${schema.description}`);
+      }
+      if (schema.example) {
+        remarks.push(` * example: ${schema.example}`);
+      }
+      remarks.push(` */${split}`);
+    }
+    return remarks.join(split);
+  }
+
+  /**
+   * generate ts declaration from schema
+   */
+  generateTypescriptTypeFromSchema(schema, options) {
+    const { space = 1, semi = true } = options;
+    const split = `\n${new Array(space).fill('  ').reduce((a, b) => a + b, '')}`;
+    let output = schema.type;
+
+    if (schema.type === 'object') {
+      const interfaceList = Object.keys(schema.properties)
+        .map((key) => {
+          const required = Array.isArray(schema.required) && schema.required.includes(key);
+          const childSchema = schema.properties[key];
+          return `${
+            this.generateRemarkFromSchema(childSchema, split)
+          }${key}${required ? '' : '?'}: ${this.generateTypescriptTypeFromSchema(childSchema, space + 1)}`;
+        });
+      output = `{${split}${interfaceList.join(split)}\n}`;
+    } else if (schema.type === 'array') {
+      if (schema.items.$ref) {
+        output = `${decodeURIComponent(schema.items.$ref).split('/').pop()}[]`;
+      } else {
+        output = `${schema.items.type}[]`;
+      }
+    } else if (schema.type === 'integer' || schema.type === 'number') {
+      output = 'number';
+    }
+    // use enum
+    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+      if (schema.type === 'string') {
+        output = schema.enum.map((item) => `"${item}"`).join(' | ');
+      } else {
+        output = schema.enum.join(' | ');
+      }
+    }
+    // use $ref
+    if (schema.$ref) {
+      output = decodeURIComponent(schema.$ref).split('/').pop();
+    }
+    return `${output}${semi ? ';' : ''}${schema.format ? `  // ${schema.format}` : ''}`;
   }
 }
 
