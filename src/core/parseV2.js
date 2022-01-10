@@ -222,7 +222,7 @@ class SwaggerParserV2 {
    * generate ts declaration from schema
    */
   generateTypescriptTypeFromSchema(schema, options) {
-    const { defaultRequired = true, formatKey } = this.options;
+    const { defaultRequired = true, formatProp } = this.options;
     const { space = 1, semi = true } = options;
     const split = `\n${new Array(space).fill('  ').reduce((a, b) => a + b, '')}`;
     const generateTypescriptType = (subSchema) => {
@@ -240,11 +240,15 @@ class SwaggerParserV2 {
               const childSchema = subSchema.properties[key];
               return `${
                 this.generateRemarkFromSchema(childSchema, split)
-              }${formatKey ? formatKey(key) : key}${required ? '' : '?'}: ${this.generateTypescriptTypeFromSchema(childSchema, { space: space + 1 })}`;
+              }${formatProp ? formatProp(key) : key}${required ? '' : '?'}: ${
+                this.generateTypescriptTypeFromSchema(childSchema, { space: space + 1 })
+              }`;
             }));
         }
         if (subSchema.additionalProperties) {
-          interfaceList.push(`[name: string]: ${this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { space: space + 1 })}`);
+          interfaceList.push(`[name: string]: ${
+            this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { space: space + 1 })
+          }`);
         }
         return `{${split}${interfaceList.join(split)}\n}`;
       }
