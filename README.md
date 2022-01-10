@@ -63,6 +63,12 @@ Determine whether mock automatically when there is no example in schema, default
 ##### resTemplate
 Custom the mock response data struct, default is `{"code":0,"msg":"success","data":$data}`.`$data` will be replaced by the mock data in `to-md/to-mock`
 
+##### defaultRequired
+Determine whether the property is required when there is no required in schema, default is `True`
+
+##### formatProp
+Format the property in typescript declaration.
+
 e.g.
 
 ```
@@ -71,6 +77,11 @@ module.exports = {
   url: './test/swagger.json',
   autoMock: true,
   resTemplate: '{"code":0,"msg":"success","data":$data}',
+  defaultRequired: true,
+  formatProp: (prop) => {
+    // Add prop format
+    return prop
+  }
 }
 ```
 
