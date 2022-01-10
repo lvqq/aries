@@ -43,7 +43,7 @@ module.exports = ({
   const generateParamsTable = (schema, configs) => {
     const { subParams = [], subTitle = true } = configs;
     const subResults = [];
-    if (schema.type === 'object') {
+    if (schema.type === 'object' && schema.properties) {
       subParams.push(`##### ${schema.name}\n${requestTableHeader}`);
       subParams.push(Object.keys(schema.properties).map((name) => {
         const subSchema = {
@@ -98,12 +98,14 @@ module.exports = ({
     }### Parameters\n${
       generateParametersToMd(request.parameters) || 'N/A'
     }\n### Request samples\n${
-      Object.keys(request.mock.parameters)
-        .map(
-          (type) => `#### ${type}\n\`\`\`\n${JSON.stringify(request.mock.parameters[type], null, 2)}\n\`\`\``,
-        ).join('\n')
+      JSON.stringify(request.mock.parameters) === '{}' ? 'N/A'
+        : Object.keys(request.mock.parameters)
+          .map(
+            (type) => `#### ${type}\n\`\`\`\n${JSON.stringify(request.mock.parameters[type], null, 2)}\n\`\`\``,
+          ).join('\n')
     }\n### Response samples\n${
-      `\`\`\`\n${JSON.stringify(request.mock.responses, null, 2)}\n\`\`\``
+      JSON.stringify(request.mock.responses) === '{}' ? 'N/A'
+        : `\`\`\`\n${JSON.stringify(request.mock.responses, null, 2)}\n\`\`\``
     }`).join('\n');
 
   const markdown = Object.values(mdJson)

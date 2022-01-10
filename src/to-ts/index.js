@@ -7,10 +7,10 @@ module.exports = async ({
   const { definitions } = new SwaggerParserV2(swagger, options);
 
   return Object.keys(definitions).map((name) => {
-    const schema = definitions[name];
-    if (schema.type === 'object') {
-      return `export interface ${name} ${schema.ts}\n`;
+    const tsSchema = definitions[name].ts;
+    if (tsSchema.type === 'interface') {
+      return `export interface ${tsSchema.name} ${tsSchema.value}\n`;
     }
-    return `export type ${name} = ${schema.ts};\n`;
+    return `export type ${tsSchema.name} = ${tsSchema.value};\n`;
   }).join('');
 };

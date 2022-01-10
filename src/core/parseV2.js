@@ -13,10 +13,16 @@ class SwaggerParserV2 {
    * @param {*} options init options
    */
   constructor(swagger, options = {}) {
+    // init property
     this.swagger = swagger;
     this.options = options;
     this.chance = new Chance();
-
+    // format definitions in to-ts
+    this.names = {};
+    // visited node, avoid ring
+    this.visited = {};
+    this.visitedDefinitions = {};
+    // generate definitons, paths
     this.definitions = this.parseDefinitions();
     this.paths = this.parsePaths();
   }
@@ -26,8 +32,14 @@ class SwaggerParserV2 {
    */
   parseSchema = (schema) => {
     if (schema.$ref) {
-      const definition = decodeURIComponent(schema.$ref).split('/').pop();
-      return this.parseSchema(this.swagger.definitions[definition]);
+      const definition = this.generateNameByRef(schema.$ref);
+
+      // node visited, aviod ring
+      if (this.visited[definition]) return this.visitedDefinitions[definition] || this.swagger.definitions[definition];
+      this.visited[definition] = true;
+      const value = this.parseSchema(this.swagger.definitions[definition]);
+      this.visitedDefinitions[definition] = value;
+      return value;
     }
     if (schema.type === 'array') {
       return {
@@ -47,32 +59,37 @@ class SwaggerParserV2 {
   /**
    * parse all definitions
    */
-  parseDefinitions() {
-    return mapValues(this.swagger.definitions, (schema) => ({
-      ...this.parseSchema(schema),
-      ts: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
-    }));
-  }
+  parseDefinitions = () => mapValues(this.swagger.definitions, (schema, key) => {
+    this.visited[key] = true;
+    const value = this.parseSchema(schema);
+    this.visitedDefinitions[key] = value;
+    return {
+      ...value,
+      ts: {
+        name: this.formatValidNames(key),
+        type: schema.type === 'object' ? 'interface' : 'type',
+        value: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
+      },
+    };
+  });
 
   /**
    * parse parameters, path/body/formData
    */
-  parseParameters(parameters) {
-    return parameters.map((parameter) => {
-      if (parameter.schema) {
-        return {
-          ...parameter,
-          ...this.parseSchema(parameter.schema),
-        };
-      }
-      return parameter;
-    });
-  }
+  parseParameters = (parameters) => parameters.map((parameter) => {
+    if (parameter.schema) {
+      return {
+        ...parameter,
+        ...this.parseSchema(parameter.schema),
+      };
+    }
+    return parameter;
+  });
 
   /**
    * parse responses, 200/default
    */
-  parseResponses(responses) {
+  parseResponses = (responses) => {
     if (responses.default || responses['200']) {
       const key = responses.default ? 'default' : '200';
       if (responses[key].schema) {
@@ -87,12 +104,12 @@ class SwaggerParserV2 {
       return responses;
     }
     return responses;
-  }
+  };
 
   /**
    * parse paths
    */
-  parsePaths() {
+  parsePaths = () => {
     const { resTemplate = '{"code":0,"msg":"success","data":$data}' } = this.options;
     // validate resTpl
     try {
@@ -104,9 +121,9 @@ class SwaggerParserV2 {
       this.swagger.paths,
       (pathDefinition) => mapValues(pathDefinition, (pathParams) => {
         // parse parameters
-        const parameters = this.parseParameters(pathParams.parameters);
+        const parameters = Array.isArray(pathParams.parameters) ? this.parseParameters(pathParams.parameters) : [];
         // params responses
-        const responses = this.parseResponses(pathParams.responses);
+        const responses = pathParams.responses ? this.parseResponses(pathParams.responses) : {};
         // exist default or 200
         let successResponseKey;
         if (responses['200']) successResponseKey = '200';
@@ -140,12 +157,20 @@ class SwaggerParserV2 {
         };
       }),
     );
-  }
+  };
+
+  generateNameByRef = (ref) => decodeURIComponent(ref).split('/').pop();
+
+  formatValidNames = (name) => {
+    const result = name.split('.').map((str) => str.slice(0, 1).toUpperCase() + str.slice(1)).join('');
+    this.names[name] = result;
+    return result;
+  };
 
   /**
    * generate mock data from schema example, enum and random data
    */
-  generateMockFromSchema(schema) {
+  generateMockFromSchema = (schema) => {
     /**
      * @autoMock use random mock data when there is no example or enum
      */
@@ -173,7 +198,7 @@ class SwaggerParserV2 {
     if (schema.type === 'number') return autoMock ? this.chance.integer() : 0;
     if (schema.type === 'boolean') return autoMock ? this.chance.bool() : true;
     return null;
-  }
+  };
 
   /**
    * generate ts declaration from schema
@@ -197,41 +222,50 @@ class SwaggerParserV2 {
    * generate ts declaration from schema
    */
   generateTypescriptTypeFromSchema(schema, options) {
+    const { defaultRequired = true, formatKey } = this.options;
     const { space = 1, semi = true } = options;
     const split = `\n${new Array(space).fill('  ').reduce((a, b) => a + b, '')}`;
-    let output = schema.type;
+    const generateTypescriptType = (subSchema) => {
+      // use $ref
+      if (subSchema.$ref) {
+        return this.formatValidNames(this.generateNameByRef(subSchema.$ref));
+      }
 
-    if (schema.type === 'object') {
-      const interfaceList = Object.keys(schema.properties)
-        .map((key) => {
-          const required = Array.isArray(schema.required) && schema.required.includes(key);
-          const childSchema = schema.properties[key];
-          return `${
-            this.generateRemarkFromSchema(childSchema, split)
-          }${key}${required ? '' : '?'}: ${this.generateTypescriptTypeFromSchema(childSchema, space + 1)}`;
-        });
-      output = `{${split}${interfaceList.join(split)}\n}`;
-    } else if (schema.type === 'array') {
-      if (schema.items.$ref) {
-        output = `${decodeURIComponent(schema.items.$ref).split('/').pop()}[]`;
-      } else {
-        output = `${schema.items.type}[]`;
+      if (subSchema.type === 'object') {
+        const interfaceList = [];
+        if (subSchema.properties) {
+          interfaceList.push(...Object.keys(subSchema.properties)
+            .map((key) => {
+              const required = Array.isArray(subSchema.required) ? subSchema.required.includes(key) : defaultRequired;
+              const childSchema = subSchema.properties[key];
+              return `${
+                this.generateRemarkFromSchema(childSchema, split)
+              }${formatKey ? formatKey(key) : key}${required ? '' : '?'}: ${this.generateTypescriptTypeFromSchema(childSchema, { space: space + 1 })}`;
+            }));
+        }
+        if (subSchema.additionalProperties) {
+          interfaceList.push(`[name: string]: ${this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { space: space + 1 })}`);
+        }
+        return `{${split}${interfaceList.join(split)}\n}`;
       }
-    } else if (schema.type === 'integer' || schema.type === 'number') {
-      output = 'number';
-    }
-    // use enum
-    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
-      if (schema.type === 'string') {
-        output = schema.enum.map((item) => `"${item}"`).join(' | ');
-      } else {
-        output = schema.enum.join(' | ');
+      if (subSchema.type === 'array') {
+        return `${generateTypescriptType(subSchema.items)}[]`;
       }
-    }
-    // use $ref
-    if (schema.$ref) {
-      output = decodeURIComponent(schema.$ref).split('/').pop();
-    }
+      if (subSchema.type === 'integer' || subSchema.type === 'number') {
+        return 'number';
+      }
+      // use enum
+      if (Array.isArray(subSchema.enum) && subSchema.enum.length > 0) {
+        if (subSchema.type === 'string') {
+          return subSchema.enum.map((item) => `"${item}"`).join(' | ');
+        }
+        return subSchema.enum.join(' | ');
+      }
+      return subSchema.type;
+    };
+
+    const output = generateTypescriptType(schema);
+
     return `${output}${semi ? ';' : ''}${schema.format ? `  // ${schema.format}` : ''}`;
   }
 }

@@ -33,7 +33,6 @@
     "chalk": "4.1.2",
     "chance": "^1.1.8",
     "commander": "^8.3.0",
-    "dtsgenerator": "2.7.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.groupby": "^4.6.0",
     "lodash.mapvalues": "^4.6.0",

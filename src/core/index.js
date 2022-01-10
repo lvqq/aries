@@ -64,25 +64,27 @@ const generateOptions = async (options) => {
  */
 const generateOutputByPlugin = async (fn, options) => {
   let spinner;
-  let params;
   try {
+    // fetch swagger and generate options
     spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
-    params = await generateOptions(options);
+    const params = await generateOptions(options);
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
+    // generate file
+    if (params) {
+      const output = await fn(params);
+      if (Array.isArray(output)) {
+        output.forEach((item) => {
+          fs.writeFileSync(path.join(params.options.output, item.filename), item.content);
+        });
+      } else {
+        fs.writeFileSync(params.options.output, output, 'utf8');
+      }
+      spinner.succeed(chalk.greenBright('Generate file success'));
+    }
   } catch (e) {
     spinner.fail(chalk.redBright('Fetch swagger json failed'));
     // eslint-disable-next-line no-console
     console.log(chalk.redBright(e.message));
-  }
-  if (params) {
-    const output = await fn(params);
-    if (Array.isArray(output)) {
-      output.forEach((item) => {
-        fs.writeFileSync(path.join(params.options.output, item.filename), item.content);
-      });
-    } else {
-      fs.writeFileSync(params.options.output, output, 'utf8');
-    }
   }
 };
 
