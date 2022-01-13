@@ -61,7 +61,7 @@ Support only in `.ariesrc.js`
 Determine whether mock automatically when there is no example in schema, default is `True`. Affects `to-md` and `to-mock`
 
 ##### resTemplate
-Custom the mock response data struct, default is `{"code":0,"msg":"success","data":$data}`.`$data` will be replaced by the mock data in `to-md/to-mock`
+Custom the mock response data struct, default is `"$data"`.`$data` will be replaced by the mock data in `to-md/to-mock`
 
 ##### defaultRequired
 Determine whether the property is required when there is no required in schema, default is `True`
@@ -85,6 +85,9 @@ module.exports = {
 }
 ```
 
+## Support
+- Swagger 2.0
+- node >= 12
 
 ## LICENSE
 MIT

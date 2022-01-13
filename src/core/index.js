@@ -82,9 +82,9 @@ const generateOutputByPlugin = async (fn, options) => {
       spinner.succeed(chalk.greenBright('Generate file success'));
     }
   } catch (e) {
-    spinner.fail(chalk.redBright('Fetch swagger json failed'));
+    spinner.fail(chalk.redBright('Generate file failed'));
     // eslint-disable-next-line no-console
-    console.log(chalk.redBright(e.message));
+    console.log(e);
   }
 };
 

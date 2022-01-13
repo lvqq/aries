@@ -1,3 +1,10 @@
+## v0.5.0
+- 🌟[feature] support parameters and responses in to-ts
+- 🌟[feature] add js doc comment in parameters/responses ts declaration
+- 🌟[feature] support type File in to-ts 
+- 🐞[fix] log message error in file generate
+- 🐞[fix] reserve `$ref` in parser when parse schem
+
 ## v0.4.0
 - 🌟[feature] support `defaultRequired` config in `.ariesrc.js` to determine whether the property is required when there is no required in schema
 - 🌟[feature] support `formatProp` config in `.ariesrc.js` to format the property in typescript declaration
@@ -17,7 +24,7 @@
 - 🐞[fix] fix eslint error and CRLF error
 
 ## v0.2.0
-- 🌟[feature] Converter support **to-schema**, generater schema json files
+- 🌟[feature] Converter support **to-schema**, generate schema json files
 
 ## v0.1.0
 - 🌟[feature] Init version, converter support **to-ts**, **to-md** and **to-mock**
