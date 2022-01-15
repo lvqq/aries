@@ -1,6 +1,6 @@
 {
   "name": "@tooltik/aries",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A swagger converter cli, support TypeScript declaration, markdown docs, mock js and so on",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -11,7 +11,6 @@
     "test:to-ts": "aries to-ts -u ./test/swagger.json -o ./test/output.swagger.types.ts",
     "test:to-md": "aries to-md -u ./test/swagger.json -o ./test/output.swagger.docs.md",
     "test:to-mock": "aries to-mock -u ./test/swagger.json -o ./test/output.swagger.mock.json",
-    "test:to-schema": "aries to-schema -u ./test/swagger.json -o ./test/schema",
     "lint": "eslint --fix --quiet --ext js src bin"
   },
   "repository": {

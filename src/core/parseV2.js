@@ -271,7 +271,7 @@ class SwaggerParserV2 {
    * generate ts declaration from schema
    */
   generateTypescriptTypeFromSchema(schema, options = {}) {
-    const { defaultRequired = true, formatProp } = this.options;
+    const { autoRequired = true, formatProp } = this.options;
     const { space = 1, semi = true } = options;
     const split = `\n${new Array(space).fill('  ').reduce((a, b) => a + b, '')}`;
     const generateTypescriptType = (subSchema) => {
@@ -285,7 +285,7 @@ class SwaggerParserV2 {
         if (subSchema.properties) {
           interfaceList.push(...Object.keys(subSchema.properties)
             .map((key) => {
-              const required = Array.isArray(subSchema.required) ? subSchema.required.includes(key) : defaultRequired;
+              const required = Array.isArray(subSchema.required) ? subSchema.required.includes(key) : autoRequired;
               const childSchema = subSchema.properties[key];
               return `${
                 this.generateRemarkFromSchema(childSchema, split)

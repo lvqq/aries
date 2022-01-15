@@ -1,4 +1,3 @@
-const mapValues = require('lodash.mapvalues');
 const SwaggerParserV2 = require('../core/parseV2');
 
 module.exports = async ({

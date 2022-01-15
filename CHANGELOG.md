@@ -1,3 +1,7 @@
+## v0.5.1
+- ⚡[refactor] optimize command line options
+- ⚡[refactor] add index.d.ts
+
 ## v0.5.0
 - 🌟[feature] support parameters and responses in to-ts
 - 🌟[feature] add js doc comment in parameters/responses ts declaration

@@ -25,6 +25,10 @@ program
   .description('Convert swagger to typescript declaration')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.types.ts', './swagger.types.ts')
+  .option(
+    '--no-autoRequired',
+    'Do not generate the property as required automatically when there is no required array in definitions',
+  )
   .action(async (options) => {
     await generateOutputByPlugin(toTs, options);
   });
@@ -34,6 +38,10 @@ program
   .description('Convert swagger to markdown docs')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.docs.md', './swagger.docs.md')
+  .option(
+    '--no-autoMock',
+    'Do not generate the mock samples automatically when there is no example in schema',
+  )
   .action(async (options) => {
     await generateOutputByPlugin(toMd, options);
   });
@@ -43,6 +51,10 @@ program
   .description('Convert swagger to mock json')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
   .option('-o --output <output>', 'Specify output file path, default is ./swagger.mock.json', './swagger.mock.json')
+  .option(
+    '--no-autoMock',
+    'Do not generate the mock response automatically when there is no example in schema',
+  )
   .action(async (options) => {
     await generateOutputByPlugin(toMock, options);
   });

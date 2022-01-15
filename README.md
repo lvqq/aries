@@ -32,6 +32,8 @@ Options:
                         remote url
   -o --output <output>  Specify output file path, default is ./swagger.types.ts
                         (default: "./swagger.types.ts")
+  --no-autoRequired     Do not generate the property as required automatically
+                        when there is no required array in definitions
 ```
 
 #### to-md
@@ -41,6 +43,8 @@ Options:
                         remote url
   -o --output <output>  Specify output file path, default is ./swagger.docs.md
                         (default: "./swagger.docs.md")
+  --no-autoMock         Do not generate the mock samples automatically when
+                        there is no example in schema
 ```
 
 #### to-mock
@@ -50,24 +54,30 @@ Options:
                         remote url
   -o --output <output>  Specify output file path, default is ./swagger.mock.json
                         (default: "./swagger.mock.json")
+  --no-autoMock         Do not generate the mock response automatically when
+                        there is no example in schema
 ```
 
 ### .ariesrc.js
-Add `.ariesrc.js` in your project root directory. Support all options in command
+Add `.ariesrc.js` in your project root directory. Support all options in command.And the command line has a higher priority than `.ariesrc.js`
 
-#### Unique options
-Support only in `.ariesrc.js`
-##### autoMock
+#### url
+Swagger url, support relative path and remote url
+
+#### output
+Output file path
+
+#### autoMock
 Determine whether mock automatically when there is no example in schema, default is `True`. Affects `to-md` and `to-mock`
 
-##### resTemplate
+#### resTemplate
 Custom the mock response data struct, default is `"$data"`.`$data` will be replaced by the mock data in `to-md/to-mock`
 
-##### defaultRequired
+#### autoRequired
 Determine whether the property is required when there is no required in schema, default is `True`
 
-##### formatProp
-Format the property in typescript declaration.
+#### formatProp
+Format the property in typescript declaration.The parameter is the property name
 
 e.g.
 
@@ -77,7 +87,7 @@ module.exports = {
   url: './test/swagger.json',
   autoMock: true,
   resTemplate: '{"code":0,"msg":"success","data":$data}',
-  defaultRequired: true,
+  autoRequired: true,
   formatProp: (prop) => {
     // Add prop format
     return prop
