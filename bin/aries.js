@@ -2,7 +2,7 @@
 const program = require('commander');
 const { version } = require('../package.json');
 const {
-  toTs, toMd, toMock,
+  toTs, toMd, toMock, mockServer,
 } = require('../src');
 const { generateOutputByPlugin } = require('../src/core');
 
@@ -24,7 +24,7 @@ program
   .command('to-ts')
   .description('Convert swagger to typescript declaration')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-  .option('-o --output <output>', 'Specify output file path, default is ./swagger.types.ts', './swagger.types.ts')
+  .option('-o --output <output>', 'Specify output file path', './swagger.types.ts')
   .option(
     '--no-autoRequired',
     'Do not generate the property as required automatically when there is no required array in definitions',
@@ -37,7 +37,7 @@ program
   .command('to-md')
   .description('Convert swagger to markdown docs')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-  .option('-o --output <output>', 'Specify output file path, default is ./swagger.docs.md', './swagger.docs.md')
+  .option('-o --output <output>', 'Specify output file path', './swagger.docs.md')
   .option(
     '--no-autoMock',
     'Do not generate the mock samples automatically when there is no example in schema',
@@ -50,13 +50,26 @@ program
   .command('to-mock')
   .description('Convert swagger to mock json')
   .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-  .option('-o --output <output>', 'Specify output file path, default is ./swagger.mock.json', './swagger.mock.json')
+  .option('-o --output <output>', 'Specify output file path', './swagger.mock.json')
   .option(
     '--no-autoMock',
     'Do not generate the mock response automatically when there is no example in schema',
   )
   .action(async (options) => {
     await generateOutputByPlugin(toMock, options);
+  });
+
+program
+  .command('mock-server')
+  .description('Start a local server to return the mock interface')
+  .option('-u, --url <url>', 'Swagger link, support relative path or remote url')
+  .option('-p, --port <port>', 'Mock server port', 3000)
+  .option(
+    '--no-autoMock',
+    'Do not generate the mock response automatically when there is no example in schema',
+  )
+  .action(async (options) => {
+    await mockServer(options);
   });
 
 program.parse(process.argv);

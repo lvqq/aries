@@ -1,7 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dt/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
 
 ## Aries ♈️
-Aries is a swagger converter cli, support typescript declaration, markdown docs, mock json and so on
+Aries is a swagger converter cli, support typescript declaration, markdown docs, mock server and so on
 
 ## Install
 ```
@@ -23,39 +23,39 @@ Commands:
   to-ts [options]    Convert swagger to typescript declaration
   to-md [options]    Convert swagger to markdown docs
   to-mock [options]  Convert swagger to mock json
+  mock-server [options]  Start a local server to return the mock interface
 ```
 
 #### to-ts
 ```
 Options:
-  -u, --url <url>       Swagger link to generate, support relative path or
-                        remote url
-  -o --output <output>  Specify output file path, default is ./swagger.types.ts
-                        (default: "./swagger.types.ts")
-  --no-autoRequired     Do not generate the property as required automatically
-                        when there is no required array in definitions
+  -u, --url <url>       Swagger link to generate, support relative path or remote url
+  -o --output <output>  Specify output file path (default: "./swagger.types.ts")
+  --no-autoRequired     Do not generate the property as required automatically when there is no required array in definitions
 ```
 
 #### to-md
 ```
 Options:
-  -u, --url <url>       Swagger link to generate, support relative path or
-                        remote url
-  -o --output <output>  Specify output file path, default is ./swagger.docs.md
-                        (default: "./swagger.docs.md")
-  --no-autoMock         Do not generate the mock samples automatically when
-                        there is no example in schema
+  -u, --url <url>       Swagger link to generate, support relative path orremote url
+  -o --output <output>  Specify output file path (default: "./swagger.docs.md")
+  --no-autoMock         Do not generate the mock samples automatically when there is no example in schema
 ```
 
 #### to-mock
 ```
 Options:
-  -u, --url <url>       Swagger link to generate, support relative path or
-                        remote url
-  -o --output <output>  Specify output file path, default is ./swagger.mock.json
-                        (default: "./swagger.mock.json")
-  --no-autoMock         Do not generate the mock response automatically when
-                        there is no example in schema
+  -u, --url <url>       Swagger link to generate, support relative path or remote url
+  -o --output <output>  Specify output file path (default: "./swagger.mock.json")
+  --no-autoMock         Do not generate the mock response automatically when there is no example in schema
+```
+
+#### mock-server
+```
+Options:
+  -u, --url <url>       Swagger link, support relative path or remote url
+  -p, --port <port>     Mock server port (default: 3000)
+  --no-autoMock         Do not generate the mock response automatically when there is no example in schema
 ```
 
 ### .ariesrc.js
@@ -78,6 +78,9 @@ Determine whether the property is required when there is no required in schema, 
 
 #### formatProp
 Format the property in typescript declaration.The parameter is the property name
+
+#### port
+Change the port in mock-server, default is 3000
 
 e.g.
 

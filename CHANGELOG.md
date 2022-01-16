@@ -1,3 +1,7 @@
+## v0.6.0
+- 🌟[feature] support mock-server to start a local server to return the mock interface
+- ⚡[refactor] optimize interface declaration in index.d.ts
+
 ## v0.5.2
 - 🐞[fix] log message error in fetch swagger
 

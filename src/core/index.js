@@ -27,7 +27,7 @@ const mergeOptionsFromRc = (options) => {
  * generate swagger json and config from command options
  * @param {*} options command options
  */
-const generateOptions = async (options) => {
+const generateOptionsAndSwagger = async (options) => {
   const params = mergeOptionsFromRc(options);
   const { url } = params;
   // validate url
@@ -68,7 +68,7 @@ const generateOutputByPlugin = async (fn, options) => {
   // fetch swagger and generate options
   try {
     spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
-    params = await generateOptions(options);
+    params = await generateOptionsAndSwagger(options);
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
   } catch (e) {
     spinner.fail(chalk.redBright('Fetch swagger json failed'));
@@ -95,6 +95,6 @@ const generateOutputByPlugin = async (fn, options) => {
 };
 
 module.exports = {
-  generateOptions,
+  generateOptionsAndSwagger,
   generateOutputByPlugin,
 };
