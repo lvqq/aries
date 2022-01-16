@@ -33,7 +33,7 @@ const generateOptions = async (options) => {
   // validate url
   if (!url) {
     throw new Error(
-      'error: required swagger url not specified, add \'-u, --url <url>\' in command option or url config .ariesrc',
+      'error: required swagger url not specified, add \'-u, --url <url>\' in command option or add url in .ariesrc',
     );
   }
   // get swagger json
@@ -64,13 +64,20 @@ const generateOptions = async (options) => {
  */
 const generateOutputByPlugin = async (fn, options) => {
   let spinner;
+  let params;
+  // fetch swagger and generate options
   try {
-    // fetch swagger and generate options
     spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
-    const params = await generateOptions(options);
+    params = await generateOptions(options);
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
-    // generate file
+  } catch (e) {
+    spinner.fail(chalk.redBright('Fetch swagger json failed'));
+    console.log(chalk.redBright(e.message));
+  }
+  // generate file
+  try {
     if (params) {
+      spinner = ora(chalk.blueBright('Generate file start')).start();
       const output = await fn(params);
       if (Array.isArray(output)) {
         output.forEach((item) => {
@@ -83,7 +90,6 @@ const generateOutputByPlugin = async (fn, options) => {
     }
   } catch (e) {
     spinner.fail(chalk.redBright('Generate file failed'));
-    // eslint-disable-next-line no-console
     console.log(e);
   }
 };

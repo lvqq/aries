@@ -1,7 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dt/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
 
 ## Aries ♈️
-Aries is a swagger converter cli, support TypeScript declaration, markdown docs, mock json and so on
+Aries is a swagger converter cli, support typescript declaration, markdown docs, mock json and so on
 
 ## Install
 ```
@@ -96,7 +96,7 @@ module.exports = {
 ```
 
 ## Support
-- Swagger 2.0
+- swagger 2.0
 - node >= 12
 
 ## LICENSE

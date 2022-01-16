@@ -1,3 +1,6 @@
+## v0.5.2
+- 🐞[fix] log message error in fetch swagger
+
 ## v0.5.1
 - ⚡[refactor] optimize command line options
 - ⚡[refactor] add index.d.ts
