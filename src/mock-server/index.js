@@ -25,7 +25,7 @@ module.exports = async (originOptions) => {
           const matchs = path.match(/{[^{}]*}/g);
           if (matchs) {
             matchs.forEach((match) => {
-              mockPath = mockPath.replaceAll(match, `:${match.slice(1, -1)}`);
+              mockPath = mockPath.replace(match, `:${match.slice(1, -1)}`);
             });
           }
           app[mockMethod](mockPath, (req, res) => {

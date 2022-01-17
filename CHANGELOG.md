@@ -1,3 +1,6 @@
+## v0.6.1
+- 🐞[fix] remove `String.prototype.replaceAll()` usage which was supported after NodeJS 15.0.0
+
 ## v0.6.0
 - 🌟[feature] support mock-server to start a local server to return the mock interface
 - ⚡[refactor] optimize interface declaration in index.d.ts
