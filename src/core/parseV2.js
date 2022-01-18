@@ -3,6 +3,8 @@ const fromPairs = require('lodash.frompairs');
 const groupBy = require('lodash.groupby');
 const Chance = require('chance');
 
+const InvalidChar = /{|}|:|\./;
+
 /**
  * Swagger parse class for swagger 2.0
  */
@@ -31,6 +33,21 @@ class SwaggerParserV2 {
    * parse schema, remove ref
    */
   parseSchema = (schema) => {
+    if (schema.allOf) {
+      let properties = {};
+      // merge allOf
+      schema.allOf.forEach((subSchema) => {
+        properties = {
+          ...properties,
+          ...this.parseSchema(subSchema).properties,
+        };
+      });
+      return {
+        ...schema,
+        type: 'object',
+        properties,
+      };
+    }
     if (schema.$ref) {
       const definition = this.generateNameByRef(schema.$ref);
 
@@ -216,6 +233,8 @@ class SwaggerParserV2 {
     return result;
   };
 
+  formatSplitByLayer = ({ layer = 1, space = 2 }) => `\n${new Array(layer).fill(' '.repeat(space)).reduce((a, b) => a + b, '')}`;
+
   /**
    * generate mock data from schema example, enum and random data
    */
@@ -272,14 +291,44 @@ class SwaggerParserV2 {
    */
   generateTypescriptTypeFromSchema(schema, options = {}) {
     const { autoRequired = true, formatProp } = this.options;
-    const { space = 1, semi = true } = options;
-    const split = `\n${new Array(space).fill('  ').reduce((a, b) => a + b, '')}`;
+    /**
+     * layer: recurve layer
+     * semi: endline semi
+     * bracketSplit: parentheses split
+     */
+    const { layer = 1, semi = true, bracketSplit = false } = options;
+
+    const preSplit = this.formatSplitByLayer({ layer: layer - 1 });
+    const split = this.formatSplitByLayer({ layer });
     const generateTypescriptType = (subSchema) => {
+      if (Array.isArray(subSchema.allOf)) {
+        const allOfMap = {};
+        // merge allOf
+        subSchema.allOf.forEach((childSchema) => {
+          let sourceSchema = childSchema;
+          if (childSchema.$ref) {
+            sourceSchema = this.parseSchema(childSchema);
+          }
+          Object.keys(sourceSchema.properties).forEach((key) => {
+            const required = Array.isArray(sourceSchema.required) ? sourceSchema.required.includes(key) : autoRequired;
+            const childAllOfSchema = sourceSchema.properties[key];
+            let propKey = formatProp ? formatProp(key) : key;
+            if (InvalidChar.test(propKey)) {
+              propKey = `"${propKey}"`;
+            }
+            allOfMap[key] = `${
+              this.generateRemarkFromSchema(childAllOfSchema, split)
+            }${propKey}${required ? '' : '?'}: ${
+              this.generateTypescriptTypeFromSchema(childAllOfSchema, { layer: layer + 1, bracketSplit: true })
+            }`;
+          });
+          return `{${split}${Object.values(allOfMap).join(split)}${bracketSplit ? preSplit : '\n'}}`;
+        });
+      }
       // use $ref
       if (subSchema.$ref) {
         return this.formatValidNamesByModal(this.generateNameByRef(subSchema.$ref));
       }
-
       if (subSchema.type === 'object') {
         const interfaceList = [];
         if (subSchema.properties) {
@@ -287,19 +336,23 @@ class SwaggerParserV2 {
             .map((key) => {
               const required = Array.isArray(subSchema.required) ? subSchema.required.includes(key) : autoRequired;
               const childSchema = subSchema.properties[key];
+              let propKey = formatProp ? formatProp(key) : key;
+              if (InvalidChar.test(propKey)) {
+                propKey = `"${propKey}"`;
+              }
               return `${
                 this.generateRemarkFromSchema(childSchema, split)
-              }${formatProp ? formatProp(key) : key}${required ? '' : '?'}: ${
-                this.generateTypescriptTypeFromSchema(childSchema, { space: space + 1 })
+              }${propKey}${required ? '' : '?'}: ${
+                this.generateTypescriptTypeFromSchema(childSchema, { layer: layer + 1, bracketSplit: true })
               }`;
             }));
         }
         if (subSchema.additionalProperties) {
           interfaceList.push(`[name: string]: ${
-            this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { space: space + 1 })
+            this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { layer: layer + 1, bracketSplit: true })
           }`);
         }
-        return `{${split}${interfaceList.join(split)}\n}`;
+        return `{${split}${interfaceList.join(split)}${bracketSplit ? preSplit : '\n'}}`;
       }
       if (subSchema.type === 'array') {
         const hasEnum = Array.isArray(subSchema.items.enum) && subSchema.items.enum.length > 0;
@@ -307,6 +360,9 @@ class SwaggerParserV2 {
       }
       if (subSchema.type === 'integer' || subSchema.type === 'number') {
         return 'number';
+      }
+      if (subSchema.type === 'bool') {
+        return 'boolean';
       }
       if (subSchema.type === 'file') {
         return 'File';

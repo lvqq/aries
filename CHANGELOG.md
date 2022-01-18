@@ -1,3 +1,9 @@
+## v0.6.2
+- 🐞[fix] `allOf` usage in swagger return `undefined`
+- 🐞[fix] add "" in typescript prop if there has an invalid char
+- 🐞[fix] indent error in to-ts
+- 🐞[fix] bool type now return boolean in to-ts
+
 ## v0.6.1
 - 🐞[fix] remove `String.prototype.replaceAll()` usage which was supported after NodeJS 15.0.0
 
