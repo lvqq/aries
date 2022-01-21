@@ -2,8 +2,14 @@
 module.exports = {
   url: './test/swagger.json',
   autoMock: true,
-  resTemplate: '{"code":0,"msg":"success","data":$data}',
   autoRequired: true,
+  formatMock: (data) => {
+    return {
+      code: 0,
+      msg: 'success',
+      data,
+    }
+  },
   formatProp: (prop) => {
     // Add prop format
     return prop

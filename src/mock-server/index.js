@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const SwaggerParserV2 = require('../core/parseV2');
 const { generateOptionsAndSwagger } = require('../core');
 
@@ -12,6 +13,7 @@ module.exports = async (originOptions) => {
       const { paths } = new SwaggerParserV2(swagger, options);
       // listen mock server
       const app = express();
+      app.use(cors());
       const { port = 3000 } = options;
       const { basePath } = swagger;
 
@@ -29,7 +31,10 @@ module.exports = async (originOptions) => {
             });
           }
           app[mockMethod](mockPath, (req, res) => {
-            res.set('Access-Control-Allow-Origin', '*');
+            if (req.method === 'OPTIONS') {
+              res.status(200).end();
+              return;
+            }
             res.send(mockRes);
           });
         });

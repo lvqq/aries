@@ -135,13 +135,7 @@ class SwaggerParserV2 {
    * parse paths
    */
   parsePaths = () => {
-    const { resTemplate = '$data' } = this.options;
-    // validate resTpl
-    try {
-      JSON.parse(resTemplate.replace('$data', '""'));
-    } catch (e) {
-      throw new Error('parse error! Invalid resTemplate');
-    }
+    const { formatMock } = this.options;
     return mapValues(
       this.swagger.paths,
       (pathDefinition, path) => mapValues(pathDefinition, (pathParams, method) => {
@@ -153,6 +147,8 @@ class SwaggerParserV2 {
         let successResponseKey;
         if (responses['200']) successResponseKey = '200';
         if (responses.default) successResponseKey = 'default';
+        const mockResponse = successResponseKey && responses[successResponseKey].schema
+          ? this.generateMockFromSchema(responses[successResponseKey].schema) : {};
         return {
           ...pathParams,
           parameters,
@@ -174,10 +170,7 @@ class SwaggerParserV2 {
               },
             ),
             // generate response mock data
-            responses: JSON.parse(resTemplate.replace('$data', JSON.stringify(
-              successResponseKey && responses[successResponseKey].schema
-                ? this.generateMockFromSchema(responses[successResponseKey].schema) : {},
-            ))),
+            responses: formatMock ? formatMock(mockResponse) : mockResponse,
           },
           ts: [
             // group by 'in' path/body/formData

@@ -63,19 +63,19 @@ export interface ToTsOptions extends RequiredOptions {
 export interface ToMdOptions extends RequiredOptions {
   output: string;
   autoMock?: boolean;
-  resTemplate?: string;
+  formatMock?:  (mock: any) => any
 }
 
 export interface ToMockOptions extends RequiredOptions {
   output: string;
   autoMock?: boolean;
-  resTemplate?: string;
+  formatMock?:  (mock: any) => any
 }
 
 export interface MockServerOptions extends RequiredOptions {
   autoMock?: boolean;
-  resTemplate?: string;
   port?: number
+  formatMock?:  (mock: any) => any
 }
 
 export interface PluginParams<T> {
