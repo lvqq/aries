@@ -1,24 +1,18 @@
 #!/usr/bin/env node
 const program = require('commander');
 const { version } = require('../package.json');
-const {
-  toTs, toMd, toMock, mockServer,
-} = require('../src');
+const { toTs, toMd, toMock, mockServer } = require('../src');
 const { generateOutputByPlugin } = require('../src/core');
 
 process.on('unhandledRejection', (err) => {
   throw err;
 });
 
-program
-  .version(version)
-  .usage('<command> [options]');
+program.version(version).usage('<command> [options]');
 
-program
-  .arguments('<command>')
-  .action(() => {
-    program.outputHelp();
-  });
+program.arguments('<command>').action(() => {
+  program.outputHelp();
+});
 
 program
   .command('to-ts')
@@ -27,7 +21,7 @@ program
   .option('-o --output <output>', 'Specify output file path', './swagger.types.ts')
   .option(
     '--no-autoRequired',
-    'Do not generate the property as required automatically when there is no required array in definitions',
+    'Do not generate the property as required automatically when there is no required array in definitions'
   )
   .action(async (options) => {
     await generateOutputByPlugin(toTs, options);
@@ -40,7 +34,7 @@ program
   .option('-o --output <output>', 'Specify output file path', './swagger.docs.md')
   .option(
     '--no-autoMock',
-    'Do not generate the mock samples automatically when there is no example in schema',
+    'Do not generate the mock samples automatically when there is no example in schema'
   )
   .action(async (options) => {
     await generateOutputByPlugin(toMd, options);
@@ -53,7 +47,7 @@ program
   .option('-o --output <output>', 'Specify output file path', './swagger.mock.json')
   .option(
     '--no-autoMock',
-    'Do not generate the mock response automatically when there is no example in schema',
+    'Do not generate the mock response automatically when there is no example in schema'
   )
   .action(async (options) => {
     await generateOutputByPlugin(toMock, options);
@@ -66,7 +60,7 @@ program
   .option('-p, --port <port>', 'Mock server port', 3000)
   .option(
     '--no-autoMock',
-    'Do not generate the mock response automatically when there is no example in schema',
+    'Do not generate the mock response automatically when there is no example in schema'
   )
   .action(async (options) => {
     await mockServer(options);

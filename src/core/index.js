@@ -33,7 +33,7 @@ const generateOptionsAndSwagger = async (options) => {
   // validate url
   if (!url) {
     throw new Error(
-      'error: required swagger url not specified, add \'-u, --url <url>\' in command option or add url in .ariesrc',
+      "error: required swagger url not specified, add '-u, --url <url>' in command option or add url in .ariesrc"
     );
   }
   // get swagger json

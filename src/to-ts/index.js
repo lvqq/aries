@@ -1,9 +1,6 @@
 const SwaggerParserV2 = require('../core/parseV2');
 
-module.exports = async ({
-  swagger,
-  options,
-}) => {
+module.exports = async ({ swagger, options }) => {
   const { definitions, paths } = new SwaggerParserV2(swagger, options);
   // ts in models
   const definitionsTs = Object.keys(definitions).map((name) => {

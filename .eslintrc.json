@@ -6,18 +6,19 @@
   },
   "extends": [
     "eslint:recommended",
-    "airbnb-base"
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 13
   },
   "rules": {
-    "indent": ["error", 2],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
+    "prettier/prettier": "error",
     "import/no-dynamic-require": 0,
     "global-require": 0,
-    "max-len": ["warn", { "code": 120, "ignoreComments": true, "tabWidth": 2 }],
     "no-unused-vars": 1,
     "class-methods-use-this": 0,
     "no-console": 0

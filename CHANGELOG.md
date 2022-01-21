@@ -1,3 +1,8 @@
+## v0.6.3
+- 🐞[fix] core error in `mock-server`
+- 🐞[fix] use `formatMock` instead of `resTemplate`
+- ⚡[chore] add prettier to autofix code style
+
 ## v0.6.2
 - 🐞[fix] `allOf` usage in swagger return `undefined`
 - 🐞[fix] add "" in typescript prop if there has an invalid char

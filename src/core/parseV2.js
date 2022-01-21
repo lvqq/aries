@@ -84,32 +84,34 @@ class SwaggerParserV2 {
   /**
    * parse all definitions
    */
-  parseDefinitions = () => mapValues(this.swagger.definitions, (schema, key) => {
-    this.visited[key] = true;
-    const value = this.parseSchema(schema);
-    this.visitedDefinitions[key] = value;
-    return {
-      ...value,
-      ts: {
-        name: this.formatValidNamesByModal(key),
-        type: schema.type === 'object' ? 'interface' : 'type',
-        value: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
-      },
-    };
-  });
+  parseDefinitions = () =>
+    mapValues(this.swagger.definitions, (schema, key) => {
+      this.visited[key] = true;
+      const value = this.parseSchema(schema);
+      this.visitedDefinitions[key] = value;
+      return {
+        ...value,
+        ts: {
+          name: this.formatValidNamesByModal(key),
+          type: schema.type === 'object' ? 'interface' : 'type',
+          value: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
+        },
+      };
+    });
 
   /**
    * parse parameters, path/body/formData
    */
-  parseParameters = (parameters) => parameters.map((parameter) => {
-    if (parameter.schema) {
-      return {
-        ...parameter,
-        ...this.parseSchema(parameter.schema),
-      };
-    }
-    return parameter;
-  });
+  parseParameters = (parameters) =>
+    parameters.map((parameter) => {
+      if (parameter.schema) {
+        return {
+          ...parameter,
+          ...this.parseSchema(parameter.schema),
+        };
+      }
+      return parameter;
+    });
 
   /**
    * parse responses, 200/default
@@ -136,19 +138,22 @@ class SwaggerParserV2 {
    */
   parsePaths = () => {
     const { formatMock } = this.options;
-    return mapValues(
-      this.swagger.paths,
-      (pathDefinition, path) => mapValues(pathDefinition, (pathParams, method) => {
+    return mapValues(this.swagger.paths, (pathDefinition, path) =>
+      mapValues(pathDefinition, (pathParams, method) => {
         // parse parameters
-        const parameters = Array.isArray(pathParams.parameters) ? this.parseParameters(pathParams.parameters) : [];
+        const parameters = Array.isArray(pathParams.parameters)
+          ? this.parseParameters(pathParams.parameters)
+          : [];
         // params responses
         const responses = pathParams.responses ? this.parseResponses(pathParams.responses) : {};
         // exist default or 200
         let successResponseKey;
         if (responses['200']) successResponseKey = '200';
         if (responses.default) successResponseKey = 'default';
-        const mockResponse = successResponseKey && responses[successResponseKey].schema
-          ? this.generateMockFromSchema(responses[successResponseKey].schema) : {};
+        const mockResponse =
+          successResponseKey && responses[successResponseKey].schema
+            ? this.generateMockFromSchema(responses[successResponseKey].schema)
+            : {};
         return {
           ...pathParams,
           parameters,
@@ -160,14 +165,14 @@ class SwaggerParserV2 {
               groupBy(parameters, (parameter) => parameter.in),
               (params) => {
                 const mockResult = fromPairs(
-                  params.map((param) => [param.name, this.generateMockFromSchema(param)]),
+                  params.map((param) => [param.name, this.generateMockFromSchema(param)])
                 );
                 // delete body key
                 if (params[0] && params[0].in === 'body' && mockResult.body) {
                   return mockResult.body;
                 }
                 return mockResult;
-              },
+              }
             ),
             // generate response mock data
             responses: formatMock ? formatMock(mockResponse) : mockResponse,
@@ -193,40 +198,64 @@ class SwaggerParserV2 {
                 schema = params[0].schema;
               }
               return {
-                name: this.formatValidNamesByPath({ path, method, type: `Request${type.slice(0, 1).toUpperCase()}${type.slice(1)}` }),
+                name: this.formatValidNamesByPath({
+                  path,
+                  method,
+                  type: `Request${type.slice(0, 1).toUpperCase()}${type.slice(1)}`,
+                }),
                 type: schema.type === 'object' && !schema.$ref ? 'interface' : 'type',
                 value: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
               };
             }),
-            ...successResponseKey && responses[successResponseKey].schema
-              ? [{
-                name: this.formatValidNamesByPath({ path, method, type: 'Response' }),
-                type: responses[successResponseKey].schema.type === 'object' && !responses[successResponseKey].schema.$ref ? 'interface' : 'type',
-                value: this.generateTypescriptTypeFromSchema(responses[successResponseKey].schema, { semi: false }),
-              }] : [],
+            ...(successResponseKey && responses[successResponseKey].schema
+              ? [
+                  {
+                    name: this.formatValidNamesByPath({ path, method, type: 'Response' }),
+                    type:
+                      responses[successResponseKey].schema.type === 'object' &&
+                      !responses[successResponseKey].schema.$ref
+                        ? 'interface'
+                        : 'type',
+                    value: this.generateTypescriptTypeFromSchema(
+                      responses[successResponseKey].schema,
+                      { semi: false }
+                    ),
+                  },
+                ]
+              : []),
           ],
         };
-      }),
+      })
     );
   };
 
   generateNameByRef = (ref) => decodeURIComponent(ref).split('/').pop();
 
   formatValidNamesByModal = (name) => {
-    const result = name.split('.').map((str) => str.slice(0, 1).toUpperCase() + str.slice(1)).join('');
+    const result = name
+      .split('.')
+      .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
+      .join('');
     this.names[name] = result;
     return result;
   };
 
   formatValidNamesByPath = ({ path, method, type }) => {
     // delete invalid char
-    const formatPath = path.replace(/{|}|:|\./g, '').split('/').map((str) => str.slice(0, 1).toUpperCase() + str.slice(1)).join('');
-    const result = `${method.slice(0, 1).toUpperCase()}${method.slice(1)}${formatPath}${type.slice(0, 1).toUpperCase()}${type.slice(1)}`;
+    const formatPath = path
+      .replace(/{|}|:|\./g, '')
+      .split('/')
+      .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
+      .join('');
+    const result = `${method.slice(0, 1).toUpperCase()}${method.slice(1)}${formatPath}${type
+      .slice(0, 1)
+      .toUpperCase()}${type.slice(1)}`;
     this.names[method + path + type] = result;
     return result;
   };
 
-  formatSplitByLayer = ({ layer = 1, space = 2 }) => `\n${new Array(layer).fill(' '.repeat(space)).reduce((a, b) => a + b, '')}`;
+  formatSplitByLayer = ({ layer = 1, space = 2 }) =>
+    `\n${new Array(layer).fill(' '.repeat(space)).reduce((a, b) => a + b, '')}`;
 
   /**
    * generate mock data from schema example, enum and random data
@@ -237,8 +266,9 @@ class SwaggerParserV2 {
      */
     const { autoMock = true } = this.options;
     // default null
-    if (!schema
-      || (!schema.example && !schema.type && !schema.enum && !schema.default)) { return null; }
+    if (!schema || (!schema.example && !schema.type && !schema.enum && !schema.default)) {
+      return null;
+    }
     // use default
     if (schema.default) return schema.default;
     // use example
@@ -247,7 +277,8 @@ class SwaggerParserV2 {
     if (Array.isArray(schema.enum)) return this.chance.pickone(schema.enum);
     if (schema.type === 'array') {
       // random array length 1-3
-      return new Array(this.chance.integer({ min: 1, max: 3 })).fill(1)
+      return new Array(this.chance.integer({ min: 1, max: 3 }))
+        .fill(1)
         .map(() => this.generateMockFromSchema(schema.items));
     }
     if (schema.type === 'object') {
@@ -303,19 +334,24 @@ class SwaggerParserV2 {
             sourceSchema = this.parseSchema(childSchema);
           }
           Object.keys(sourceSchema.properties).forEach((key) => {
-            const required = Array.isArray(sourceSchema.required) ? sourceSchema.required.includes(key) : autoRequired;
+            const required = Array.isArray(sourceSchema.required)
+              ? sourceSchema.required.includes(key)
+              : autoRequired;
             const childAllOfSchema = sourceSchema.properties[key];
             let propKey = formatProp ? formatProp(key) : key;
             if (InvalidChar.test(propKey)) {
               propKey = `"${propKey}"`;
             }
-            allOfMap[key] = `${
-              this.generateRemarkFromSchema(childAllOfSchema, split)
-            }${propKey}${required ? '' : '?'}: ${
-              this.generateTypescriptTypeFromSchema(childAllOfSchema, { layer: layer + 1, bracketSplit: true })
-            }`;
+            allOfMap[key] = `${this.generateRemarkFromSchema(childAllOfSchema, split)}${propKey}${
+              required ? '' : '?'
+            }: ${this.generateTypescriptTypeFromSchema(childAllOfSchema, {
+              layer: layer + 1,
+              bracketSplit: true,
+            })}`;
           });
-          return `{${split}${Object.values(allOfMap).join(split)}${bracketSplit ? preSplit : '\n'}}`;
+          return `{${split}${Object.values(allOfMap).join(split)}${
+            bracketSplit ? preSplit : '\n'
+          }}`;
         });
       }
       // use $ref
@@ -325,31 +361,42 @@ class SwaggerParserV2 {
       if (subSchema.type === 'object') {
         const interfaceList = [];
         if (subSchema.properties) {
-          interfaceList.push(...Object.keys(subSchema.properties)
-            .map((key) => {
-              const required = Array.isArray(subSchema.required) ? subSchema.required.includes(key) : autoRequired;
+          interfaceList.push(
+            ...Object.keys(subSchema.properties).map((key) => {
+              const required = Array.isArray(subSchema.required)
+                ? subSchema.required.includes(key)
+                : autoRequired;
               const childSchema = subSchema.properties[key];
               let propKey = formatProp ? formatProp(key) : key;
               if (InvalidChar.test(propKey)) {
                 propKey = `"${propKey}"`;
               }
-              return `${
-                this.generateRemarkFromSchema(childSchema, split)
-              }${propKey}${required ? '' : '?'}: ${
-                this.generateTypescriptTypeFromSchema(childSchema, { layer: layer + 1, bracketSplit: true })
-              }`;
-            }));
+              return `${this.generateRemarkFromSchema(childSchema, split)}${propKey}${
+                required ? '' : '?'
+              }: ${this.generateTypescriptTypeFromSchema(childSchema, {
+                layer: layer + 1,
+                bracketSplit: true,
+              })}`;
+            })
+          );
         }
         if (subSchema.additionalProperties) {
-          interfaceList.push(`[name: string]: ${
-            this.generateTypescriptTypeFromSchema(subSchema.additionalProperties, { layer: layer + 1, bracketSplit: true })
-          }`);
+          interfaceList.push(
+            `[name: string]: ${this.generateTypescriptTypeFromSchema(
+              subSchema.additionalProperties,
+              { layer: layer + 1, bracketSplit: true }
+            )}`
+          );
         }
         return `{${split}${interfaceList.join(split)}${bracketSplit ? preSplit : '\n'}}`;
       }
       if (subSchema.type === 'array') {
         const hasEnum = Array.isArray(subSchema.items.enum) && subSchema.items.enum.length > 0;
-        return `${hasEnum ? `(${generateTypescriptType(subSchema.items)})` : generateTypescriptType(subSchema.items)}[]`;
+        return `${
+          hasEnum
+            ? `(${generateTypescriptType(subSchema.items)})`
+            : generateTypescriptType(subSchema.items)
+        }[]`;
       }
       if (subSchema.type === 'integer' || subSchema.type === 'number') {
         return 'number';
