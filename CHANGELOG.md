@@ -1,5 +1,5 @@
 ## v0.6.3
-- 🐞[fix] core error in `mock-server`
+- 🐞[fix] cors error in `mock-server`
 - 🐞[fix] use `formatMock` instead of `resTemplate`
 - ⚡[chore] add prettier to autofix code style
 
