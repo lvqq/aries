@@ -1,3 +1,6 @@
+## v0.7.0
+- 🌟[feature] support swagger yaml format
+
 ## v0.6.3
 - 🐞[fix] cors error in `mock-server`
 - 🐞[fix] use `formatMock` instead of `resTemplate`

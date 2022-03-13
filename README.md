@@ -3,6 +3,10 @@
 ## Aries ♈️
 Aries is a swagger converter cli, support typescript declaration, markdown docs, mock server and so on
 
+## Support
+- swagger 2.0, json or yaml format
+- node >= 12
+
 ## Install
 ```
 npm install @tooltik/aries --save-dev
@@ -103,10 +107,6 @@ module.exports = {
   }
 }
 ```
-
-## Support
-- swagger 2.0
-- node >= 12
 
 ## LICENSE
 MIT

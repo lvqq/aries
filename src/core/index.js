@@ -3,6 +3,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const ora = require('ora');
 const axios = require('axios');
+const yaml = require('js-yaml');
 
 const cwd = process.cwd();
 /**
@@ -36,6 +37,7 @@ const generateOptionsAndSwagger = async (options) => {
       "error: required swagger url not specified, add '-u, --url <url>' in command option or add url in .ariesrc"
     );
   }
+  const isYaml = url.endsWith('.yaml') || url.endsWith('.yml');
   // get swagger json
   let swagger;
   if (url.startsWith('http')) {
@@ -46,10 +48,18 @@ const generateOptionsAndSwagger = async (options) => {
     }
   } else {
     try {
-      swagger = require(path.resolve(cwd, url));
+      if (isYaml) {
+        swagger = fs.readFileSync(path.resolve(cwd, url), 'utf-8');
+      } else {
+        swagger = require(path.resolve(cwd, url));
+      }
     } catch (e) {
       throw new Error('error: require swagger json failed, check if url is valid');
     }
+  }
+  // yaml to json
+  if (isYaml) {
+    swagger = yaml.load(swagger);
   }
   return {
     swagger,
