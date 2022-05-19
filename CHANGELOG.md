@@ -1,3 +1,16 @@
+## v0.8.0
+### Breaking Changes
+- 🐞[fix] path with underscore style now will be converted to hump style in interface declaration name
+
+e.g.
+```javascript
+// [Get]/ping_test
+// before
+export interface GetPing_test {}
+// after
+export interface GetPingTest {}
+```
+
 ## v0.7.0
 - 🌟[feature] support swagger yaml format
 

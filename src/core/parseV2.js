@@ -241,12 +241,13 @@ class SwaggerParserV2 {
   };
 
   formatValidNamesByPath = ({ path, method, type }) => {
-    // delete invalid char
     const formatPath = path
+      // begin with capital letters
+      .replace(path[0], path[0].toUpperCase())
+      // delete invalid char
       .replace(/{|}|:|\./g, '')
-      .split('/')
-      .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
-      .join('');
+      // _a or /a to A
+      .replace(/(?:(_|\/))+([^_])/g, ($0, $1, $2) => $2.toUpperCase());
     const result = `${method.slice(0, 1).toUpperCase()}${method.slice(1)}${formatPath}${type
       .slice(0, 1)
       .toUpperCase()}${type.slice(1)}`;
