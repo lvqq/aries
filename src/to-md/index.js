@@ -1,8 +1,9 @@
 const groupBy = require('lodash.groupby');
 const fromPairs = require('lodash.frompairs');
+const { generateOutputByPlugin } = require('../core');
 const SwaggerParserV2 = require('../core/parseV2');
 
-module.exports = ({ swagger, options }) => {
+const genMd = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
   const mdJson =
     swagger.tags && swagger.tags.length
@@ -139,3 +140,5 @@ module.exports = ({ swagger, options }) => {
 
   return markdown.join('\n\n');
 };
+
+module.exports = async (options) => generateOutputByPlugin(genMd, options)

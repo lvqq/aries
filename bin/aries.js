@@ -2,7 +2,6 @@
 const program = require('commander');
 const { version } = require('../package.json');
 const { toTs, toMd, toMock, mockServer } = require('../src');
-const { generateOutputByPlugin } = require('../src/core');
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -24,7 +23,7 @@ program
     'Do not generate the property as required automatically when there is no required array in definitions'
   )
   .action(async (options) => {
-    await generateOutputByPlugin(toTs, options);
+    await toTs(options)
   });
 
 program
@@ -37,7 +36,7 @@ program
     'Do not generate the mock samples automatically when there is no example in schema'
   )
   .action(async (options) => {
-    await generateOutputByPlugin(toMd, options);
+    await toMd(options)
   });
 
 program
@@ -50,7 +49,7 @@ program
     'Do not generate the mock response automatically when there is no example in schema'
   )
   .action(async (options) => {
-    await generateOutputByPlugin(toMock, options);
+    await toMock(options)
   });
 
 program

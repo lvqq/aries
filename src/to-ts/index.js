@@ -1,6 +1,7 @@
+const { generateOutputByPlugin } = require('../core');
 const SwaggerParserV2 = require('../core/parseV2');
 
-module.exports = async ({ swagger, options }) => {
+const genTs =  async ({ swagger, options }) => {
   const { definitions, paths } = new SwaggerParserV2(swagger, options);
   // ts in models
   const definitionsTs = Object.keys(definitions).map((name) => {
@@ -30,3 +31,5 @@ module.exports = async ({ swagger, options }) => {
   });
   return [...definitionsTs, '\n', ...pathsTs.flat(2)].join('');
 };
+
+module.exports = async (options) => generateOutputByPlugin(genTs, options);

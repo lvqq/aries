@@ -1,6 +1,6 @@
 {
   "name": "@tooltik/aries",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A swagger converter cli, support TypeScript declaration, markdown docs, mock js and so on",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -8,14 +8,16 @@
     "aries": "./bin/aries.js"
   },
   "scripts": {
-    "test:to-ts": "aries to-ts -u ./test/swagger.json -o ./test/output.swagger.types.ts",
-    "test:to-md": "aries to-md -u ./test/swagger.json -o ./test/output.swagger.docs.md",
-    "test:to-mock": "aries to-mock -u ./test/swagger.json -o ./test/output.swagger.mock.json",
-    "test:mock-server": "aries mock-server -u ./test/swagger.json",
-    "test:yml:to-ts": "aries to-ts -u ./test/swagger.yml -o ./test/output.yml.swagger.types.ts",
-    "test:yml:to-md": "aries to-md -u ./test/swagger.yml -o ./test/output.yml.swagger.docs.md",
-    "test:yml:to-mock": "aries to-mock -u ./test/swagger.yml -o ./test/output.yml.swagger.mock.json",
-    "test:yml:mock-server": "aries mock-server -u ./test/swagger.yml",
+    "test-gen:to-ts": "aries to-ts -u ./test/swagger.json -o ./test/output.swagger.types.ts",
+    "test-gen:to-md": "aries to-md -u ./test/swagger.json -o ./test/output.swagger.docs.md",
+    "test-gen:to-mock": "aries to-mock -u ./test/swagger.json -o ./test/output.swagger.mock.json",
+    "test-gen:yml:to-ts": "aries to-ts -u ./test/swagger.yml -o ./test/output.yml.swagger.types.ts",
+    "test-gen:yml:to-md": "aries to-md -u ./test/swagger.yml -o ./test/output.yml.swagger.docs.md",
+    "test-gen:yml:to-mock": "aries to-mock -u ./test/swagger.yml -o ./test/output.yml.swagger.mock.json",
+    "test-gen:node": "node ./test/node-gen",
+    "test-server:mock-server": "aries mock-server -u ./test/swagger.json",
+    "test-server:yml:mock-server": "aries mock-server -u ./test/swagger.yml",
+    "test-gen": "run-s test-gen:**",
     "lint": "eslint --fix --quiet --ext js src bin"
   },
   "repository": {
@@ -54,6 +56,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": ">=6",
     "lint-staged": ">=10",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1"
   },
   "lint-staged": {

@@ -4,25 +4,34 @@
 Aries is a swagger converter cli, support typescript declaration, markdown docs, mock server and so on
 
 ## Support
-- swagger 2.0, json or yaml format
-- node >= 12
+Swagger 2.0, json or yaml format
+
+## Env
+NodeJS >= 12
 
 ## Install
-```
+### With npm
+```bash
 npm install @tooltik/aries --save-dev
+```
 
-# or
-
+### With yarn
+```bash
 yarn add @tooltik/aries --dev
 ```
 
-## Usage
+### With pnpm
+```bash
+pnpm install @tooltik/aries --save-dev
+```
+
+## Usage in command line 
 ```
 aries <command> [options]
 ```
 
 ### Command options
-```
+```bash
 Commands:
   to-ts [options]    Convert swagger to typescript declaration
   to-md [options]    Convert swagger to markdown docs
@@ -75,26 +84,67 @@ Add `.ariesrc.js` in your project root directory. Support all options in command
 | formatProp | function | N | - | format the property in typescript declaration when using `to-ts`, the parameter is the property name |
 | port | number | N | 3000 | change the mock server port when using `mock-server` |
 
+#### .ariesrc.js samples
+See [.ariesrc.js](https://github.com/lvqq/aries/blob/main/.ariesrc.js) file
 
-#### Samples
-```
-// .ariesrc.js
-module.exports = {
+## Usage in NodeJS
+Support all  options in `.ariesrc.js`
+
+```javascript
+const { toTs, toMd, mockServer } = required('@tooltik/aries')
+
+toTs({
+    url: './test/swagger.json',
+    output: './test/output.node.swagger.types.ts',
+    autoRequired: true,
+})
+    
+toMd({
+    url: './test/swagger.json',
+    output: './test/output.node.swagger.docs.md',
+    autoMock: true,
+    formatMock: (data) => {
+      return {
+          code: 0,
+          msg: 'success',
+          data,
+      }
+    },
+})
+
+mockServer({
   url: './test/swagger.json',
+  port: 3000,
   autoMock: true,
-  autoRequired: true,
   formatMock: (data) => {
-    return {
-      code: 0,
-      msg: 'success',
-      data,
-    }
+      return {
+          code: 0,
+          msg: 'success',
+          data,
+      }
   },
-  formatProp: (prop) => {
-    // Add prop format
-    return prop
-  }
-}
+})
+```
+
+## Dev
+Install
+```bash
+pnpm install
+```
+
+Link package
+```bash
+pnpm link --global
+```
+
+Make changes and run test
+```bash
+pnpm run test-gen
+```
+
+Uninstall
+```bash
+pnpm rm --global @tooltik/aries
 ```
 
 ## LICENSE

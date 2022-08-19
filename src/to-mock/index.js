@@ -1,6 +1,7 @@
+const { generateOutputByPlugin } = require('../core');
 const SwaggerParserV2 = require('../core/parseV2');
 
-module.exports = ({ swagger, options }) => {
+const genMock = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
   const mockJson = {};
   Object.keys(paths).forEach((path) => {
@@ -10,3 +11,5 @@ module.exports = ({ swagger, options }) => {
   });
   return JSON.stringify(mockJson, null, 2);
 };
+
+module.exports = async (options) => generateOutputByPlugin(genMock, options)

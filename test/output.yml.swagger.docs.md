@@ -30,31 +30,28 @@ name | N/A | string | N/A
 #### body
 ```
 {
-  "id": 1111605827862528,
+  "id": 7616997676285952,
   "category": {
-    "id": -2256683552210944,
-    "name": "]nBjS*XAihMZS!3Eb*D"
+    "id": 2884790881615872,
+    "name": "bXd@urPp%2xd6#F)3@C"
   },
   "name": "doggie",
   "photoUrls": [
-    "tg^D8pv",
-    "DykhT@"
+    "TEO!wo7o[1czdNjrk",
+    "rKtO!",
+    "6wRcYH%"
   ],
   "tags": [
     {
-      "id": 8957532609445888,
-      "name": "(Ip3ER"
+      "id": -5987214068547584,
+      "name": "!Qf&C]qh"
     },
     {
-      "id": -297552230481920,
-      "name": "a^9fc4@Dk"
-    },
-    {
-      "id": -524333755662336,
-      "name": "ti9IJ"
+      "id": 262835141607424,
+      "name": "eT7P@Ug4Ee12s^S7&G"
     }
   ],
-  "status": "pending"
+  "status": "available"
 }
 ```
 ### Response samples
@@ -95,27 +92,27 @@ name | N/A | string | N/A
 #### body
 ```
 {
-  "id": 3748940197396480,
+  "id": -7194542990163968,
   "category": {
-    "id": 7163458059501568,
-    "name": "lLQc[(LhJE"
+    "id": -1244641902985216,
+    "name": "W#sRRt3cLEi(L7Cf"
   },
   "name": "doggie",
   "photoUrls": [
-    "Zhc&A3SUgbU^H%f",
-    "JIUFg(fB!MvD"
+    "t@nejKS*L(iK3EX3mO!",
+    "GpldzwQS22tRLpI"
   ],
   "tags": [
     {
-      "id": -1559067063484416,
-      "name": "ZPn3sKLN1Orrok0tpwX"
+      "id": 1501570445344768,
+      "name": "EClRY$u"
     },
     {
-      "id": -1071593040117760,
-      "name": "2p3A(loH9"
+      "id": 2477961009692672,
+      "name": "kELQ3(oLR%iM[Dwu@al"
     }
   ],
-  "status": "sold"
+  "status": "available"
 }
 ```
 ### Response samples
@@ -138,6 +135,8 @@ status | Y | string[] | Status values that need to be considered for filter
 ```
 {
   "status": [
+    "available",
+    "available",
     "available"
   ]
 }
@@ -149,25 +148,48 @@ status | Y | string[] | Status values that need to be considered for filter
   "msg": "success",
   "data": [
     {
-      "id": -5048606071455744,
+      "id": -2288996201791488,
       "category": {
-        "id": -1707291845853184,
-        "name": "wtp0pnFBjDX%ZGx(o9"
+        "id": -60184797904896,
+        "name": "3tF#dBwc5yY1piH60V9"
       },
       "name": "doggie",
       "photoUrls": [
-        "m4pe*CtCSjom$A",
-        "eH&RF$*tHbf",
-        "%suHXbR2K^ZZQt4!Bu"
+        "b%))6",
+        "N$C@rCfg46t"
       ],
       "tags": [
         {
-          "id": -4375072689094656,
-          "name": "a3485O1ecnZTSvlknf(e"
+          "id": 111955620659200,
+          "name": "idfO["
         },
         {
-          "id": 1761932948275200,
-          "name": "gWnbsmW#B0ilToc"
+          "id": 7386777354502144,
+          "name": "se9w]8sDUU]S$tU4j"
+        }
+      ],
+      "status": "available"
+    },
+    {
+      "id": 5196651488608256,
+      "category": {
+        "id": 7128231647903744,
+        "name": "T1hoyF6se["
+      },
+      "name": "doggie",
+      "photoUrls": [
+        "98[$^OKM^!9M",
+        "FigIdiHDu!",
+        "$JQH@RzC2RhXjb1VU]"
+      ],
+      "tags": [
+        {
+          "id": -8340787842514944,
+          "name": "x2uh95M!I4Y^TX#MTwb"
+        },
+        {
+          "id": 2260895531008000,
+          "name": "Ty*vkmk)@!V]S"
         }
       ],
       "status": "sold"
@@ -187,9 +209,7 @@ tags | Y | string[] | Tags to filter by
 ```
 {
   "tags": [
-    "zoAbKTk9QM",
-    "%WTuGS5!Nu2",
-    "oCWG6^xDwyOfbZZQCuz"
+    "tjDgwxEPjdY@i!Gz)w"
   ]
 }
 ```
@@ -200,41 +220,20 @@ tags | Y | string[] | Tags to filter by
   "msg": "success",
   "data": [
     {
-      "id": -2482384716955648,
+      "id": -5894298914521088,
       "category": {
-        "id": 4340580603658240,
-        "name": "hSPB7"
+        "id": -6047655977287680,
+        "name": "Z)FFp(l7"
       },
       "name": "doggie",
       "photoUrls": [
-        "JO$Q5KJv63RUYcR9Q"
+        "xFcMnI)B3wd",
+        "(X[bx4g3b5M@8yJgK!"
       ],
       "tags": [
         {
-          "id": 532752633954304,
-          "name": "zovXR"
-        }
-      ],
-      "status": "pending"
-    },
-    {
-      "id": 596003199647744,
-      "category": {
-        "id": -5415203873226752,
-        "name": "16xjeHTnPk2oE7)Ki^"
-      },
-      "name": "doggie",
-      "photoUrls": [
-        "s@kKQVTB"
-      ],
-      "tags": [
-        {
-          "id": 3190144760807424,
-          "name": "w@nKkQ"
-        },
-        {
-          "id": 7606979430187008,
-          "name": "9*og*I7d1UBr[t"
+          "id": 5553102547582976,
+          "name": "U(C1W^pzfy]9bcyxx(2"
         }
       ],
       "status": "available"
@@ -253,7 +252,7 @@ petId | Y | integer | ID of pet to return
 #### path
 ```
 {
-  "petId": -6618310330286080
+  "petId": -2830333376462848
 }
 ```
 ### Response samples
@@ -262,20 +261,27 @@ petId | Y | integer | ID of pet to return
   "code": 0,
   "msg": "success",
   "data": {
-    "id": 5501883225473024,
+    "id": -3483990698754048,
     "category": {
-      "id": 5951332280172544,
-      "name": "1*@(O8RHJK5t"
+      "id": 1824366799093760,
+      "name": "5tg3h*t8h1j%p8oh4B"
     },
     "name": "doggie",
     "photoUrls": [
-      "&5ggo",
-      "^^!Ude$]tO]%yav15"
+      "X]5CK"
     ],
     "tags": [
       {
-        "id": 7284412936880128,
-        "name": "JmYydgm"
+        "id": 6361803504222208,
+        "name": "lzFvg2LrbQXT]PY@W[w9"
+      },
+      {
+        "id": 5757425063821312,
+        "name": "6CCCzIea2xcL&ttkYW("
+      },
+      {
+        "id": 4596620146507776,
+        "name": "0NFix"
       }
     ],
     "status": "pending"
@@ -297,14 +303,14 @@ status | N | string | Updated status of the pet
 #### path
 ```
 {
-  "petId": -7799461245878272
+  "petId": 784943311486976
 }
 ```
 #### formData
 ```
 {
-  "name": "&T6q66TKBsxXu",
-  "status": "T$itL9aI"
+  "name": "$UuNpPt0LL7m",
+  "status": "Qwk!B5[Y"
 }
 ```
 ### Response samples
@@ -329,13 +335,13 @@ petId | Y | integer | Pet id to delete
 #### header
 ```
 {
-  "api_key": "VOGeHHFtE"
+  "api_key": "MrByO"
 }
 ```
 #### path
 ```
 {
-  "petId": 2096861779329024
+  "petId": 7026890195861504
 }
 ```
 ### Response samples
@@ -361,13 +367,13 @@ file | N | file | file to upload
 #### path
 ```
 {
-  "petId": 5036350294196224
+  "petId": -4126947621732352
 }
 ```
 #### formData
 ```
 {
-  "additionalMetadata": "YUG$ZxJNF&&K[5fa",
+  "additionalMetadata": "unwMe]jhhe",
   "file": null
 }
 ```
@@ -377,9 +383,9 @@ file | N | file | file to upload
   "code": 0,
   "msg": "success",
   "data": {
-    "code": -1509364108099584,
-    "type": "g&Sk%ZH#q1qQu",
-    "message": "W)4M9fa"
+    "code": 3735770040893440,
+    "type": "^qs][]NZNsD2FF#18Mb",
+    "message": "2bn%bXUhet$C"
   }
 }
 ```
@@ -419,10 +425,10 @@ complete | N/A | boolean | N/A
 #### body
 ```
 {
-  "id": -7680853475852288,
-  "petId": -4504697163481088,
-  "quantity": 7519562094346240,
-  "shipDate": "%z^hgupQd",
+  "id": -8371009765769216,
+  "petId": 3059200938737664,
+  "quantity": 6812191479037952,
+  "shipDate": "j1ia%Z6#N",
   "status": "approved",
   "complete": true
 }
@@ -433,12 +439,12 @@ complete | N/A | boolean | N/A
   "code": 0,
   "msg": "success",
   "data": {
-    "id": -1401917959831552,
-    "petId": -401135596732416,
-    "quantity": -530976551731200,
-    "shipDate": "mW@cRaYR",
+    "id": 3958885182341120,
+    "petId": -5177826516926464,
+    "quantity": 2369314757804032,
+    "shipDate": "tU@OK$MqzWdnFHi",
     "status": "delivered",
-    "complete": true
+    "complete": false
   }
 }
 ```
@@ -453,7 +459,7 @@ orderId | Y | integer | ID of pet that needs to be fetched
 #### path
 ```
 {
-  "orderId": -5688968628666368
+  "orderId": -2618438744801280
 }
 ```
 ### Response samples
@@ -462,10 +468,10 @@ orderId | Y | integer | ID of pet that needs to be fetched
   "code": 0,
   "msg": "success",
   "data": {
-    "id": 1846712863817728,
-    "petId": -2643939593027584,
-    "quantity": -8293637087559680,
-    "shipDate": "hJgzrodOt4obzREm6",
+    "id": 8903526507872256,
+    "petId": -6904954312720384,
+    "quantity": 1432802960605184,
+    "shipDate": "#1iWCq#XSp",
     "status": "delivered",
     "complete": false
   }
@@ -482,7 +488,7 @@ orderId | Y | integer | ID of the order that needs to be deleted
 #### path
 ```
 {
-  "orderId": 8425033328230400
+  "orderId": -8420238206959616
 }
 ```
 ### Response samples
@@ -518,14 +524,14 @@ userStatus | N/A | integer | User Status
 #### body
 ```
 {
-  "id": -7645026083405824,
-  "username": "chFg@Lz3PWEt9*1u!X",
-  "firstName": "xh0wdNg",
-  "lastName": "lU9]t4iDNydfl0^vANO",
-  "email": "KSK2]u",
-  "password": "rr**LQeNaM[q",
-  "phone": "(Nf8&P&u",
-  "userStatus": 6128606287757312
+  "id": -4042090761682944,
+  "username": "TCoHEeQfofBN1TUaExlN",
+  "firstName": "$$SasRGH",
+  "lastName": "IzAzxb7PniJ!nD",
+  "email": "TF@D$Lax3nKPF",
+  "password": "PcJzNZH*5vlE$",
+  "phone": "[0es0)R!",
+  "userStatus": 7566606272036864
 }
 ```
 ### Response samples
@@ -559,24 +565,24 @@ userStatus | N/A | integer | User Status
 ```
 [
   {
-    "id": -4802857899393024,
-    "username": "liPdopCJmj",
-    "firstName": "CykHH#*G1",
-    "lastName": "l%I9sqCeIuXpCTJTdS",
-    "email": "$7tQpowqr28",
-    "password": "TIrwEo7VlE",
-    "phone": "$*Lh*bF",
-    "userStatus": -1636479285592064
+    "id": 4200332036931584,
+    "username": "&2fWGQDIvUt82xM^o",
+    "firstName": "4Ph#Baf9)x[ewP",
+    "lastName": "*NnDTnrZXgV",
+    "email": "b*jsbrOy",
+    "password": "h5KOFQtW*Z4TIh*gD",
+    "phone": "*REDvIhkAz^jlGNs!y",
+    "userStatus": -2628763485470720
   },
   {
-    "id": -2069517349945344,
-    "username": "KwaluhC3U5*hPrW3P",
-    "firstName": "LdMd3vy@)",
-    "lastName": "&gqNJEesNV]9Va(^",
-    "email": "HNDRzUh928",
-    "password": "3QYFU)Mt7fzblXP",
-    "phone": "9GV[cAdC1d",
-    "userStatus": 6166100576305152
+    "id": -7032678473793536,
+    "username": "hX[$e5EzS1ji6VjZ&rI",
+    "firstName": "njRpT#sG]zrFEuq!)",
+    "lastName": "%s93]vqCrr",
+    "email": "BnY8D8trR1xyE2r2pv",
+    "password": "9r!pyq@XSW$)MiiZoxS",
+    "phone": "h[uDRRlJZ3NH!PL",
+    "userStatus": 3802147091120128
   }
 ]
 ```
@@ -611,24 +617,24 @@ userStatus | N/A | integer | User Status
 ```
 [
   {
-    "id": -7269220345708544,
-    "username": "vQD#%h4vBaZFQ",
-    "firstName": "ahd!GIJ",
-    "lastName": "zVtaxIbG702hqzlfw@V",
-    "email": "XASd9z3VZxf*[@EBE5",
-    "password": "s5HeePaQau(7jhW",
-    "phone": "!SoNI&kFYuaS213",
-    "userStatus": -4988278000320512
+    "id": 1095705959596032,
+    "username": "0qQEu#Cc5s2HAL",
+    "firstName": "B7x5fMfFvwZ#%rG0Twin",
+    "lastName": "Bx$o*7Uy)FT2B2]ew",
+    "email": "p7O$h([YG&&",
+    "password": "R@(b5t",
+    "phone": "gZ&B8rM$zmv2cOEJF",
+    "userStatus": 121705003483136
   },
   {
-    "id": -1883952897851392,
-    "username": "$(LxwL^(",
-    "firstName": "y#fiz5a9jlW*puz$",
-    "lastName": "PLYHTua6",
-    "email": "v6CNu",
-    "password": "W(GgUg)CLSCY&[)(UT",
-    "phone": "LOXbLo5*!XkLde",
-    "userStatus": 5358992486301696
+    "id": 7346626276360192,
+    "username": "rWsywlTfH]A0",
+    "firstName": "57yA#Vw",
+    "lastName": "a9N9#mexpOWOZ",
+    "email": "sAdIlh@D@C[t$on5",
+    "password": "NvuWy36aTNH6r",
+    "phone": "sGNF(HVJurQU0AmtRBCt",
+    "userStatus": -3154327434690560
   }
 ]
 ```
@@ -651,8 +657,8 @@ password | Y | string | The password for login in clear text
 #### query
 ```
 {
-  "username": "OHd@a21",
-  "password": "Jv!9D&90mRerT"
+  "username": "jsccq",
+  "password": "IWImr0DMvOO(9zGO"
 }
 ```
 ### Response samples
@@ -660,7 +666,7 @@ password | Y | string | The password for login in clear text
 {
   "code": 0,
   "msg": "success",
-  "data": "d*!TMm&a3zQmcR"
+  "data": "7GJ[hmhL&QPk"
 }
 ```
 ## 3.5 GET /user/logout
@@ -686,7 +692,7 @@ username | Y | string | The name that needs to be fetched. Use user1 for testing
 #### path
 ```
 {
-  "username": "7RVw(EFK"
+  "username": "EL^07TeT@FsQJvV(TL"
 }
 ```
 ### Response samples
@@ -695,14 +701,14 @@ username | Y | string | The name that needs to be fetched. Use user1 for testing
   "code": 0,
   "msg": "success",
   "data": {
-    "id": 3882567069597696,
-    "username": "X3bMIiT(@zN",
-    "firstName": "]7LmE2qm40KP08w",
-    "lastName": "EKsH$hDmN8!c4OqMFm]R",
-    "email": "qtdU)XX)HnaxxugV5T",
-    "password": "2hIUa$EYu",
-    "phone": "^%1@&v3q1mk",
-    "userStatus": 52714662789120
+    "id": -3862732075958272,
+    "username": "(1zWlqaynFbPB*EX)!x",
+    "firstName": "LuK&wLUvB47B3wOe",
+    "lastName": "IbGC5GshX",
+    "email": "#m$GUNl4k^0J[0",
+    "password": "(G3^b54v(K@",
+    "phone": "cfL[Irv2UX#c6C6u",
+    "userStatus": -6709912264507392
   }
 }
 ```
@@ -732,20 +738,20 @@ userStatus | N/A | integer | User Status
 #### path
 ```
 {
-  "username": "KTzP(25Pw!rnI4(d8T"
+  "username": "hCs]auf"
 }
 ```
 #### body
 ```
 {
-  "id": -6385470971838464,
-  "username": "Z%jCc!WV9!eWq*pw",
-  "firstName": "Nd^3LKZ",
-  "lastName": "@R(DCsm5LejYNhreEe",
-  "email": "4E[DG",
-  "password": ")H9rhsYrG5W&KQNYS3",
-  "phone": "qiMqFBKdU!bSaE",
-  "userStatus": 3784995793534976
+  "id": -2511103938527232,
+  "username": "9SHkPH5QID$",
+  "firstName": "SFH92oa6Ljw)J(MnZ7",
+  "lastName": "9u)GQJ)y4^",
+  "email": "4Xs3KTaBA$kMWM!)[4q^",
+  "password": "T(MuWc!Ou17jzL",
+  "phone": "zl)QfTD*l]92k^t2B",
+  "userStatus": 6430867203293184
 }
 ```
 ### Response samples
@@ -767,7 +773,7 @@ username | Y | string | The name that needs to be deleted
 #### path
 ```
 {
-  "username": "YuFZKy"
+  "username": "]3[^HHB[ck[6wY(Mi55!"
 }
 ```
 ### Response samples

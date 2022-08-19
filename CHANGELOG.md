@@ -1,3 +1,8 @@
+## v0.9.0
+- 🌟[feature] support same way of function calling in NodeJS
+- 🌟[feature] TypeScript declaration sync changes
+- ⚡[refactor] complete test cases in using NodeJS
+- ⚡[refactor] migrate from yarn to pnpm
 ## v0.8.0
 ### Breaking Changes
 - 🐞[fix] path with underscore style now will be converted to hump style in interface declaration name
