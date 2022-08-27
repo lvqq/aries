@@ -1,5 +1,7 @@
-// rc confg for test 
-module.exports = {
+// .ariesrc for test script
+import { defineConfig } from './src/util'
+
+defineConfig({
   url: './test/swagger.json',
   autoMock: true,
   autoRequired: true,
@@ -13,5 +15,5 @@ module.exports = {
   formatProp: (prop) => {
     // Add prop format
     return prop
-  }
-}
+  },
+})

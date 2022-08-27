@@ -1,7 +1,8 @@
-const { generateOutputByPlugin } = require('../core');
-const SwaggerParserV2 = require('../core/parseV2');
+import { AriesConfig, Plugin } from '../interface';
+import { generateOutputByPlugin } from '../core';
+import SwaggerParserV2 from '../core/parseV2'
 
-const genTs =  async ({ swagger, options }) => {
+const genTs: Plugin.Function =  async ({ swagger, options }) => {
   const { definitions, paths } = new SwaggerParserV2(swagger, options);
   // ts in models
   const definitionsTs = Object.keys(definitions).map((name) => {
@@ -20,16 +21,22 @@ const genTs =  async ({ swagger, options }) => {
       const comments = `/**\n * @method ${method}\n * @path ${path}\n */\n`;
       return [
         comments,
-        ...pathParams.ts.map((tsSchema) => {
-          if (tsSchema.type === 'interface') {
-            return `export interface ${tsSchema.name} ${tsSchema.value}\n`;
-          }
-          return `export type ${tsSchema.name} = ${tsSchema.value};\n`;
-        }),
+        ...pathParams.ts.map((tsSchema: {
+          name: string;
+          type: string;
+          value: string;
+        }) => {
+            if (tsSchema.type === 'interface') {
+              return `export interface ${tsSchema.name} ${tsSchema.value}\n`;
+            }
+            return `export type ${tsSchema.name} = ${tsSchema.value};\n`;
+          }),
       ];
     });
   });
   return [...definitionsTs, '\n', ...pathsTs.flat(2)].join('');
 };
 
-module.exports = async (options) => generateOutputByPlugin(genTs, options);
+export type ToTsOptions = Pick<AriesConfig, "url" | "output" | "autoRequired" | "formatProp">;
+
+export const toTs = (options: ToTsOptions) => generateOutputByPlugin(genTs, options);

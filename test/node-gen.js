@@ -1,4 +1,4 @@
-const { toTs, toMd, toMock } = require('@tooltik/aries')
+const { toTs, toMd, toMock } = require('../dist/src')
 
 const genNodeTest = async () => {
     await toTs({

@@ -1,19 +1,25 @@
-const path = require('path');
-const fs = require('fs');
-const chalk = require('chalk');
-const ora = require('ora');
-const axios = require('axios');
-const yaml = require('js-yaml');
+import path from 'node:path';
+import fs from 'node:fs'
+import chalk from 'chalk'
+import ora from 'ora'
+import axios from 'axios';
+import yaml from 'js-yaml';
+import { AriesConfig, Plugin } from '../interface';
 
 const cwd = process.cwd();
 /**
  * merge .ariesrc.js and command options
  * @param {*} options command options
  */
-const mergeOptionsFromRc = (options) => {
-  let ariesrc;
+const mergeOptionsFromRc = async (options: Partial<AriesConfig>) => {
+  let ariesrc: Partial<AriesConfig>;
   try {
-    ariesrc = require(path.resolve(cwd, '.ariesrc'));
+    const rcpath = path.resolve(cwd, '.ariesrc');
+    if (fs.existsSync(`${rcpath}.ts`)) {
+      ariesrc = await import(rcpath)
+    } else {
+      ariesrc = require(rcpath);
+    }
   } catch (e) {
     ariesrc = {};
   }
@@ -28,8 +34,8 @@ const mergeOptionsFromRc = (options) => {
  * generate swagger json and config from command options
  * @param {*} options command options
  */
-const generateOptionsAndSwagger = async (options) => {
-  const params = mergeOptionsFromRc(options);
+export const generateOptionsAndSwagger = async (options: Partial<AriesConfig>) => {
+  const params = await mergeOptionsFromRc(options);
   const { url } = params;
   // validate url
   if (!url) {
@@ -72,29 +78,28 @@ const generateOptionsAndSwagger = async (options) => {
  * @param {*} fn plugin function
  * @param {*} options command options
  */
-const generateOutputByPlugin = async (fn, options) => {
-  let spinner;
-  let params;
-  // fetch swagger and generate options
+export const generateOutputByPlugin = async (fn: Plugin.Function, options: Partial<AriesConfig>) => {
+  let params: Plugin.Params;
+  let spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
   try {
-    spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
+    // fetch swagger and generate options
     params = await generateOptionsAndSwagger(options);
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
   } catch (e) {
     spinner.fail(chalk.redBright('Fetch swagger json failed'));
-    console.log(chalk.redBright(e.message));
+    console.log(chalk.redBright((e as Error).message));
   }
   // generate file
   try {
-    if (params) {
+    if (params!) {
       spinner = ora(chalk.blueBright('Generate file start')).start();
       const output = await fn(params);
       if (Array.isArray(output)) {
         output.forEach((item) => {
-          fs.writeFileSync(path.join(params.options.output, item.filename), item.content);
+          fs.writeFileSync(path.join(params.options.output || '', item.filename), item.content);
         });
       } else {
-        fs.writeFileSync(params.options.output, output, 'utf8');
+        fs.writeFileSync(params.options.output || '', output, 'utf8');
       }
       spinner.succeed(chalk.greenBright('Generate file success'));
     }
@@ -102,9 +107,4 @@ const generateOutputByPlugin = async (fn, options) => {
     spinner.fail(chalk.redBright('Generate file failed'));
     console.log(e);
   }
-};
-
-module.exports = {
-  generateOptionsAndSwagger,
-  generateOutputByPlugin,
 };

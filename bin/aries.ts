@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const program = require('commander');
-const { version } = require('../package.json');
-const { toTs, toMd, toMock, mockServer } = require('../src');
+import { program } from "commander";
+import { version } from '../package.json';
+import { toTs, toMd, toMock, mockServer } from '../src'
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -56,7 +56,7 @@ program
   .command('mock-server')
   .description('Start a local server to return the mock interface')
   .option('-u, --url <url>', 'Swagger link, support relative path or remote url')
-  .option('-p, --port <port>', 'Mock server port', 3000)
+  .option('-p, --port <port>', 'Mock server port', "3000")
   .option(
     '--no-autoMock',
     'Do not generate the mock response automatically when there is no example in schema'

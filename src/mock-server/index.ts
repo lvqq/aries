@@ -1,9 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const SwaggerParserV2 = require('../core/parseV2');
-const { generateOptionsAndSwagger } = require('../core');
+import express from 'express';
+import cors from 'cors';
+import { generateOptionsAndSwagger } from '../core';
+import SwaggerParserV2 from '../core/parseV2'
+import { AriesConfig } from '../interface';
 
-module.exports = async (originOptions) => {
+export type MockServerOptions = Pick<AriesConfig, "url" | "port" | "autoMock" | "formatMock">;
+
+export const mockServer = async (originOptions: MockServerOptions) => {
   let params;
   try {
     params = await generateOptionsAndSwagger(originOptions);
@@ -30,7 +33,7 @@ module.exports = async (originOptions) => {
               mockPath = mockPath.replace(match, `:${match.slice(1, -1)}`);
             });
           }
-          app[mockMethod](mockPath, (req, res) => {
+          app[mockMethod as 'get' | 'post'](mockPath, (req, res) => {
             if (req.method === 'OPTIONS') {
               res.status(200).end();
               return;

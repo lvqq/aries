@@ -1,7 +1,6 @@
-const mapValues = require('lodash.mapvalues');
-const fromPairs = require('lodash.frompairs');
-const groupBy = require('lodash.groupby');
-const Chance = require('chance');
+import { mapValues, fromPairs, groupBy } from 'lodash';
+import Chance from 'chance';
+import { AriesConfig, SwaggerV2 } from '../interface';
 
 const InvalidChar = /{|}|:|\./;
 
@@ -9,12 +8,20 @@ const InvalidChar = /{|}|:|\./;
  * Swagger parse class for swagger 2.0
  */
 class SwaggerParserV2 {
+  swagger: SwaggerV2.Swagger;
+  options: Partial<AriesConfig>;
+  chance: Chance.Chance;
+  names: Record<string, string>;
+  visited: Record<string, boolean>;
+  visitedDefinitions: Record<string, SwaggerV2.Swagger["definitions"]>;
+  definitions: SwaggerV2.Swagger["definitions"];
+  paths: SwaggerV2.Swagger["paths"]
   /**
    * init parse handle
    * @param {*} swagger swagger object
    * @param {*} options init options
    */
-  constructor(swagger, options = {}) {
+  constructor(swagger: SwaggerV2.Swagger, options: Partial<AriesConfig> = {}) {
     // init property
     this.swagger = swagger;
     this.options = options;
@@ -32,11 +39,11 @@ class SwaggerParserV2 {
   /**
    * parse schema, remove ref
    */
-  parseSchema = (schema) => {
+  parseSchema = (schema: SwaggerV2.Definition): SwaggerV2.Definition => {
     if (schema.allOf) {
       let properties = {};
       // merge allOf
-      schema.allOf.forEach((subSchema) => {
+      schema.allOf.forEach((subSchema: SwaggerV2.Definition) => {
         properties = {
           ...properties,
           ...this.parseSchema(subSchema).properties,
@@ -50,23 +57,24 @@ class SwaggerParserV2 {
     }
     if (schema.$ref) {
       const definition = this.generateNameByRef(schema.$ref);
-
-      // node visited, aviod ring
-      if (this.visited[definition]) {
+      if (definition) {
+        // node visited, aviod ring
+        if (this.visited[definition]) {
+          return {
+            $ref: schema.$ref,
+            ...(this.visitedDefinitions[definition] || this.swagger.definitions[definition]),
+          };
+        }
+        this.visited[definition] = true;
+        const value = this.parseSchema(this.swagger.definitions[definition]);
+        this.visitedDefinitions[definition] = value;
         return {
           $ref: schema.$ref,
-          ...(this.visitedDefinitions[definition] || this.swagger.definitions[definition]),
+          ...value,
         };
       }
-      this.visited[definition] = true;
-      const value = this.parseSchema(this.swagger.definitions[definition]);
-      this.visitedDefinitions[definition] = value;
-      return {
-        $ref: schema.$ref,
-        ...value,
-      };
     }
-    if (schema.type === 'array') {
+    if (schema.type === 'array' && schema.items) {
       return {
         ...schema,
         items: this.parseSchema(schema.items),
@@ -102,7 +110,7 @@ class SwaggerParserV2 {
   /**
    * parse parameters, path/body/formData
    */
-  parseParameters = (parameters) =>
+  parseParameters = (parameters: SwaggerV2.PathParameter[]) =>
     parameters.map((parameter) => {
       if (parameter.schema) {
         return {
@@ -116,7 +124,7 @@ class SwaggerParserV2 {
   /**
    * parse responses, 200/default
    */
-  parseResponses = (responses) => {
+  parseResponses = (responses: SwaggerV2.Path["responses"]) => {
     if (responses.default || responses['200']) {
       const key = responses.default ? 'default' : '200';
       if (responses[key].schema) {
@@ -124,7 +132,7 @@ class SwaggerParserV2 {
           ...responses,
           [key]: {
             ...responses[key],
-            schema: this.parseSchema(responses[key].schema),
+            schema: this.parseSchema(responses[key].schema!),
           },
         };
       }
@@ -136,23 +144,23 @@ class SwaggerParserV2 {
   /**
    * parse paths
    */
-  parsePaths = () => {
+  parsePaths = (): SwaggerV2.Swagger["paths"] => {
     const { formatMock } = this.options;
     return mapValues(this.swagger.paths, (pathDefinition, path) =>
       mapValues(pathDefinition, (pathParams, method) => {
         // parse parameters
-        const parameters = Array.isArray(pathParams.parameters)
+        const parameters = (Array.isArray(pathParams.parameters)
           ? this.parseParameters(pathParams.parameters)
-          : [];
+          : []) as SwaggerV2.PathParameter[];
         // params responses
-        const responses = pathParams.responses ? this.parseResponses(pathParams.responses) : {};
+        const responses: SwaggerV2.Path["responses"] = pathParams.responses ? this.parseResponses(pathParams.responses) : {};
         // exist default or 200
         let successResponseKey;
         if (responses['200']) successResponseKey = '200';
         if (responses.default) successResponseKey = 'default';
         const mockResponse =
-          successResponseKey && responses[successResponseKey].schema
-            ? this.generateMockFromSchema(responses[successResponseKey].schema)
+          successResponseKey && responses[successResponseKey]?.schema
+            ? this.generateMockFromSchema(responses[successResponseKey]!.schema!)
             : {};
         return {
           ...pathParams,
@@ -165,7 +173,7 @@ class SwaggerParserV2 {
               groupBy(parameters, (parameter) => parameter.in),
               (params) => {
                 const mockResult = fromPairs(
-                  params.map((param) => [param.name, this.generateMockFromSchema(param)])
+                  params.map((param) => [param.name, this.generateMockFromSchema(param as SwaggerV2.Definition)])
                 );
                 // delete body key
                 if (params[0] && params[0].in === 'body' && mockResult.body) {
@@ -180,8 +188,9 @@ class SwaggerParserV2 {
           ts: [
             // group by 'in' path/body/formData
             ...Object.values(groupBy(parameters, (parameter) => parameter.in)).map((params) => {
-              const required = [];
-              const properties = {};
+              const required: string[] = [];
+              type Property = (ReturnType<typeof this.parseParameters>)[number]
+              const properties: Record<string, Property> = {};
               params.forEach((param) => {
                 properties[param.name] = param;
                 if (param.required) required.push(param.name);
@@ -192,9 +201,9 @@ class SwaggerParserV2 {
                 type: 'object',
                 required,
                 properties,
-              };
+              } as SwaggerV2.Definition;
               // delete body key
-              if (type === 'body' && name === 'body') {
+              if (type === 'body' && name === 'body' && params[0].schema) {
                 schema = params[0].schema;
               }
               return {
@@ -207,17 +216,17 @@ class SwaggerParserV2 {
                 value: this.generateTypescriptTypeFromSchema(schema, { semi: false }),
               };
             }),
-            ...(successResponseKey && responses[successResponseKey].schema
+            ...(successResponseKey && responses[successResponseKey]?.schema
               ? [
                   {
                     name: this.formatValidNamesByPath({ path, method, type: 'Response' }),
                     type:
-                      responses[successResponseKey].schema.type === 'object' &&
-                      !responses[successResponseKey].schema.$ref
+                      responses[successResponseKey]?.schema?.type === 'object' &&
+                      !responses[successResponseKey]?.schema?.$ref
                         ? 'interface'
                         : 'type',
                     value: this.generateTypescriptTypeFromSchema(
-                      responses[successResponseKey].schema,
+                      responses[successResponseKey]!.schema!,
                       { semi: false }
                     ),
                   },
@@ -229,9 +238,9 @@ class SwaggerParserV2 {
     );
   };
 
-  generateNameByRef = (ref) => decodeURIComponent(ref).split('/').pop();
+  generateNameByRef = (ref: string) => decodeURIComponent(ref).split('/').pop();
 
-  formatValidNamesByModal = (name) => {
+  formatValidNamesByModal = (name: string) => {
     const result = name
       .split('.')
       .map((str) => str.slice(0, 1).toUpperCase() + str.slice(1))
@@ -240,14 +249,14 @@ class SwaggerParserV2 {
     return result;
   };
 
-  formatValidNamesByPath = ({ path, method, type }) => {
+  formatValidNamesByPath = ({ path, method, type }: { path: string; method: string; type: string }) => {
     const formatPath = path
       // begin with capital letters
       .replace(path[0], path[0].toUpperCase())
       // delete invalid char
       .replace(/{|}|:|\./g, '')
       // _a or /a to A
-      .replace(/(?:(_|\/))+([^_])/g, ($0, $1, $2) => $2.toUpperCase());
+      .replace(/(?:(_|\/))+([^_])/g, (_$0, _$1, $2) => $2.toUpperCase());
     const result = `${method.slice(0, 1).toUpperCase()}${method.slice(1)}${formatPath}${type
       .slice(0, 1)
       .toUpperCase()}${type.slice(1)}`;
@@ -261,7 +270,7 @@ class SwaggerParserV2 {
   /**
    * generate mock data from schema example, enum and random data
    */
-  generateMockFromSchema = (schema) => {
+  generateMockFromSchema = (schema: SwaggerV2.Definition): any => {
     /**
      * @autoMock use random mock data when there is no example or enum
      */
@@ -276,11 +285,11 @@ class SwaggerParserV2 {
     if (schema.example) return schema.example;
     // use enum
     if (Array.isArray(schema.enum)) return this.chance.pickone(schema.enum);
-    if (schema.type === 'array') {
+    if (schema.type === 'array' && schema.items) {
       // random array length 1-3
       return new Array(this.chance.integer({ min: 1, max: 3 }))
         .fill(1)
-        .map(() => this.generateMockFromSchema(schema.items));
+        .map(() => this.generateMockFromSchema(schema.items!));
     }
     if (schema.type === 'object') {
       return mapValues(schema.properties, (property) => this.generateMockFromSchema(property));
@@ -296,7 +305,7 @@ class SwaggerParserV2 {
   /**
    * generate ts declaration from schema
    */
-  generateRemarkFromSchema(schema, split) {
+  generateRemarkFromSchema(schema: SwaggerV2.Definition, split: string) {
     const remarks = [];
     if (schema.description || schema.example) {
       remarks.push('/**');
@@ -314,7 +323,7 @@ class SwaggerParserV2 {
   /**
    * generate ts declaration from schema
    */
-  generateTypescriptTypeFromSchema(schema, options = {}) {
+  generateTypescriptTypeFromSchema(schema: SwaggerV2.Definition, options: { layer?: number; semi?: boolean; bracketSplit?: boolean } = {}): string {
     const { autoRequired = true, formatProp } = this.options;
     /**
      * layer: recurve layer
@@ -325,9 +334,9 @@ class SwaggerParserV2 {
 
     const preSplit = this.formatSplitByLayer({ layer: layer - 1 });
     const split = this.formatSplitByLayer({ layer });
-    const generateTypescriptType = (subSchema) => {
+    const generateTypescriptType = (subSchema: SwaggerV2.Definition): string => {
       if (Array.isArray(subSchema.allOf)) {
-        const allOfMap = {};
+        const allOfMap: Record<string, string> = {};
         // merge allOf
         subSchema.allOf.forEach((childSchema) => {
           let sourceSchema = childSchema;
@@ -357,7 +366,10 @@ class SwaggerParserV2 {
       }
       // use $ref
       if (subSchema.$ref) {
-        return this.formatValidNamesByModal(this.generateNameByRef(subSchema.$ref));
+        const subName = this.generateNameByRef(subSchema.$ref)
+        if (subName) {
+          return this.formatValidNamesByModal(subName);
+        }
       }
       if (subSchema.type === 'object') {
         const interfaceList = [];
@@ -367,7 +379,7 @@ class SwaggerParserV2 {
               const required = Array.isArray(subSchema.required)
                 ? subSchema.required.includes(key)
                 : autoRequired;
-              const childSchema = subSchema.properties[key];
+              const childSchema = subSchema.properties![key];
               let propKey = formatProp ? formatProp(key) : key;
               if (InvalidChar.test(propKey)) {
                 propKey = `"${propKey}"`;
@@ -391,7 +403,7 @@ class SwaggerParserV2 {
         }
         return `{${split}${interfaceList.join(split)}${bracketSplit ? preSplit : '\n'}}`;
       }
-      if (subSchema.type === 'array') {
+      if (subSchema.type === 'array' && subSchema.items) {
         const hasEnum = Array.isArray(subSchema.items.enum) && subSchema.items.enum.length > 0;
         return `${
           hasEnum
@@ -415,7 +427,7 @@ class SwaggerParserV2 {
         }
         return subSchema.enum.join(' | ');
       }
-      return subSchema.type;
+      return subSchema.type as string;
     };
 
     const output = generateTypescriptType(schema);
@@ -424,4 +436,4 @@ class SwaggerParserV2 {
   }
 }
 
-module.exports = SwaggerParserV2;
+export default SwaggerParserV2;

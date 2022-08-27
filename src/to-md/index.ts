@@ -1,9 +1,9 @@
-const groupBy = require('lodash.groupby');
-const fromPairs = require('lodash.frompairs');
-const { generateOutputByPlugin } = require('../core');
-const SwaggerParserV2 = require('../core/parseV2');
+import { groupBy, fromPairs } from "lodash";
+import { AriesConfig, Plugin, SwaggerV2 } from "../interface";
+import { generateOutputByPlugin } from "../core";
+import SwaggerParserV2 from '../core/parseV2'
 
-const genMd = ({ swagger, options }) => {
+const genMd: Plugin.Function = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
   const mdJson =
     swagger.tags && swagger.tags.length
@@ -32,7 +32,7 @@ const genMd = ({ swagger, options }) => {
 
   const requestTableHeader = 'Param | Required | Type | Remark\n---- | -------- | -------- | ----';
 
-  const generateParamsTableItem = (schema) => {
+  const generateParamsTableItem = (schema: SwaggerV2.PathParameter) => {
     let required = 'N/A';
     if (schema.required === true) required = 'Y';
     if (schema.required === false) required = 'N';
@@ -40,9 +40,9 @@ const genMd = ({ swagger, options }) => {
   };
 
   // generate param table markdown
-  const generateParamsTable = (schema, configs) => {
+  const generateParamsTable = (schema: SwaggerV2.PathParameter, configs: { subParams?: string[]; subTitle?: boolean }) => {
     const { subParams = [], subTitle = true } = configs;
-    const subResults = [];
+    const subResults: string[] = [];
     if (schema.type === 'object' && schema.properties) {
       subParams.push(`##### ${schema.name}\n${requestTableHeader}`);
       subParams.push(
@@ -83,16 +83,16 @@ const genMd = ({ swagger, options }) => {
       return generateParamsTableItem({
         ...schema,
         type: `${schema.items.type}[]`,
-      });
+      } as SwaggerV2.PathParameter);
     }
-    return subTitle ? generateParamsTableItem(schema) : '';
+    return subTitle ? generateParamsTableItem(schema as SwaggerV2.PathParameter) : '';
   };
 
-  const generateParametersToMd = (parameters) => {
+  const generateParametersToMd = (parameters: SwaggerV2.PathParameter[]) => {
     const paramsMap = groupBy(parameters, (parameter) => parameter.in);
     return Object.keys(paramsMap)
       .map((paramType) => {
-        const subParams = [];
+        const subParams: string[] = [];
         return `#### ${paramType}\n${[
           requestTableHeader,
           ...paramsMap[paramType].map((param) => generateParamsTable(param, { subParams })),
@@ -102,10 +102,10 @@ const genMd = ({ swagger, options }) => {
       .join('\n');
   };
 
-  const generatePathsToMd = (requests, topIndex) =>
+  const generatePathsToMd = (requests: SwaggerV2.Path[], topIndex: number) =>
     requests
       .map(
-        (request, index) =>
+        (request, index: number) =>
           `## ${topIndex}.${index + 1} ${request.method.toLocaleUpperCase()} ${request.path}\n${
             request.description ? `${request.description}\n` : ''
           }### Parameters\n${
@@ -141,4 +141,6 @@ const genMd = ({ swagger, options }) => {
   return markdown.join('\n\n');
 };
 
-module.exports = async (options) => generateOutputByPlugin(genMd, options)
+export type ToMdOptions = Pick<AriesConfig, "url" | "output" | "autoMock" | "formatMock">;
+
+export const toMd = async (options: ToMdOptions) => generateOutputByPlugin(genMd, options)

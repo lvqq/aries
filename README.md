@@ -10,19 +10,15 @@ Swagger 2.0, json or yaml format
 NodeJS >= 12
 
 ## Install
-### With npm
 ```bash
+# with npm
 npm install @tooltik/aries --save-dev
-```
 
-### With yarn
-```bash
+# with yarn
 yarn add @tooltik/aries --dev
-```
 
-### With pnpm
-```bash
-pnpm install @tooltik/aries --save-dev
+# with pnpm
+pnpm add @tooltik/aries --save-dev
 ```
 
 ## Usage in command line 
@@ -71,8 +67,8 @@ Options:
   --no-autoMock         Do not generate the mock response automatically when there is no example in schema
 ```
 
-### .ariesrc.js
-Add `.ariesrc.js` in your project root directory. Support all options in command. And the command line has a higher priority than `.ariesrc.js`
+### .ariesrc
+Add `.ariesrc.ts` or `.ariesrc.js` in your project root directory. Support all options in command. And the command line has a higher priority than `.ariesrc`
 
 | Property | Type  | Required | Default | Description |
 | ----- | ----- | ----- | ----- | ----- |
@@ -84,14 +80,23 @@ Add `.ariesrc.js` in your project root directory. Support all options in command
 | formatProp | function | N | - | format the property in typescript declaration when using `to-ts`, the parameter is the property name |
 | port | number | N | 3000 | change the mock server port when using `mock-server` |
 
-#### .ariesrc.js samples
-See [.ariesrc.js](https://github.com/lvqq/aries/blob/main/.ariesrc.js) file
+#### .ariesrc samples
+```typescript
+// .ariesrc.ts
+import { defineConfig } from '@tooltik/aries'
 
-## Usage in NodeJS
-Support all  options in `.ariesrc.js`
+defineConfig({
+  url: './swagger.json',
+  autoMock: true,
+  autoRequired: true,
+})
+```
+
+## Usage in ES Module/CommonJS
+Support all  options in `.ariesrc.ts`
 
 ```javascript
-const { toTs, toMd, mockServer } = required('@tooltik/aries')
+import { toTs, toMd, mockServer } from '@tooltik/aries'
 
 toTs({
     url: './test/swagger.json',
@@ -117,11 +122,11 @@ mockServer({
   port: 3000,
   autoMock: true,
   formatMock: (data) => {
-      return {
-          code: 0,
-          msg: 'success',
-          data,
-      }
+    return {
+        code: 0,
+        msg: 'success',
+        data,
+    }
   },
 })
 ```
@@ -137,9 +142,14 @@ Link package
 pnpm link --global
 ```
 
+Run dev watch
+```bash
+pnpm dev
+```
+
 Make changes and run test
 ```bash
-pnpm run test-gen
+pnpm test-gen
 ```
 
 Uninstall

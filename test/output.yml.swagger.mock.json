@@ -1,190 +1,158 @@
 {
-  "POST /pet": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "PUT /pet": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "GET /pet/findByStatus": {
-    "code": 0,
-    "msg": "success",
-    "data": [
-      {
-        "id": 4453538683944960,
-        "category": {
-          "id": 2273648870162432,
-          "name": "^Fwyt0BODiF9"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "U7KIPKseYcjc"
-        ],
-        "tags": [
-          {
-            "id": -5549876569964544,
-            "name": "8jFdhG%FQ"
-          }
-        ],
-        "status": "sold"
-      }
-    ]
-  },
-  "GET /pet/findByTags": {
-    "code": 0,
-    "msg": "success",
-    "data": [
-      {
-        "id": 2505552332587008,
-        "category": {
-          "id": -1016129187217408,
-          "name": "G4frvukbNl"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "ixuU%GUNK1lkRR",
-          "@tTy@krEvgYKmGZ3y"
-        ],
-        "tags": [
-          {
-            "id": 5161068879937536,
-            "name": "Lpeqpk7gBm"
-          }
-        ],
-        "status": "pending"
-      }
-    ]
-  },
-  "GET /pet/{petId}": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "id": -1212266074603520,
+  "POST /pet": {},
+  "PUT /pet": {},
+  "GET /pet/findByStatus": [
+    {
+      "id": -4589007665102848,
       "category": {
-        "id": 8475524871487488,
-        "name": "gfg[kPJag4ne2]vB"
+        "id": 1415999010111488,
+        "name": "vulU1SZlpZG4RHmD]E"
       },
       "name": "doggie",
       "photoUrls": [
-        "I@cw(d]V7NEVZglr0tjx",
-        "Vp$4L*(#I@%Gezv"
+        "&*mT3!MjY",
+        "qg7qqlGpok3Y"
       ],
       "tags": [
         {
-          "id": -8713412179656704,
-          "name": "zc]PSIvy(mhFWsA5u"
+          "id": -2451843577806848,
+          "name": "z@vHMBT5x5)sD)vazqZ"
         },
         {
-          "id": 5290322036785152,
-          "name": "ZojEcPXMBZQQbh"
+          "id": -6724664994824192,
+          "name": "nD[7KP[2xJc"
         }
       ],
-      "status": "pending"
+      "status": "sold"
+    },
+    {
+      "id": -6428042255663104,
+      "category": {
+        "id": -2042080167723008,
+        "name": "yz&D^ttzv^"
+      },
+      "name": "doggie",
+      "photoUrls": [
+        "R@oDr(",
+        "yVeXd8",
+        "GDB#BYg"
+      ],
+      "tags": [
+        {
+          "id": -7511192734007296,
+          "name": "[JC*5]8o1@kKkgSVm"
+        }
+      ],
+      "status": "sold"
     }
+  ],
+  "GET /pet/findByTags": [
+    {
+      "id": 3477452756090880,
+      "category": {
+        "id": -8285634930147328,
+        "name": "b2V%3mYDhRaP"
+      },
+      "name": "doggie",
+      "photoUrls": [
+        "MOf!V",
+        "g7L#eEhVYL(",
+        "7HrJmt%"
+      ],
+      "tags": [
+        {
+          "id": 4585107453116416,
+          "name": "6zp0]kWEY"
+        }
+      ],
+      "status": "sold"
+    },
+    {
+      "id": 316087610638336,
+      "category": {
+        "id": 3416656965533696,
+        "name": "(thVXmzT#HnhyBo"
+      },
+      "name": "doggie",
+      "photoUrls": [
+        "uiZ%M"
+      ],
+      "tags": [
+        {
+          "id": -2979683368960000,
+          "name": "*d&bw6"
+        }
+      ],
+      "status": "available"
+    }
+  ],
+  "GET /pet/{petId}": {
+    "id": 4067166294900736,
+    "category": {
+      "id": 4689329033052160,
+      "name": "FEPqsI&1BHB5ciGA"
+    },
+    "name": "doggie",
+    "photoUrls": [
+      "dmGCW&)]YtH*#TrEt",
+      "a7Z1(@F9v&#%MLF)zNu"
+    ],
+    "tags": [
+      {
+        "id": 8488961911554048,
+        "name": "&S)H@Ex[KhD"
+      },
+      {
+        "id": -6876381510107136,
+        "name": "pHMV^DTbrvYeu(QGd4[!"
+      },
+      {
+        "id": -987595131584512,
+        "name": "v2VYtQ$Cfg5ATsy"
+      }
+    ],
+    "status": "pending"
   },
-  "POST /pet/{petId}": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "DELETE /pet/{petId}": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
+  "POST /pet/{petId}": {},
+  "DELETE /pet/{petId}": {},
   "POST /pet/{petId}/uploadImage": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "code": 3291824839983104,
-      "type": "6*j2(CRZgszhnQ",
-      "message": "rlgq!uic@"
-    }
+    "code": 1294390777610240,
+    "type": "Py^KLH",
+    "message": "7g@%U"
   },
-  "GET /store/inventory": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
+  "GET /store/inventory": {},
   "POST /store/order": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "id": -7339827787726848,
-      "petId": 4734623414222848,
-      "quantity": 3802311520419840,
-      "shipDate": "RNUjlVi*d&utuSDv",
-      "status": "approved",
-      "complete": true
-    }
+    "id": 1211681464123392,
+    "petId": -1568400551706624,
+    "quantity": 761703587381248,
+    "shipDate": "1ab77",
+    "status": "approved",
+    "complete": false
   },
   "GET /store/order/{orderId}": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "id": 5810222954184704,
-      "petId": 7514904386863104,
-      "quantity": -18733066092544,
-      "shipDate": "SIm$GkSJAI@",
-      "status": "delivered",
-      "complete": false
-    }
+    "id": 6139151195832320,
+    "petId": 6902624490094592,
+    "quantity": -490923335090176,
+    "shipDate": "DtM#Qc1@]0A)Icya&",
+    "status": "approved",
+    "complete": false
   },
-  "DELETE /store/order/{orderId}": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "POST /user": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "POST /user/createWithArray": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "POST /user/createWithList": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "GET /user/login": {
-    "code": 0,
-    "msg": "success",
-    "data": "@ouPap[kDhz"
-  },
-  "GET /user/logout": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
+  "DELETE /store/order/{orderId}": {},
+  "POST /user": {},
+  "POST /user/createWithArray": {},
+  "POST /user/createWithList": {},
+  "GET /user/login": "#JUz@4v*j",
+  "GET /user/logout": {},
   "GET /user/{username}": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "id": 8427149086162944,
-      "username": "Vacw[OV#08eQiokYxV$",
-      "firstName": "z)c(HoPQ1ZDw",
-      "lastName": "ulvEpuxGGRuusIuJQKGi",
-      "email": "HPY@Hi!qhH&BnHaugfn",
-      "password": "Hjc^MtXtk",
-      "phone": "V0jjMP",
-      "userStatus": 4332478105911296
-    }
+    "id": 7523750203359232,
+    "username": "06#3k5pBCkCaZ",
+    "firstName": "dDV2vF$0U7yGm4",
+    "lastName": "xDxS77kFFNdzg",
+    "email": "(lc!XmcGL1s6Ocme$neb",
+    "password": "1Tic[&d",
+    "phone": "icDh8n&bUnAeF%$zv",
+    "userStatus": 650748421472256
   },
-  "PUT /user/{username}": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "DELETE /user/{username}": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  }
+  "PUT /user/{username}": {},
+  "DELETE /user/{username}": {}
 }
