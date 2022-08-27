@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import { generateOptionsAndSwagger } from '../core';
-import SwaggerParserV2 from '../core/parseV2'
+import SwaggerParserV2 from '../core/parseV2';
 import { AriesConfig } from '../interface';
 
-export type MockServerOptions = Pick<AriesConfig, "url" | "port" | "autoMock" | "formatMock">;
+export type MockServerOptions = Pick<AriesConfig, 'url' | 'port' | 'autoMock' | 'formatMock'>;
 
 export const mockServer = async (originOptions: MockServerOptions) => {
   let params;

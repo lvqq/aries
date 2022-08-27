@@ -1,7 +1,7 @@
-import { groupBy, fromPairs } from "lodash";
-import { AriesConfig, Plugin, SwaggerV2 } from "../interface";
-import { generateOutputByPlugin } from "../core";
-import SwaggerParserV2 from '../core/parseV2'
+import { groupBy, fromPairs } from 'lodash';
+import { AriesConfig, Plugin, SwaggerV2 } from '../interface';
+import { generateOutputByPlugin } from '../core';
+import SwaggerParserV2 from '../core/parseV2';
 
 const genMd: Plugin.Function = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
@@ -40,7 +40,10 @@ const genMd: Plugin.Function = ({ swagger, options }) => {
   };
 
   // generate param table markdown
-  const generateParamsTable = (schema: SwaggerV2.PathParameter, configs: { subParams?: string[]; subTitle?: boolean }) => {
+  const generateParamsTable = (
+    schema: SwaggerV2.PathParameter,
+    configs: { subParams?: string[]; subTitle?: boolean }
+  ) => {
     const { subParams = [], subTitle = true } = configs;
     const subResults: string[] = [];
     if (schema.type === 'object' && schema.properties) {
@@ -141,6 +144,6 @@ const genMd: Plugin.Function = ({ swagger, options }) => {
   return markdown.join('\n\n');
 };
 
-export type ToMdOptions = Pick<AriesConfig, "url" | "output" | "autoMock" | "formatMock">;
+export type ToMdOptions = Pick<AriesConfig, 'url' | 'output' | 'autoMock' | 'formatMock'>;
 
-export const toMd = async (options: ToMdOptions) => generateOutputByPlugin(genMd, options)
+export const toMd = async (options: ToMdOptions) => generateOutputByPlugin(genMd, options);

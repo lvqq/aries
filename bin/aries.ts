@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { program } from "commander";
+import { program } from 'commander';
 import { version } from '../package.json';
-import { toTs, toMd, toMock, mockServer } from '../src'
+import { toTs, toMd, toMock, mockServer } from '../src';
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -23,7 +23,7 @@ program
     'Do not generate the property as required automatically when there is no required array in definitions'
   )
   .action(async (options) => {
-    await toTs(options)
+    await toTs(options);
   });
 
 program
@@ -36,7 +36,7 @@ program
     'Do not generate the mock samples automatically when there is no example in schema'
   )
   .action(async (options) => {
-    await toMd(options)
+    await toMd(options);
   });
 
 program
@@ -49,14 +49,14 @@ program
     'Do not generate the mock response automatically when there is no example in schema'
   )
   .action(async (options) => {
-    await toMock(options)
+    await toMock(options);
   });
 
 program
   .command('mock-server')
   .description('Start a local server to return the mock interface')
   .option('-u, --url <url>', 'Swagger link, support relative path or remote url')
-  .option('-p, --port <port>', 'Mock server port', "3000")
+  .option('-p, --port <port>', 'Mock server port', '3000')
   .option(
     '--no-autoMock',
     'Do not generate the mock response automatically when there is no example in schema'
