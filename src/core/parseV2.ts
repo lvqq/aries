@@ -9,13 +9,21 @@ const InvalidChar = /{|}|:|\./;
  */
 class SwaggerParserV2 {
   swagger: SwaggerV2.Swagger;
+
   options: Partial<AriesConfig>;
+
   chance: Chance.Chance;
+
   names: Record<string, string>;
+
   visited: Record<string, boolean>;
-  visitedDefinitions: Record<string, SwaggerV2.Swagger["definitions"]>;
-  definitions: SwaggerV2.Swagger["definitions"];
-  paths: SwaggerV2.Swagger["paths"]
+
+  visitedDefinitions: Record<string, SwaggerV2.Swagger['definitions']>;
+
+  definitions: SwaggerV2.Swagger['definitions'];
+
+  paths: SwaggerV2.Swagger['paths'];
+
   /**
    * init parse handle
    * @param {*} swagger swagger object
@@ -124,7 +132,7 @@ class SwaggerParserV2 {
   /**
    * parse responses, 200/default
    */
-  parseResponses = (responses: SwaggerV2.Path["responses"]) => {
+  parseResponses = (responses: SwaggerV2.Path['responses']) => {
     if (responses.default || responses['200']) {
       const key = responses.default ? 'default' : '200';
       if (responses[key].schema) {
@@ -144,16 +152,18 @@ class SwaggerParserV2 {
   /**
    * parse paths
    */
-  parsePaths = (): SwaggerV2.Swagger["paths"] => {
+  parsePaths = (): SwaggerV2.Swagger['paths'] => {
     const { formatMock } = this.options;
     return mapValues(this.swagger.paths, (pathDefinition, path) =>
       mapValues(pathDefinition, (pathParams, method) => {
         // parse parameters
-        const parameters = (Array.isArray(pathParams.parameters)
-          ? this.parseParameters(pathParams.parameters)
-          : []) as SwaggerV2.PathParameter[];
+        const parameters = (
+          Array.isArray(pathParams.parameters) ? this.parseParameters(pathParams.parameters) : []
+        ) as SwaggerV2.PathParameter[];
         // params responses
-        const responses: SwaggerV2.Path["responses"] = pathParams.responses ? this.parseResponses(pathParams.responses) : {};
+        const responses: SwaggerV2.Path['responses'] = pathParams.responses
+          ? this.parseResponses(pathParams.responses)
+          : {};
         // exist default or 200
         let successResponseKey;
         if (responses['200']) successResponseKey = '200';
@@ -173,7 +183,10 @@ class SwaggerParserV2 {
               groupBy(parameters, (parameter) => parameter.in),
               (params) => {
                 const mockResult = fromPairs(
-                  params.map((param) => [param.name, this.generateMockFromSchema(param as SwaggerV2.Definition)])
+                  params.map((param) => [
+                    param.name,
+                    this.generateMockFromSchema(param as SwaggerV2.Definition),
+                  ])
                 );
                 // delete body key
                 if (params[0] && params[0].in === 'body' && mockResult.body) {
@@ -189,7 +202,7 @@ class SwaggerParserV2 {
             // group by 'in' path/body/formData
             ...Object.values(groupBy(parameters, (parameter) => parameter.in)).map((params) => {
               const required: string[] = [];
-              type Property = (ReturnType<typeof this.parseParameters>)[number]
+              type Property = ReturnType<typeof this.parseParameters>[number];
               const properties: Record<string, Property> = {};
               params.forEach((param) => {
                 properties[param.name] = param;
@@ -249,7 +262,15 @@ class SwaggerParserV2 {
     return result;
   };
 
-  formatValidNamesByPath = ({ path, method, type }: { path: string; method: string; type: string }) => {
+  formatValidNamesByPath = ({
+    path,
+    method,
+    type,
+  }: {
+    path: string;
+    method: string;
+    type: string;
+  }) => {
     const formatPath = path
       // begin with capital letters
       .replace(path[0], path[0].toUpperCase())
@@ -323,7 +344,10 @@ class SwaggerParserV2 {
   /**
    * generate ts declaration from schema
    */
-  generateTypescriptTypeFromSchema(schema: SwaggerV2.Definition, options: { layer?: number; semi?: boolean; bracketSplit?: boolean } = {}): string {
+  generateTypescriptTypeFromSchema(
+    schema: SwaggerV2.Definition,
+    options: { layer?: number; semi?: boolean; bracketSplit?: boolean } = {}
+  ): string {
     const { autoRequired = true, formatProp } = this.options;
     /**
      * layer: recurve layer
@@ -366,7 +390,7 @@ class SwaggerParserV2 {
       }
       // use $ref
       if (subSchema.$ref) {
-        const subName = this.generateNameByRef(subSchema.$ref)
+        const subName = this.generateNameByRef(subSchema.$ref);
         if (subName) {
           return this.formatValidNamesByModal(subName);
         }

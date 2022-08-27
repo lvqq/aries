@@ -1,3 +1,3 @@
-import { AriesConfig } from "../interface";
+import { AriesConfig } from '../interface';
 
-export const defineConfig = (config: AriesConfig) => config
+export const defineConfig = (config: AriesConfig) => config;

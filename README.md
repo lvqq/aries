@@ -85,7 +85,7 @@ Add `.ariesrc.ts` or `.ariesrc.js` in your project root directory. Support all o
 // .ariesrc.ts
 import { defineConfig } from '@tooltik/aries'
 
-defineConfig({
+export default defineConfig({
   url: './swagger.json',
   autoMock: true,
   autoRequired: true,

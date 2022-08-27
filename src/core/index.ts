@@ -1,7 +1,7 @@
 import path from 'node:path';
-import fs from 'node:fs'
-import chalk from 'chalk'
-import ora from 'ora'
+import fs from 'node:fs';
+import chalk from 'chalk';
+import ora from 'ora';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import { AriesConfig, Plugin } from '../interface';
@@ -16,7 +16,7 @@ const mergeOptionsFromRc = async (options: Partial<AriesConfig>) => {
   try {
     const rcpath = path.resolve(cwd, '.ariesrc');
     if (fs.existsSync(`${rcpath}.ts`)) {
-      ariesrc = await import(rcpath)
+      ariesrc = await import(rcpath);
     } else {
       ariesrc = require(rcpath);
     }
@@ -78,7 +78,10 @@ export const generateOptionsAndSwagger = async (options: Partial<AriesConfig>) =
  * @param {*} fn plugin function
  * @param {*} options command options
  */
-export const generateOutputByPlugin = async (fn: Plugin.Function, options: Partial<AriesConfig>) => {
+export const generateOutputByPlugin = async (
+  fn: Plugin.Function,
+  options: Partial<AriesConfig>
+) => {
   let params: Plugin.Params;
   let spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
   try {

@@ -24,7 +24,7 @@
     "test-server:mock-server": "aries mock-server -u ./test/swagger.json",
     "test-server:yml:mock-server": "aries mock-server -u ./test/swagger.yml",
     "test-gen": "run-s test-gen:**",
-    "lint": "eslint --fix --quiet --ext js src bin"
+    "lint": "eslint --fix --quiet --ext .ts src bin"
   },
   "repository": {
     "type": "git",
@@ -57,6 +57,8 @@
     "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.13",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
