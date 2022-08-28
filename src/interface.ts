@@ -40,6 +40,7 @@ export namespace SwaggerV2 {
   export interface Path {
     tags?: string[];
     description?: string;
+    summary?: string;
     parameters: PathParameter[];
     responses: Record<string, PathResponse>;
     [key: string]: any;

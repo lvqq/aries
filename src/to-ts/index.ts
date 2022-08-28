@@ -2,7 +2,7 @@ import { AriesConfig, Plugin } from '../interface';
 import { generateOutputByPlugin } from '../core';
 import SwaggerParserV2 from '../core/parseV2';
 
-const genTs: Plugin.Function = async ({ swagger, options }) => {
+export const genTs: Plugin.Function = async ({ swagger, options }) => {
   const { definitions, paths } = new SwaggerParserV2(swagger, options);
   // ts in models
   const definitionsTs = Object.keys(definitions).map((name) => {

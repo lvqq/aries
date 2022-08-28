@@ -3,7 +3,7 @@ import { AriesConfig, Plugin, SwaggerV2 } from '../interface';
 import { generateOutputByPlugin } from '../core';
 import SwaggerParserV2 from '../core/parseV2';
 
-const genMd: Plugin.Function = ({ swagger, options }) => {
+export const genMd: Plugin.Function = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
   const mdJson =
     swagger.tags && swagger.tags.length

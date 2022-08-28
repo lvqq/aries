@@ -1,6 +1,7 @@
 import { mapValues, fromPairs, groupBy } from 'lodash';
 import Chance from 'chance';
 import { AriesConfig, SwaggerV2 } from '../interface';
+import { formatValidNamesByPath } from '../util';
 
 const InvalidChar = /{|}|:|\./;
 
@@ -271,13 +272,7 @@ class SwaggerParserV2 {
     method: string;
     type: string;
   }) => {
-    const formatPath = path
-      // begin with capital letters
-      .replace(path[0], path[0].toUpperCase())
-      // delete invalid char
-      .replace(/{|}|:|\./g, '')
-      // _a or /a to A
-      .replace(/(?:(_|\/))+([^_])/g, (_$0, _$1, $2) => $2.toUpperCase());
+    const formatPath = formatValidNamesByPath(path);
     const result = `${method.slice(0, 1).toUpperCase()}${method.slice(1)}${formatPath}${type
       .slice(0, 1)
       .toUpperCase()}${type.slice(1)}`;

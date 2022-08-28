@@ -1,3 +1,7 @@
+## v0.11.0
+- 🌟[feature] support **to-request**, generate request function of axios
+- 🐞[fix] dev husky hooks not work
+
 ## v0.10.0
 - 🌟[feature] support esmodule import
 - 🌟[feature] support .ariesrc.ts

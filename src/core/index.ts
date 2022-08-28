@@ -99,7 +99,13 @@ export const generateOutputByPlugin = async (
       const output = await fn(params);
       if (Array.isArray(output)) {
         output.forEach((item) => {
-          fs.writeFileSync(path.join(params.options.output || '', item.filename), item.content);
+          fs.writeFileSync(
+            path.join(
+              params.options.output ? params.options.output.split('/').slice(0, -1).join('/') : '',
+              item.filename
+            ),
+            item.content
+          );
         });
       } else {
         fs.writeFileSync(params.options.output || '', output, 'utf8');

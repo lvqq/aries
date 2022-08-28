@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 import { version } from '../package.json';
-import { toTs, toMd, toMock, mockServer } from '../src';
+import { toTs, toMd, toMock, mockServer, toRequest } from '../src';
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -24,6 +24,21 @@ program
   )
   .action(async (options) => {
     await toTs(options);
+  });
+
+program
+  .command('to-request')
+  .description(
+    'Convert swagger to request function, generate <output> file and <output>.types file'
+  )
+  .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
+  .option('-o --output <output>', 'Specify output file path', './swagger.request.ts')
+  .option(
+    '--no-autoRequired',
+    'Do not generate the property as required automatically when there is no required array in definitions'
+  )
+  .action(async (options) => {
+    await toRequest(options);
   });
 
 program
