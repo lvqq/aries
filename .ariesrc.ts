@@ -1,9 +1,9 @@
 // .ariesrc for test script
-import { defineConfig } from './src/util'
+import { defineConfig } from './src'
 
-defineConfig({
+export default defineConfig({
   url: './test/swagger.json',
-  autoMock: true,
+  autoMock: false,
   autoRequired: true,
   formatMock: (data) => {
     return {
@@ -11,9 +11,5 @@ defineConfig({
       msg: 'success',
       data,
     }
-  },
-  formatProp: (prop) => {
-    // Add prop format
-    return prop
   },
 })

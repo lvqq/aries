@@ -15,13 +15,13 @@ file | N | file | file to upload
 #### path
 ```
 {
-  "petId": -253323542265856
+  "petId": 0
 }
 ```
 #### formData
 ```
 {
-  "additionalMetadata": "Q&Os6Wwd^s",
+  "additionalMetadata": "",
   "file": null
 }
 ```
@@ -31,9 +31,9 @@ file | N | file | file to upload
   "code": 0,
   "msg": "success",
   "data": {
-    "code": 133823908020224,
-    "type": "J($58TBp",
-    "message": "0&ELa!jtc1^gO0y3"
+    "code": 0,
+    "type": "",
+    "message": ""
   }
 }
 ```
@@ -67,27 +67,22 @@ name | N/A | string | N/A
 #### body
 ```
 {
-  "id": 3715420120940544,
+  "id": 0,
   "category": {
-    "id": 417134781923328,
-    "name": "&(^mjz933%FTSO%"
+    "id": 0,
+    "name": ""
   },
   "name": "doggie",
   "photoUrls": [
-    "xw%vlQS*vC",
-    "OhIEq)K4#MU"
+    ""
   ],
   "tags": [
     {
-      "id": -4403099758231552,
-      "name": "mwkr]AKe&"
-    },
-    {
-      "id": -3357004378669056,
-      "name": "JoocnH"
+      "id": 0,
+      "name": ""
     }
   ],
-  "status": "pending"
+  "status": "available"
 }
 ```
 ### Response samples
@@ -128,27 +123,22 @@ name | N/A | string | N/A
 #### body
 ```
 {
-  "id": 3972307814973440,
+  "id": 0,
   "category": {
-    "id": 6799133843128320,
-    "name": "@*N3Dz)nAKpU"
+    "id": 0,
+    "name": ""
   },
   "name": "doggie",
   "photoUrls": [
-    "]&sjGn",
-    "&z!byHIJRnBJvxEz"
+    ""
   ],
   "tags": [
     {
-      "id": 7211970704965632,
-      "name": "gcE*[CzE0"
-    },
-    {
-      "id": -2005745071554560,
-      "name": "B]7[3pOCGD$p78J"
+      "id": 0,
+      "name": ""
     }
   ],
-  "status": "sold"
+  "status": "available"
 }
 ```
 ### Response samples
@@ -182,49 +172,19 @@ status | Y | string[] | Status values that need to be considered for filter
   "msg": "success",
   "data": [
     {
-      "id": 6263448161746944,
+      "id": 0,
       "category": {
-        "id": -6505552339271680,
-        "name": "h^Y6P"
+        "id": 0,
+        "name": ""
       },
       "name": "doggie",
       "photoUrls": [
-        "nioHt!qGEiJSAT",
-        "J5zJ6nOMy]k(WE",
-        "5bpgrykqm"
+        ""
       ],
       "tags": [
         {
-          "id": 3946117918097408,
-          "name": "Ijhchde9xoQl93B(9]n]"
-        }
-      ],
-      "status": "sold"
-    },
-    {
-      "id": -2466623575293952,
-      "category": {
-        "id": -137887857246208,
-        "name": "3de^@W$LMu"
-      },
-      "name": "doggie",
-      "photoUrls": [
-        "kTRj^V",
-        "JfPz!lMEKqRbd7@7vp(",
-        "D@2ib!"
-      ],
-      "tags": [
-        {
-          "id": -6010101806661632,
-          "name": "qPS$P]tnnt"
-        },
-        {
-          "id": -8228154879508480,
-          "name": "4!cKz5gp22SCA!(]"
-        },
-        {
-          "id": 4287082285498368,
-          "name": "uVm6l1f3i"
+          "id": 0,
+          "name": ""
         }
       ],
       "status": "available"
@@ -244,9 +204,7 @@ tags | Y | string[] | Tags to filter by
 ```
 {
   "tags": [
-    "nyi67s7^7spTiCL1",
-    "I6C%k6l#Gy@cavU#",
-    "S0YhdEaYiL"
+    ""
   ]
 }
 ```
@@ -257,29 +215,19 @@ tags | Y | string[] | Tags to filter by
   "msg": "success",
   "data": [
     {
-      "id": -2494138150813696,
+      "id": 0,
       "category": {
-        "id": -5472032217104384,
-        "name": "eMYZCjvj!SmyG"
+        "id": 0,
+        "name": ""
       },
       "name": "doggie",
       "photoUrls": [
-        "SHabh2R!cEI8]V32*zx!",
-        "rNqxKlBOQf(ss[0SY",
-        "quLD%u&R"
+        ""
       ],
       "tags": [
         {
-          "id": -813226992336896,
-          "name": "03yo#TPY()R]K!Oq"
-        },
-        {
-          "id": 7528727500029952,
-          "name": "1Bq[L!yl(#Dej5"
-        },
-        {
-          "id": -4132530936610816,
-          "name": "o2o)5n!)]KU"
+          "id": 0,
+          "name": ""
         }
       ],
       "status": "available"
@@ -298,7 +246,7 @@ petId | Y | integer | ID of pet to return
 #### path
 ```
 {
-  "petId": -2642205646782464
+  "petId": 0
 }
 ```
 ### Response samples
@@ -307,27 +255,22 @@ petId | Y | integer | ID of pet to return
   "code": 0,
   "msg": "success",
   "data": {
-    "id": -1923939739631616,
+    "id": 0,
     "category": {
-      "id": -3602659751755776,
-      "name": "lIeVkUL^)O2hRX$"
+      "id": 0,
+      "name": ""
     },
     "name": "doggie",
     "photoUrls": [
-      "F4swkf)7^!jEsD$wj",
-      "sxPHJNUglDN"
+      ""
     ],
     "tags": [
       {
-        "id": 3304906777690112,
-        "name": "cT(1%WoKJYzl4"
-      },
-      {
-        "id": 7752895587942400,
-        "name": "Q3*TlJl)AVf0Gn]m&dzQ"
+        "id": 0,
+        "name": ""
       }
     ],
-    "status": "sold"
+    "status": "available"
   }
 }
 ```
@@ -346,14 +289,14 @@ status | N | string | Updated status of the pet
 #### path
 ```
 {
-  "petId": 5799592163540992
+  "petId": 0
 }
 ```
 #### formData
 ```
 {
-  "name": "2VE]VXy0a",
-  "status": "68ms%F5G"
+  "name": "",
+  "status": ""
 }
 ```
 ### Response samples
@@ -378,13 +321,13 @@ petId | Y | integer | Pet id to delete
 #### header
 ```
 {
-  "api_key": "Nk7s$T67k6"
+  "api_key": ""
 }
 ```
 #### path
 ```
 {
-  "petId": -3014163458686976
+  "petId": 0
 }
 ```
 ### Response samples
@@ -417,12 +360,12 @@ complete | N/A | boolean | N/A
 #### body
 ```
 {
-  "id": 3428622882832384,
-  "petId": -6447866910343168,
-  "quantity": -3239806540709888,
-  "shipDate": "Ry$Fn4wl0NF2&bQDLP*U",
-  "status": "approved",
-  "complete": false
+  "id": 0,
+  "petId": 0,
+  "quantity": 0,
+  "shipDate": "",
+  "status": "placed",
+  "complete": true
 }
 ```
 ### Response samples
@@ -431,11 +374,11 @@ complete | N/A | boolean | N/A
   "code": 0,
   "msg": "success",
   "data": {
-    "id": 2249020021932032,
-    "petId": -4797053846683648,
-    "quantity": -7192909312950272,
-    "shipDate": "GlKUPz6",
-    "status": "delivered",
+    "id": 0,
+    "petId": 0,
+    "quantity": 0,
+    "shipDate": "",
+    "status": "placed",
     "complete": true
   }
 }
@@ -451,7 +394,7 @@ orderId | Y | integer | ID of pet that needs to be fetched
 #### path
 ```
 {
-  "orderId": 3694475176050688
+  "orderId": 0
 }
 ```
 ### Response samples
@@ -460,12 +403,12 @@ orderId | Y | integer | ID of pet that needs to be fetched
   "code": 0,
   "msg": "success",
   "data": {
-    "id": -6644741206704128,
-    "petId": -1848161307983872,
-    "quantity": -3100219034042368,
-    "shipDate": "@9TL7J9pk276II3dwL&",
-    "status": "approved",
-    "complete": false
+    "id": 0,
+    "petId": 0,
+    "quantity": 0,
+    "shipDate": "",
+    "status": "placed",
+    "complete": true
   }
 }
 ```
@@ -480,7 +423,7 @@ orderId | Y | integer | ID of the order that needs to be deleted
 #### path
 ```
 {
-  "orderId": 8876363863818240
+  "orderId": 0
 }
 ```
 ### Response samples
@@ -531,34 +474,14 @@ userStatus | N/A | integer | User Status
 ```
 [
   {
-    "id": 6259974741164032,
-    "username": "WxpgoJMw",
-    "firstName": "fCc3o9LC(x!3",
-    "lastName": "Z3WWsZA3ehsqRPOLJWJr",
-    "email": "[2JiPOJtaZ6y(0v",
-    "password": "FAG1[",
-    "phone": "fLsEAc!1",
-    "userStatus": 5560299163746304
-  },
-  {
-    "id": 2160853231075328,
-    "username": "BObZgz94s%h$H6G%@q]7",
-    "firstName": "LyyLSe8[YUcGIqZ)",
-    "lastName": "fMq]q]8Ud#UVw^",
-    "email": "vh)6C",
-    "password": "Nt5(nHh#zO2ES",
-    "phone": "3v(nYbYc)%XsCkxF4n",
-    "userStatus": 5527165521100800
-  },
-  {
-    "id": -4381759420497920,
-    "username": "vK#0z",
-    "firstName": ")4hYMx",
-    "lastName": "Sax[)",
-    "email": "D01k0Vm",
-    "password": "tQI7ZG5D)AC8j",
-    "phone": "m0tbz",
-    "userStatus": 2715102604165120
+    "id": 0,
+    "username": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "phone": "",
+    "userStatus": 0
   }
 ]
 ```
@@ -593,34 +516,14 @@ userStatus | N/A | integer | User Status
 ```
 [
   {
-    "id": 5048014372601856,
-    "username": "$x)GH5Gdkaqj",
-    "firstName": "h@5Sua[9Pa3m7FOvmWs!",
-    "lastName": "J^v04iadR",
-    "email": "0Dofp&H5",
-    "password": "90Fl1W[",
-    "phone": "AYsbdpLw@ZRr[hz!53@$",
-    "userStatus": -8042586958725120
-  },
-  {
-    "id": -7563610200997888,
-    "username": "$mY0GgL@A535",
-    "firstName": "Vo[TSYREGMJ37@ANfW",
-    "lastName": "B$4Z^hC#Geaz[#[v$S",
-    "email": "7*Zi(ZLe#9",
-    "password": "KIeI1G",
-    "phone": "ut9*)AJp%CHgK7zqlmn",
-    "userStatus": 7849730218393600
-  },
-  {
-    "id": -4300265318514688,
-    "username": "Y6Xyj9",
-    "firstName": "izul^jB",
-    "lastName": "UlMIW32J%",
-    "email": "F##zBx8",
-    "password": "%DbT!9KzkxEFD^",
-    "phone": "&Z2BFDLBGJ]DaD(WFRJs",
-    "userStatus": -6551209875865600
+    "id": 0,
+    "username": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "phone": "",
+    "userStatus": 0
   }
 ]
 ```
@@ -642,7 +545,7 @@ username | Y | string | The name that needs to be fetched. Use user1 for testing
 #### path
 ```
 {
-  "username": "X7QkX![)A^"
+  "username": ""
 }
 ```
 ### Response samples
@@ -651,14 +554,14 @@ username | Y | string | The name that needs to be fetched. Use user1 for testing
   "code": 0,
   "msg": "success",
   "data": {
-    "id": -4894030458519552,
-    "username": "IPACXJ^W[i4VO",
-    "firstName": "Dq!7$4OWGr#4csl90Q",
-    "lastName": "J(2tmOBsm!SlnH6E",
-    "email": "w4X2Zr42Va9Yt]Qd",
-    "password": "ei6S1H",
-    "phone": "[%Sh!9Z[8R",
-    "userStatus": -5334761954344960
+    "id": 0,
+    "username": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "phone": "",
+    "userStatus": 0
   }
 }
 ```
@@ -688,20 +591,20 @@ userStatus | N/A | integer | User Status
 #### path
 ```
 {
-  "username": "vWNgeR20"
+  "username": ""
 }
 ```
 #### body
 ```
 {
-  "id": -6539156561854464,
-  "username": "LvG1NnEZal",
-  "firstName": "jCt7S&SoR",
-  "lastName": "spbeoNe%f6[!RfCEJ",
-  "email": "dLbKz(txoS*LbA@02",
-  "password": "GtlBTx",
-  "phone": "Reak^",
-  "userStatus": -1572088305418240
+  "id": 0,
+  "username": "",
+  "firstName": "",
+  "lastName": "",
+  "email": "",
+  "password": "",
+  "phone": "",
+  "userStatus": 0
 }
 ```
 ### Response samples
@@ -723,7 +626,7 @@ username | Y | string | The name that needs to be deleted
 #### path
 ```
 {
-  "username": "j6G6nXLM"
+  "username": ""
 }
 ```
 ### Response samples
@@ -745,8 +648,8 @@ password | Y | string | The password for login in clear text
 #### query
 ```
 {
-  "username": "Q#6r0g05Mzr21l",
-  "password": "8Rd*3"
+  "username": "",
+  "password": ""
 }
 ```
 ### Response samples
@@ -754,7 +657,7 @@ password | Y | string | The password for login in clear text
 {
   "code": 0,
   "msg": "success",
-  "data": "7dr)Z"
+  "data": ""
 }
 ```
 ## 3.7 GET /user/logout
@@ -792,14 +695,14 @@ userStatus | N/A | integer | User Status
 #### body
 ```
 {
-  "id": 2510090225582080,
-  "username": "cv#79leU",
-  "firstName": "DFZCq6%u!F1#nQ[Qanw",
-  "lastName": "LpH#t@Ugd$F[@tf",
-  "email": "mnZhz0EHHY4^uyQZr14x",
-  "password": "#kMQ1W(9Fe1T",
-  "phone": "KInWSv9uR",
-  "userStatus": -8673807204089856
+  "id": 0,
+  "username": "",
+  "firstName": "",
+  "lastName": "",
+  "email": "",
+  "password": "",
+  "phone": "",
+  "userStatus": 0
 }
 ```
 ### Response samples

@@ -1,4 +1,4 @@
-const { toTs, toMd, toMock } = require('../dist/src')
+const { toTs, toMd, toMock } = require('../dist/src/index.cjs')
 
 const genNodeTest = async () => {
     await toTs({

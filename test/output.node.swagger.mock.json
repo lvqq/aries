@@ -1,237 +1,182 @@
 {
-  "POST /pet/{petId}/uploadImage": {
+  "POST /v2/pet/{petId}/uploadImage": {
     "code": 0,
     "msg": "success",
     "data": {
-      "code": -636008366342144,
-      "type": "ZxdjD",
-      "message": "DKCbd]b"
+      "code": 0,
+      "type": "",
+      "message": ""
     }
   },
-  "POST /pet": {
+  "POST /v2/pet": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "PUT /pet": {
+  "PUT /v2/pet": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "GET /pet/findByStatus": {
+  "GET /v2/pet/findByStatus": {
     "code": 0,
     "msg": "success",
     "data": [
       {
-        "id": -2066456489492480,
+        "id": 0,
         "category": {
-          "id": -1459890987991040,
-          "name": "6Xm#jS"
+          "id": 0,
+          "name": ""
         },
         "name": "doggie",
         "photoUrls": [
-          "f0B6td6s"
+          ""
         ],
         "tags": [
           {
-            "id": 2333520923983872,
-            "name": "O$NCg4y1TK!8p)6z]Gt#"
-          },
-          {
-            "id": -5323184463151104,
-            "name": "5c6EkYxNz)s"
-          }
-        ],
-        "status": "pending"
-      }
-    ]
-  },
-  "GET /pet/findByTags": {
-    "code": 0,
-    "msg": "success",
-    "data": [
-      {
-        "id": -189500709928960,
-        "category": {
-          "id": 5307341167656960,
-          "name": "Yy^jB@)k"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "TH**7UzcVFIdh",
-          "CiLRNjBvHuv",
-          "IIG9Z3ZDKeN6QqMd"
-        ],
-        "tags": [
-          {
-            "id": -5434564012933120,
-            "name": "D^JUbhnyE$7fLAx!"
-          },
-          {
-            "id": 1940759519428608,
-            "name": "x0^BlunXTD"
-          }
-        ],
-        "status": "sold"
-      },
-      {
-        "id": -7878478103838720,
-        "category": {
-          "id": 5814349432094720,
-          "name": "66ub7zRbP"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "km2eHPK)aoA1WfO",
-          "B*8qx#5b[5Q$1nJ2c",
-          "8g3Ck&gwpQ9e"
-        ],
-        "tags": [
-          {
-            "id": 2341655021617152,
-            "name": ")ZY0vh]ukfD"
-          },
-          {
-            "id": 3814061401702400,
-            "name": "x&yPtG"
+            "id": 0,
+            "name": ""
           }
         ],
         "status": "available"
-      },
-      {
-        "id": -2002139710750720,
-        "category": {
-          "id": 6574711458758656,
-          "name": "Yq!5kCN$FQR&QUrUWL1"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "P&oX60QfIx",
-          "#Ek$Z%b"
-        ],
-        "tags": [
-          {
-            "id": -8368924554952704,
-            "name": "dakPOXbD^*V)ZFE"
-          }
-        ],
-        "status": "pending"
       }
     ]
   },
-  "GET /pet/{petId}": {
+  "GET /v2/pet/findByTags": {
+    "code": 0,
+    "msg": "success",
+    "data": [
+      {
+        "id": 0,
+        "category": {
+          "id": 0,
+          "name": ""
+        },
+        "name": "doggie",
+        "photoUrls": [
+          ""
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": ""
+          }
+        ],
+        "status": "available"
+      }
+    ]
+  },
+  "GET /v2/pet/{petId}": {
     "code": 0,
     "msg": "success",
     "data": {
-      "id": 65028845731840,
+      "id": 0,
       "category": {
-        "id": 4778774272933888,
-        "name": "EvrA*phtw"
+        "id": 0,
+        "name": ""
       },
       "name": "doggie",
       "photoUrls": [
-        "4Ev8rt7@",
-        "g7SQDTVFjPL$1*3dY&",
-        "LGylq2Bhk9BT"
+        ""
       ],
       "tags": [
         {
-          "id": -1300492089032704,
-          "name": "go[k7mi24Hsplk"
+          "id": 0,
+          "name": ""
         }
       ],
-      "status": "pending"
+      "status": "available"
     }
   },
-  "POST /pet/{petId}": {
+  "POST /v2/pet/{petId}": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "DELETE /pet/{petId}": {
+  "DELETE /v2/pet/{petId}": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "POST /store/order": {
+  "POST /v2/store/order": {
     "code": 0,
     "msg": "success",
     "data": {
-      "id": -5088110249508864,
-      "petId": -78448039034880,
-      "quantity": -6009217697710080,
-      "shipDate": "xq8#)55O*",
-      "status": "approved",
-      "complete": false
+      "id": 0,
+      "petId": 0,
+      "quantity": 0,
+      "shipDate": "",
+      "status": "placed",
+      "complete": true
     }
   },
-  "GET /store/order/{orderId}": {
+  "GET /v2/store/order/{orderId}": {
     "code": 0,
     "msg": "success",
     "data": {
-      "id": 4388197719080960,
-      "petId": 2913634380414976,
-      "quantity": -3091613576331264,
-      "shipDate": "U]$qwF71UOcGX&U",
-      "status": "approved",
-      "complete": false
+      "id": 0,
+      "petId": 0,
+      "quantity": 0,
+      "shipDate": "",
+      "status": "placed",
+      "complete": true
     }
   },
-  "DELETE /store/order/{orderId}": {
+  "DELETE /v2/store/order/{orderId}": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "GET /store/inventory": {
+  "GET /v2/store/inventory": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "POST /user/createWithArray": {
+  "POST /v2/user/createWithArray": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "POST /user/createWithList": {
+  "POST /v2/user/createWithList": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "GET /user/{username}": {
+  "GET /v2/user/{username}": {
     "code": 0,
     "msg": "success",
     "data": {
-      "id": 1088064445218816,
-      "username": "0LYqGRBDAaKNr",
-      "firstName": "vR7WuI4Ds4&CQzZxT",
-      "lastName": "[em0%",
-      "email": "fO(jBGF0]1y",
-      "password": "9d*3C",
-      "phone": "lJH2Yj#",
-      "userStatus": -2548715382374400
+      "id": 0,
+      "username": "",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "phone": "",
+      "userStatus": 0
     }
   },
-  "PUT /user/{username}": {
+  "PUT /v2/user/{username}": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "DELETE /user/{username}": {
+  "DELETE /v2/user/{username}": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "GET /user/login": {
+  "GET /v2/user/login": {
     "code": 0,
     "msg": "success",
-    "data": "gdvjr"
+    "data": ""
   },
-  "GET /user/logout": {
+  "GET /v2/user/logout": {
     "code": 0,
     "msg": "success",
     "data": {}
   },
-  "POST /user": {
+  "POST /v2/user": {
     "code": 0,
     "msg": "success",
     "data": {}

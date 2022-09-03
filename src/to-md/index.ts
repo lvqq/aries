@@ -1,4 +1,5 @@
-import { groupBy, fromPairs } from 'lodash';
+import fromPairs from 'lodash.frompairs';
+import groupBy from 'lodash.groupby';
 import { AriesConfig, Plugin, SwaggerV2 } from '../interface';
 import { generateOutputByPlugin } from '../core';
 import SwaggerParserV2 from '../core/parseV2';

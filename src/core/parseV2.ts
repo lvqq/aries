@@ -1,5 +1,7 @@
-import { mapValues, fromPairs, groupBy } from 'lodash';
 import Chance from 'chance';
+import mapValues from 'lodash.mapvalues';
+import groupBy from 'lodash.groupby';
+import fromPairs from 'lodash.frompairs';
 import { AriesConfig, SwaggerV2 } from '../interface';
 import { formatValidNamesByPath } from '../util';
 
@@ -300,12 +302,15 @@ class SwaggerParserV2 {
     // use example
     if (schema.example) return schema.example;
     // use enum
-    if (Array.isArray(schema.enum)) return this.chance.pickone(schema.enum);
+    if (Array.isArray(schema.enum))
+      return autoMock ? this.chance.pickone(schema.enum) : schema.enum[0];
     if (schema.type === 'array' && schema.items) {
       // random array length 1-3
-      return new Array(this.chance.integer({ min: 1, max: 3 }))
-        .fill(1)
-        .map(() => this.generateMockFromSchema(schema.items!));
+      return autoMock
+        ? new Array(this.chance.integer({ min: 1, max: 3 }))
+            .fill(1)
+            .map(() => this.generateMockFromSchema(schema.items!))
+        : [this.generateMockFromSchema(schema.items!)];
     }
     if (schema.type === 'object') {
       return mapValues(schema.properties, (property) => this.generateMockFromSchema(property));
