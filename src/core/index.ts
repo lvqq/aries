@@ -90,6 +90,7 @@ const mergeOptionsFromRc = async (options: OptionalConfig) => {
       bundle: true,
       treeShaking: true,
       sourcemap: 'inline',
+      external: ['require.resolve'],
       banner: {
         //  to solve 'Dynamic require of "os" is not supported', refer: https://github.com/evanw/esbuild/issues/1921
         js: isESM

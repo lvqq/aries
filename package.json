@@ -1,7 +1,7 @@
 {
   "name": "@tooltik/aries",
   "type": "module",
-  "version": "0.11.1-beta",
+  "version": "0.11.1",
   "description": "A swagger converter cli, support TypeScript declaration, request function, markdown docs, mock js and so on",
   "main": "./dist/src/index.cjs",
   "module": "./dist/src/index.js",
@@ -23,7 +23,7 @@
     "dev": "rimraf dist && tsup --sourcemap --watch",
     "build": "rimraf dist && tsup --sourcemap",
     "build:production": "rimraf dist && tsup --treeshake",
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "prepublish": "pnpm build:production",
     "test-gen:to-ts": "aries to-ts -u ./test/swagger.json -o ./test/output.swagger.types.ts",
     "test-gen:to-request": "aries to-request -u ./test/swagger.json -o ./test/output.swagger.request.ts",

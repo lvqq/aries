@@ -1,3 +1,12 @@
+## v0.11.1
+- 🐞[fix] `.ariesrc.ts` require failed, add `esbuild` to build
+- 🐞[fix] husky script error while installing
+- 🐞[fix] rm script error while cross platform
+- 🐞[fix] the mock data won't be generated randomly while `autoMock=false`
+- 🐞[fix] remove `formatProp` feature 
+- ⚡[refactor] support esm fully
+- ⚡[refactor] migrate bundle from tsc to tsup
+
 ## v0.11.0
 - 🌟[feature] support **to-request**, generate request function of axios
 - 🐞[fix] dev husky hooks not work
