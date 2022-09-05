@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path, { sep } from 'node:path';
 import fs from 'node:fs';
 import chalk from 'chalk';
 import ora from 'ora';
@@ -7,7 +7,7 @@ import yaml from 'js-yaml';
 import { build } from 'esbuild';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import { AriesConfig, Plugin } from '../interface';
+import type { AriesConfig, Plugin } from '../interface';
 import { DEFAULT_CONFIG_FILES, DEFAULT_CONFIG_OPTION_TRUE } from '../constants';
 
 const cwd = process.cwd();
@@ -90,7 +90,8 @@ const mergeOptionsFromRc = async (options: OptionalConfig) => {
       bundle: true,
       treeShaking: true,
       sourcemap: 'inline',
-      external: ['require.resolve'],
+      // to fix warning:  [WARNING] "esbuild" should be marked as external for use with "require.resolve" [require-resolve-not-external]
+      external: ['esbuild'],
       banner: {
         //  to solve 'Dynamic require of "os" is not supported', refer: https://github.com/evanw/esbuild/issues/1921
         js: isESM
@@ -130,7 +131,7 @@ export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
   // validate url
   if (!url) {
     throw new Error(
-      "error: required swagger url not specified, add '-u, --url <url>' in command option or add url in .ariesrc"
+      "required swagger url not specified, add '-u, --url <url>' in command option or add url in .ariesrc"
     );
   }
   const isYaml = url.endsWith('.yaml') || url.endsWith('.yml');
@@ -140,7 +141,7 @@ export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
     try {
       swagger = (await axios.get(url)).data;
     } catch (e) {
-      throw new Error('error: fetch swagger json failed, check if url is valid');
+      throw new Error(`fetch swagger json failed, check if url is valid: ${url}`);
     }
   } else {
     try {
@@ -150,7 +151,7 @@ export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
         swagger = _require(path.resolve(cwd, url));
       }
     } catch (e) {
-      throw new Error('error: require swagger json failed, check if url is valid');
+      throw new Error(`require swagger json failed, check if url is valid: ${url}`);
     }
   }
   // yaml to json
@@ -168,7 +169,10 @@ export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
  * @param {*} fn plugin function
  * @param {*} options command options
  */
-export const generateOutputByPlugin = async (fn: Plugin.Function, options: OptionalConfig) => {
+export const generateOutputByPlugin = async (
+  fn: Plugin.Function,
+  options: OptionalConfig
+): Promise<void> => {
   let params: Plugin.Params;
   let spinner = ora(chalk.blueBright('Fetch swagger json start')).start();
   try {
@@ -177,7 +181,7 @@ export const generateOutputByPlugin = async (fn: Plugin.Function, options: Optio
     spinner.succeed(chalk.greenBright('Fetch swagger json success'));
   } catch (e) {
     spinner.fail(chalk.redBright('Fetch swagger json failed'));
-    console.log(e);
+    throw e;
   }
   // generate file
   try {
@@ -188,20 +192,24 @@ export const generateOutputByPlugin = async (fn: Plugin.Function, options: Optio
       if (Array.isArray(output)) {
         output.forEach((item) => {
           fs.writeFileSync(
-            path.join(
-              params.options.output ? params.options.output.split('/').slice(0, -1).join('/') : '',
+            path.resolve(
+              params.options.output ? params.options.output.split(sep).slice(0, -1).join(sep) : '',
               item.filename
             ),
             item.content
           );
         });
       } else {
-        fs.writeFileSync(params.options.output || '', output, 'utf8');
+        fs.writeFileSync(
+          params.options.output ? path.resolve(cwd, params.options.output) : cwd,
+          output,
+          'utf8'
+        );
       }
       spinner.succeed(chalk.greenBright('Generate file success'));
     }
   } catch (e) {
     spinner.fail(chalk.redBright('Generate file failed'));
-    console.log(e);
+    throw e;
   }
 };

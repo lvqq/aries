@@ -1,3 +1,4 @@
+import { sep } from 'node:path';
 import { AriesConfig, Plugin } from '../interface';
 import { generateOutputByPlugin } from '../core';
 import SwaggerParserV2 from '../core/parseV2';
@@ -13,10 +14,9 @@ interface TsSchema {
 export const genRequest: Plugin.Function = async ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
   const { basePath } = swagger;
-  const requestFileName = options.output?.split('/')?.slice(-1)?.pop() || 'request.ts';
+  const requestFileName = options.output?.split(sep)?.slice(-1)?.pop() || 'request.ts';
   const tsDeclareFileName = requestFileName.split('.').slice(0, -1).concat(['types']).join('.');
   const tsDeclare = (await genTs({ swagger, options })) as string;
-
   const importRequest = `import axios from 'axios';\n\n`;
   const importTypes: string[] = [];
 

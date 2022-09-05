@@ -16,5 +16,6 @@
     "noUnusedParameters": true,
     "outDir": "dist"
   },
-  "include": ["src", "bin", "package.json"]
+  "include": ["src", "bin"],
+  "exclude": ["__tests__"]
 }

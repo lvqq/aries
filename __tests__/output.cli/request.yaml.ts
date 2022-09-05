@@ -20,7 +20,7 @@ import {
   PutUserUsernameRequestPath,
   PutUserUsernameRequestBody,
   DeleteUserUsernameRequestPath,
-} from './output.yml.swagger.request.types';
+} from './request.yaml.types';
 
 /**
  * @summary Add a new pet to the store

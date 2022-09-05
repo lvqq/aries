@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-  PostPetPetIdUploadImageRequestPath,
   PostPetRequestBody,
   PutPetRequestBody,
   GetPetFindByStatusRequestQuery,
@@ -9,25 +8,19 @@ import {
   GetPetPetIdRequestPath,
   PostPetPetIdRequestPath,
   DeletePetPetIdRequestPath,
+  PostPetPetIdUploadImageRequestPath,
   PostStoreOrderRequestBody,
   GetStoreOrderOrderIdRequestPath,
   DeleteStoreOrderOrderIdRequestPath,
+  PostUserRequestBody,
   PostUserCreateWithArrayRequestBody,
   PostUserCreateWithListRequestBody,
+  GetUserLoginRequestQuery,
   GetUserUsernameRequestPath,
   PutUserUsernameRequestPath,
   PutUserUsernameRequestBody,
   DeleteUserUsernameRequestPath,
-  GetUserLoginRequestQuery,
-  PostUserRequestBody,
-} from './output.swagger.request.types';
-
-/**
- * @summary uploads an image
- */
-export const postPetPetIdUploadImage = (args: {
-  path: PostPetPetIdUploadImageRequestPath;
-}) => axios.post(`/v2/pet/${args.path.petId}/uploadImage`, {});
+} from './request.yaml.types';
 
 /**
  * @summary Add a new pet to the store
@@ -59,7 +52,7 @@ export const getPetFindByStatus = (args: {
 
 /**
  * @summary Finds Pets by tags
- * @description Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @description Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.
  */
 export const getPetFindByTags = (args: {
   params: GetPetFindByTagsRequestQuery;
@@ -90,6 +83,19 @@ export const deletePetPetId = (args: {
 }) => axios.delete(`/v2/pet/${args.path.petId}`, {});
 
 /**
+ * @summary uploads an image
+ */
+export const postPetPetIdUploadImage = (args: {
+  path: PostPetPetIdUploadImageRequestPath;
+}) => axios.post(`/v2/pet/${args.path.petId}/uploadImage`, {});
+
+/**
+ * @summary Returns pet inventories by status
+ * @description Returns a map of status codes to quantities
+ */
+export const getStoreInventory = () => axios.get('/v2/store/inventory', {});
+
+/**
  * @summary Place an order for a pet
  */
 export const postStoreOrder = (args: {
@@ -100,7 +106,7 @@ export const postStoreOrder = (args: {
 
 /**
  * @summary Find purchase order by ID
- * @description For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @description For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions
  */
 export const getStoreOrderOrderId = (args: {
   path: GetStoreOrderOrderIdRequestPath;
@@ -108,17 +114,21 @@ export const getStoreOrderOrderId = (args: {
 
 /**
  * @summary Delete purchase order by ID
- * @description For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @description For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors
  */
 export const deleteStoreOrderOrderId = (args: {
   path: DeleteStoreOrderOrderIdRequestPath;
 }) => axios.delete(`/v2/store/order/${args.path.orderId}`, {});
 
 /**
- * @summary Returns pet inventories by status
- * @description Returns a map of status codes to quantities
+ * @summary Create user
+ * @description This can only be done by the logged in user.
  */
-export const getStoreInventory = () => axios.get('/v2/store/inventory', {});
+export const postUser = (args: {
+  data: PostUserRequestBody;
+}) => axios.post('/v2/user', {
+  data: args.data
+});
 
 /**
  * @summary Creates list of users with given input array
@@ -137,6 +147,20 @@ export const postUserCreateWithList = (args: {
 }) => axios.post('/v2/user/createWithList', {
   data: args.data
 });
+
+/**
+ * @summary Logs user into the system
+ */
+export const getUserLogin = (args: {
+  params: GetUserLoginRequestQuery;
+}) => axios.get('/v2/user/login', {
+  params: args.params
+});
+
+/**
+ * @summary Logs out current logged in user session
+ */
+export const getUserLogout = () => axios.get('/v2/user/logout', {});
 
 /**
  * @summary Get user by user name
@@ -163,28 +187,4 @@ export const putUserUsername = (args: {
 export const deleteUserUsername = (args: {
   path: DeleteUserUsernameRequestPath;
 }) => axios.delete(`/v2/user/${args.path.username}`, {});
-
-/**
- * @summary Logs user into the system
- */
-export const getUserLogin = (args: {
-  params: GetUserLoginRequestQuery;
-}) => axios.get('/v2/user/login', {
-  params: args.params
-});
-
-/**
- * @summary Logs out current logged in user session
- */
-export const getUserLogout = () => axios.get('/v2/user/logout', {});
-
-/**
- * @summary Create user
- * @description This can only be done by the logged in user.
- */
-export const postUser = (args: {
-  data: PostUserRequestBody;
-}) => axios.post('/v2/user', {
-  data: args.data
-});
 

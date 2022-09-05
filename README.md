@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dm/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
+[![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dm/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![coverage](https://coveralls.io/repos/github/lvqq/aries/badge.svg?branch=main)](https://coveralls.io/github/lvqq/aries?branch=main) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
 
 ## Aries ♈️
 Aries is a swagger converter cli, support typescript declaration, axios request function, markdown docs, mock server and so on
@@ -100,8 +100,8 @@ export default defineConfig({
 })
 ```
 
-## Usage in ES Module/CommonJS
-Support all  options in `.ariesrc.ts`
+## Api reference
+Support usage in esm or cjs, and arguments are same with `.ariesrc` export:
 
 ```javascript
 import { toTs, toMd, mockServer } from '@tooltik/aries'
