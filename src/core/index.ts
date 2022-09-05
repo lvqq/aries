@@ -193,8 +193,13 @@ export const generateOutputByPlugin = async (
         output.forEach((item) => {
           fs.writeFileSync(
             path.resolve(
-              params.options.output ? params.options.output.split(sep).slice(0, -1).join(sep) : '',
-              item.filename
+              cwd,
+              path.join(
+                params.options.output
+                  ? params.options.output.split(sep).slice(0, -1).join(sep)
+                  : '',
+                item.filename
+              )
             ),
             item.content
           );

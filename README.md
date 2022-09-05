@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dm/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![coverage](https://coveralls.io/repos/github/lvqq/aries/badge.svg?branch=main)](https://coveralls.io/github/lvqq/aries?branch=main) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
+[![npm version](https://img.shields.io/npm/v/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![npm download count](https://img.shields.io/npm/dm/@tooltik/aries.svg)](https://www.npmjs.com/package/@tooltik/aries) [![coverage](https://coveralls.io/repos/github/lvqq/aries/badge.svg?branch=main)](https://coveralls.io/github/lvqq/aries?branch=main) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/lvqq/aries/CI) [![license](https://img.shields.io/npm/l/@tooltik/aries.svg)](LICENSE) 
 
 ## Aries ♈️
 Aries is a swagger converter cli, support typescript declaration, axios request function, markdown docs, mock server and so on
@@ -157,10 +157,10 @@ pnpm dev
 
 Make changes and run test
 ```bash
-pnpm test-gen
+pnpm test
 ```
 
-Uninstall
+If need uninstall
 ```bash
 pnpm rm --global @tooltik/aries
 ```

@@ -1,3 +1,9 @@
+## v0.11.2
+- 🐞[fix] path separate char error while cross platform
+- 🐞[fix] fix esbuild warning with `require.resolve`
+- ⚡[refactor] use jest to write test cases
+- ⚡[refactor] add github workflow
+
 ## v0.11.1
 - 🐞[fix] `.ariesrc.ts` require failed, add `esbuild` to build
 - 🐞[fix] husky script error while installing
