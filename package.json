@@ -29,7 +29,12 @@
     "typecheck": "tsc",
     "lint": "eslint --fix --quiet --ext .ts src bin",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent",
-    "test:ci": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test:ci": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "test-gen:ts": "aries to-ts -o ./dev/typescript.dev.ts",
+    "test-gen:request": "aries to-request -o ./dev/request.dev.ts",
+    "test-gen:md": "aries to-md -o ./dev/markdown.dev.md",
+    "test-gen:mock": "aries to-mock -o ./dev/mock.dev.json",
+    "test-gen:mockserver": "aries mock-server"
   },
   "repository": {
     "type": "git",
@@ -69,6 +74,7 @@
     "@types/lodash.groupby": "^4.6.7",
     "@types/lodash.mapvalues": "^4.6.7",
     "@types/node": "^18.7.13",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.5.0",
@@ -81,6 +87,7 @@
     "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
+    "supertest": "^6.2.4",
     "ts-jest": "^28.0.8",
     "tsup": "^6.2.3",
     "typescript": "^4.8.2"

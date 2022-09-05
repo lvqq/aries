@@ -2,7 +2,7 @@
 import { defineConfig } from './src'
 
 export default defineConfig({
-  url: './__tests__/swagger.json',
+  url: './__tests__/input/swagger.json',
   autoMock: false,
   autoRequired: true,
   formatMock: (data) => {

@@ -147,7 +147,7 @@ pnpm install
 
 Link package
 ```bash
-pnpm link --global
+pnpm build & pnpm link --global
 ```
 
 Run dev watch

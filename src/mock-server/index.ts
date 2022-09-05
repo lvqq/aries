@@ -1,12 +1,17 @@
-import express from 'express';
+import express, { Express } from 'express';
 import cors from 'cors';
+import type { Server } from 'node:http';
 import { generateOptionsAndSwagger } from '../core';
 import SwaggerParserV2 from '../core/parseV2';
 import { AriesConfig } from '../interface';
 
 export type MockServerOptions = Pick<AriesConfig, 'url' | 'port' | 'autoMock' | 'formatMock'>;
+export type MockServerReturns = Partial<{
+  server: Server;
+  app: Express;
+}>;
 
-export const mockServer = async (originOptions: MockServerOptions) => {
+export const mockServer = async (originOptions: MockServerOptions): Promise<MockServerReturns> => {
   let params;
   try {
     params = await generateOptionsAndSwagger(originOptions);
@@ -43,11 +48,15 @@ export const mockServer = async (originOptions: MockServerOptions) => {
         });
       });
 
-      app.listen(port, () => {
+      const server = app.listen(port, () => {
         console.log(`Mock server listening at http://localhost:${port}`);
       });
+
+      // return for unit test
+      return { app, server };
     }
   } catch (e) {
     console.log(e);
   }
+  return {};
 };

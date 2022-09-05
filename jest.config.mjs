@@ -9,7 +9,7 @@ const config = {
   },
   verbose: true,
   injectGlobals: true,
-  testMatch: ['**/__tests__/**/*.test.[jt]s'],
+  testMatch: ['**/__tests__/**/server.test.[jt]s'],
   testPathIgnorePatterns: ['/__tests__/output/'],
   collectCoverage: false,
   collectCoverageFrom: ['./src/**/*'],
