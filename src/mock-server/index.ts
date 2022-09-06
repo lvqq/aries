@@ -11,10 +11,13 @@ export type MockServerReturns = Partial<{
   app: Express;
 }>;
 
-export const mockServer = async (originOptions: MockServerOptions): Promise<MockServerReturns> => {
+export const mockServer = async (
+  originOptions: MockServerOptions,
+  useRcConfig = false
+): Promise<MockServerReturns> => {
   let params;
   try {
-    params = await generateOptionsAndSwagger(originOptions);
+    params = await generateOptionsAndSwagger({ ...originOptions, useRcConfig });
     if (params) {
       // parse swagger
       const { swagger, options } = params;

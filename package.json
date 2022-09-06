@@ -25,16 +25,16 @@
     "build": "rimraf dist && tsup --sourcemap",
     "build:production": "rimraf dist && tsup --treeshake",
     "prepare": "husky install",
-    "prepublish": "pnpm build:production",
+    "prepublish": "pnpm typecheck && pnpm build:production",
     "typecheck": "tsc",
     "lint": "eslint --fix --quiet --ext .ts src bin",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --silent",
     "test:ci": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "test-gen:ts": "aries to-ts -o ./dev/typescript.dev.ts",
-    "test-gen:request": "aries to-request -o ./dev/request.dev.ts",
-    "test-gen:md": "aries to-md -o ./dev/markdown.dev.md",
-    "test-gen:mock": "aries to-mock -o ./dev/mock.dev.json",
-    "test-gen:mockserver": "aries mock-server"
+    "test-dev:ts": "aries to-ts -o ./dev/typescript.dev.ts",
+    "test-dev:request": "aries to-request -o ./dev/request.dev.ts",
+    "test-dev:md": "aries to-md -o ./dev/markdown.dev.md",
+    "test-dev:mock": "aries to-mock -o ./dev/mock.dev.json",
+    "test-dev:mockserver": "aries mock-server"
   },
   "repository": {
     "type": "git",

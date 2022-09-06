@@ -147,4 +147,5 @@ export const genMd: Plugin.Function = ({ swagger, options }) => {
 
 export type ToMdOptions = Pick<AriesConfig, 'url' | 'output' | 'autoMock' | 'formatMock'>;
 
-export const toMd = async (options: ToMdOptions) => generateOutputByPlugin(genMd, options);
+export const toMd = async (options: ToMdOptions, useRcConfig = false) =>
+  generateOutputByPlugin(genMd, { ...options, useRcConfig });

@@ -35,4 +35,5 @@ export const genTs: Plugin.Function = async ({ swagger, options }) => {
 
 export type ToTsOptions = Pick<AriesConfig, 'url' | 'output' | 'autoRequired' | 'formatProp'>;
 
-export const toTs = (options: ToTsOptions) => generateOutputByPlugin(genTs, options);
+export const toTs = (options: ToTsOptions, useRcConfig = false) =>
+  generateOutputByPlugin(genTs, { ...options, useRcConfig });

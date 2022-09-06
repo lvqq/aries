@@ -13,7 +13,7 @@ import { DEFAULT_CONFIG_FILES, DEFAULT_CONFIG_OPTION_TRUE } from '../constants';
 const cwd = process.cwd();
 const _require = import.meta.url ? createRequire(import.meta.url) : require;
 const dynamicImport = new Function('file', 'return import(file)');
-type OptionalConfig = Partial<AriesConfig>;
+export type OptionalConfig = Partial<AriesConfig>;
 
 const loadConfigFromBundle = async (
   fileName: string,
@@ -125,8 +125,12 @@ const __dirname = path.dirname(__filename);
  * generate swagger json and config from command options
  * @param {*} options command options
  */
-export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
-  const params = await mergeOptionsFromRc(options);
+export const generateOptionsAndSwagger = async (
+  options: OptionalConfig & { useRcConfig?: boolean }
+) => {
+  // use config from .ariesrc, default is true
+  const { useRcConfig } = options;
+  const params = useRcConfig ? await mergeOptionsFromRc(options) : options;
   const { url } = params;
   // validate url
   if (!url) {
@@ -171,7 +175,7 @@ export const generateOptionsAndSwagger = async (options: OptionalConfig) => {
  */
 export const generateOutputByPlugin = async (
   fn: Plugin.Function,
-  options: OptionalConfig
+  options: OptionalConfig & { useRcConfig?: boolean }
 ): Promise<void> => {
   let params: Plugin.Params;
   let spinner = ora(chalk.blueBright('Fetch swagger json start')).start();

@@ -17,4 +17,5 @@ export const genMock: Plugin.Function = ({ swagger, options }) => {
 
 export type ToMockOptions = Pick<AriesConfig, 'url' | 'output' | 'autoMock' | 'formatMock'>;
 
-export const toMock = async (options: ToMockOptions) => generateOutputByPlugin(genMock, options);
+export const toMock = async (options: ToMockOptions, useRcConfig = false) =>
+  generateOutputByPlugin(genMock, { ...options, useRcConfig });

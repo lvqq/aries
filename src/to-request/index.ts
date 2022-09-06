@@ -89,4 +89,5 @@ export const genRequest: Plugin.Function = async ({ swagger, options }) => {
 
 export type ToRequestOptions = Pick<AriesConfig, 'url' | 'output' | 'autoRequired' | 'formatProp'>;
 
-export const toRequest = (options: ToRequestOptions) => generateOutputByPlugin(genRequest, options);
+export const toRequest = (options: ToRequestOptions, useRcConfig = false) =>
+  generateOutputByPlugin(genRequest, { ...options, useRcConfig });
