@@ -145,7 +145,7 @@ Install
 pnpm install
 ```
 
-Link package
+Link package after build
 ```bash
 pnpm build & pnpm link --global
 ```
@@ -160,7 +160,7 @@ Make changes and run test
 pnpm test
 ```
 
-If need uninstall
+Uninstall
 ```bash
 pnpm rm --global @tooltik/aries
 ```

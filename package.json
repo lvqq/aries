@@ -1,7 +1,7 @@
 {
   "name": "@tooltik/aries",
   "type": "module",
-  "version": "0.11.2",
+  "version": "0.11.3",
   "description": "A swagger converter cli, support TypeScript declaration, request function, markdown docs, mock js and so on",
   "packageManager": "pnpm@7.9.3",
   "main": "./dist/src/index.cjs",
@@ -104,6 +104,7 @@
     "swagger",
     "converter",
     "typescript",
+    "request",
     "markdown",
     "mock",
     "schema",
