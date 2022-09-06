@@ -1,3 +1,8 @@
+## v0.11.3
+- 🐞[fix] function call in esm/cjs will not read `.ariesrc` now
+- 🐞[fix] fix some ci errors
+- ⚡[refactor] add test cases for mock-server
+
 ## v0.11.2
 - 🐞[fix] path separate char error while cross platform
 - 🐞[fix] fix esbuild warning with `require.resolve`
