@@ -76,6 +76,12 @@ export type PostPetPetIdUploadImageResponse = ApiResponse;
  * @path /pet
  */
 export type PostPetRequestBody = Pet;
+export interface PostPetResponse {
+  code: number;  // int32
+  type: string;
+  message: string;
+  data: Pet;
+}
 /**
  * @method put
  * @path /pet
@@ -238,10 +244,6 @@ export interface GetUserLoginRequestQuery {
   password: string;
 }
 export type GetUserLoginResponse = string;
-/**
- * @method get
- * @path /user/logout
- */
 /**
  * @method post
  * @path /user

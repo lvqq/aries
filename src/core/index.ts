@@ -8,14 +8,14 @@ import { build } from 'esbuild';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import type { AriesConfig, Plugin } from '../interface';
-import { DEFAULT_CONFIG_FILES, DEFAULT_CONFIG_OPTION_TRUE } from '../constants';
+import { DEFAULT_CONFIG_FILES, DEFAULT_CONFIG_OPTION_TRUE, DEFAULT_PATTERN } from '../constants';
 
 const cwd = process.cwd();
 const _require = import.meta.url ? createRequire(import.meta.url) : require;
 const dynamicImport = new Function('file', 'return import(file)');
 export type OptionalConfig = Partial<AriesConfig>;
 
-const loadConfigFromBundle = async (
+export const loadConfigFromBundle = async (
   fileName: string,
   bundledCode: string,
   isESM: boolean
@@ -57,7 +57,7 @@ const loadConfigFromBundle = async (
  * merge .ariesrc.js and command options
  * @param {*} options command options
  */
-const mergeOptionsFromRc = async (options: OptionalConfig) => {
+export const mergeOptionsFromRc = async (options: OptionalConfig) => {
   // file .areisrc resolved path
   let resolvedPath: string | undefined;
   // .ariesrc config
@@ -131,6 +131,13 @@ export const generateOptionsAndSwagger = async (
   // use config from .ariesrc, default is true
   const { useRcConfig } = options;
   const params = useRcConfig ? await mergeOptionsFromRc(options) : options;
+  // transform relative path to absolute path
+  if (params.output && !path.isAbsolute(params.output)) {
+    params.output = path.resolve(cwd, params.output);
+  }
+  if (!params.pattern?.length) {
+    params.pattern = DEFAULT_PATTERN;
+  }
   const { url } = params;
   // validate url
   if (!url) {

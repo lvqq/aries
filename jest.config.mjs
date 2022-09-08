@@ -9,10 +9,10 @@ const config = {
   },
   verbose: true,
   injectGlobals: true,
-  testMatch: ['**/__tests__/**/*.test.[jt]s'],
-  testPathIgnorePatterns: ['/__tests__/output/'],
+  testMatch: ['<rootDir>/__tests__/**/*.test.[jt]s'],
+  testPathIgnorePatterns: ['<rootDir>/__tests__/input/', '<rootDir>/__tests__/output.*/'],
   collectCoverage: false,
-  collectCoverageFrom: ['./src/**/*'],
+  collectCoverageFrom: ['<rootDir>/src/**/*'],
   coverageDirectory: './coverage',
   // fix test cases with side effects (dynamic import) sharing the same evnironment may throw error, refer: https://github.com/facebook/jest/issues/11438
   maxWorkers: 10,

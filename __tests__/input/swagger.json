@@ -126,6 +126,24 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Test schema for allOf",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/Pet"
+                    }
+                  }
+                }
+              ]
+            }
+          },
           "405": {
             "description": "Invalid input"
           }

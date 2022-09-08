@@ -1,10 +1,10 @@
 export interface AriesConfig {
   url: string;
+  pattern?: string[];
   output?: string;
   autoMock?: boolean;
-  formatMock?: (data: any) => any;
+  formatMock?: (data: any, path?: string, method?: string) => any;
   autoRequired?: boolean;
-  formatProp?: (prop: string) => string;
   port?: number;
 }
 

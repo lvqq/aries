@@ -1,11 +1,13 @@
 import fromPairs from 'lodash.frompairs';
 import groupBy from 'lodash.groupby';
+import minimatch from 'minimatch';
 import { AriesConfig, Plugin, SwaggerV2 } from '../interface';
 import { generateOutputByPlugin } from '../core';
 import SwaggerParserV2 from '../core/parseV2';
 
 export const genMd: Plugin.Function = ({ swagger, options }) => {
   const { paths } = new SwaggerParserV2(swagger, options);
+  const { pattern } = options;
   const mdJson =
     swagger.tags && swagger.tags.length
       ? fromPairs(swagger.tags.map((tag) => [tag.name, tag]))
@@ -23,11 +25,14 @@ export const genMd: Plugin.Function = ({ swagger, options }) => {
       if (!mdJson[tagName].paths) {
         mdJson[tagName].paths = [];
       }
-      mdJson[tagName].paths.push({
-        ...schema,
-        path,
-        method,
-      });
+      // only push path of matching pattern
+      if (pattern?.some((item) => minimatch(path, item))) {
+        mdJson[tagName].paths.push({
+          ...schema,
+          path,
+          method,
+        });
+      }
     });
   });
 
@@ -135,17 +140,22 @@ export const genMd: Plugin.Function = ({ swagger, options }) => {
       )
       .join('\n');
 
-  const markdown = Object.values(mdJson).map(
-    (item, index) =>
-      `# ${index + 1}.${item.name}\n${
-        item.description ? `${item.description}\n` : ''
-      }${generatePathsToMd(item.paths, index + 1)}`
-  );
+  const markdown = Object.values(mdJson)
+    .filter((item) => item.paths.length)
+    .map(
+      (item, index) =>
+        `# ${index + 1}.${item.name}\n${
+          item.description ? `${item.description}\n` : ''
+        }${generatePathsToMd(item.paths, index + 1)}`
+    );
 
   return markdown.join('\n\n');
 };
 
-export type ToMdOptions = Pick<AriesConfig, 'url' | 'output' | 'autoMock' | 'formatMock'>;
+export type ToMdOptions = Pick<
+  AriesConfig,
+  'url' | 'pattern' | 'output' | 'autoMock' | 'formatMock'
+>;
 
 export const toMd = async (options: ToMdOptions, useRcConfig = false) =>
   generateOutputByPlugin(genMd, { ...options, useRcConfig });

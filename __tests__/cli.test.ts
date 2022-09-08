@@ -1,11 +1,9 @@
-import { describe, test, expect, jest } from '@jest/globals';
+import { describe, test, expect } from '@jest/globals';
 import { execSync } from 'child_process';
 import path from 'node:path';
 
-jest.useFakeTimers();
 const cwd = process.cwd();
-const jsonUrl = path.resolve(cwd, './__tests__/input/swagger.json');
-const yamlUrl = path.resolve(cwd, './__tests__/input/swagger.yml');
+const url = path.resolve(cwd, './__tests__/input/swagger.json');
 const outputPrefix = path.resolve(cwd, './__tests__/output.cli/');
 const execCli = (params: { url: string; command: string; outfile: string }) =>
   execSync(
@@ -15,89 +13,43 @@ const execCli = (params: { url: string; command: string; outfile: string }) =>
     }
   );
 
-describe('cli_test_to_ts', () => {
-  test('source_json', () => {
+describe('cli_test', () => {
+  test('to_ts', () => {
     expect.assertions(1);
     execCli({
-      url: jsonUrl,
+      url,
       command: 'to-ts',
-      outfile: 'typescript.json.ts',
+      outfile: 'typescript.ts',
     });
     expect('pass').toBe('pass');
   });
 
-  test('source_yaml', () => {
+  test('to_request', () => {
     expect.assertions(1);
     execCli({
-      url: yamlUrl,
-      command: 'to-ts',
-      outfile: 'typescript.yaml.ts',
-    });
-    expect('pass').toBe('pass');
-  });
-});
-
-describe('cli_test_to_request', () => {
-  test('source_json', () => {
-    expect.assertions(1);
-    execCli({
-      url: jsonUrl,
+      url,
       command: 'to-request',
-      outfile: 'request.json.ts',
+      outfile: 'request.ts',
     });
     expect('pass').toBe('pass');
   });
 
-  test('source_yaml', () => {
+  test('to_md', () => {
     expect.assertions(1);
     execCli({
-      url: yamlUrl,
-      command: 'to-request',
-      outfile: 'request.yaml.ts',
-    });
-    expect('pass').toBe('pass');
-  });
-});
-
-describe('cli_test_to_md', () => {
-  test('source_json', () => {
-    expect.assertions(1);
-    execCli({
-      url: jsonUrl,
+      url,
       command: 'to-md',
-      outfile: 'markdown.json.md',
+      outfile: 'markdown.md',
     });
     expect('pass').toBe('pass');
   });
 
-  test('source_yaml', () => {
+  test('to_mock', () => {
     expect.assertions(1);
     execCli({
-      url: yamlUrl,
-      command: 'to-md',
-      outfile: 'markdown.yaml.md',
-    });
-    expect('pass').toBe('pass');
-  });
-});
-
-describe('cli_test_to_mock', () => {
-  test('source_json', () => {
-    expect.assertions(1);
-    execCli({
-      url: jsonUrl,
+      url,
       command: 'to-mock',
-      outfile: 'mock.json.json',
-    });
-    expect('pass').toBe('pass');
-  });
-
-  test('source_yaml', () => {
-    expect.assertions(1);
-    execCli({
-      url: yamlUrl,
-      command: 'to-mock',
-      outfile: 'mock.yaml.json',
+      outfile: 'mock.json',
     });
     expect('pass').toBe('pass');
   });

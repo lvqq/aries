@@ -1,6 +1,121 @@
 # 1.pet
 Everything about your Pets
-## 1.1 POST /pet
+## 1.1 POST /pet/{petId}/uploadImage
+### Parameters
+#### path
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+petId | Y | integer | ID of pet to update
+#### formData
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+additionalMetadata | N | string | Additional data to pass to server
+file | N | file | file to upload
+### Request samples
+#### path
+```
+{
+  "petId": 0
+}
+```
+#### formData
+```
+{
+  "additionalMetadata": "",
+  "file": null
+}
+```
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": {
+    "code": 0,
+    "type": "",
+    "message": ""
+  }
+}
+```
+## 1.2 POST /pet
+### Parameters
+#### body
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+body | N/A | object | Pet object that needs to be added to the store
+##### body
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+id | N | integer | N/A
+category | N | object | N/A
+name | Y | string | N/A
+photoUrls | Y | string[] | N/A
+tags | N | object[] | N/A
+status | N | string | pet status in the store
+##### category
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+id | N/A | integer | N/A
+name | N/A | string | N/A
+
+##### tags
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+id | N/A | integer | N/A
+name | N/A | string | N/A
+### Request samples
+#### body
+```
+{
+  "id": 0,
+  "category": {
+    "id": 0,
+    "name": ""
+  },
+  "name": "doggie",
+  "photoUrls": [
+    ""
+  ],
+  "tags": [
+    {
+      "id": 0,
+      "name": ""
+    }
+  ],
+  "status": "available"
+}
+```
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": {
+    "code": 0,
+    "type": "",
+    "message": "",
+    "data": {
+      "id": 0,
+      "category": {
+        "id": 0,
+        "name": ""
+      },
+      "name": "doggie",
+      "photoUrls": [
+        ""
+      ],
+      "tags": [
+        {
+          "id": 0,
+          "name": ""
+        }
+      ],
+      "status": "available"
+    }
+  }
+}
+```
+## 1.3 PUT /pet
 ### Parameters
 #### body
 Param | Required | Type | Remark
@@ -56,63 +171,7 @@ name | N/A | string | N/A
   "data": {}
 }
 ```
-## 1.2 PUT /pet
-### Parameters
-#### body
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-body | N/A | object | Pet object that needs to be added to the store
-##### body
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-id | N | integer | N/A
-category | N | object | N/A
-name | Y | string | N/A
-photoUrls | Y | string[] | N/A
-tags | N | object[] | N/A
-status | N | string | pet status in the store
-##### category
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-id | N/A | integer | N/A
-name | N/A | string | N/A
-
-##### tags
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-id | N/A | integer | N/A
-name | N/A | string | N/A
-### Request samples
-#### body
-```
-{
-  "id": 0,
-  "category": {
-    "id": 0,
-    "name": ""
-  },
-  "name": "doggie",
-  "photoUrls": [
-    ""
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "name": ""
-    }
-  ],
-  "status": "available"
-}
-```
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": {}
-}
-```
-## 1.3 GET /pet/findByStatus
+## 1.4 GET /pet/findByStatus
 Multiple status values can be provided with comma separated strings
 ### Parameters
 #### query
@@ -155,8 +214,8 @@ status | Y | string[] | Status values that need to be considered for filter
   ]
 }
 ```
-## 1.4 GET /pet/findByTags
-Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing.
+## 1.5 GET /pet/findByTags
+Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
 ### Parameters
 #### query
 Param | Required | Type | Remark
@@ -198,7 +257,7 @@ tags | Y | string[] | Tags to filter by
   ]
 }
 ```
-## 1.5 GET /pet/{petId}
+## 1.6 GET /pet/{petId}
 Returns a single pet
 ### Parameters
 #### path
@@ -237,7 +296,7 @@ petId | Y | integer | ID of pet to return
   }
 }
 ```
-## 1.6 POST /pet/{petId}
+## 1.7 POST /pet/{petId}
 ### Parameters
 #### path
 Param | Required | Type | Remark
@@ -270,7 +329,7 @@ status | N | string | Updated status of the pet
   "data": {}
 }
 ```
-## 1.7 DELETE /pet/{petId}
+## 1.8 DELETE /pet/{petId}
 ### Parameters
 #### header
 Param | Required | Type | Remark
@@ -301,61 +360,10 @@ petId | Y | integer | Pet id to delete
   "data": {}
 }
 ```
-## 1.8 POST /pet/{petId}/uploadImage
-### Parameters
-#### path
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-petId | Y | integer | ID of pet to update
-#### formData
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-additionalMetadata | N | string | Additional data to pass to server
-file | N | file | file to upload
-### Request samples
-#### path
-```
-{
-  "petId": 0
-}
-```
-#### formData
-```
-{
-  "additionalMetadata": "",
-  "file": null
-}
-```
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": {
-    "code": 0,
-    "type": "",
-    "message": ""
-  }
-}
-```
 
 # 2.store
 Access to Petstore orders
-## 2.1 GET /store/inventory
-Returns a map of status codes to quantities
-### Parameters
-N/A
-### Request samples
-N/A
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": {}
-}
-```
-## 2.2 POST /store/order
+## 2.1 POST /store/order
 ### Parameters
 #### body
 Param | Required | Type | Remark
@@ -397,8 +405,8 @@ complete | N/A | boolean | N/A
   }
 }
 ```
-## 2.3 GET /store/order/{orderId}
-For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions
+## 2.2 GET /store/order/{orderId}
+For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
 ### Parameters
 #### path
 Param | Required | Type | Remark
@@ -426,8 +434,8 @@ orderId | Y | integer | ID of pet that needs to be fetched
   }
 }
 ```
-## 2.4 DELETE /store/order/{orderId}
-For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors
+## 2.3 DELETE /store/order/{orderId}
+For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
 ### Parameters
 #### path
 Param | Required | Type | Remark
@@ -448,50 +456,24 @@ orderId | Y | integer | ID of the order that needs to be deleted
   "data": {}
 }
 ```
+## 2.4 GET /store/inventory
+Returns a map of status codes to quantities
+### Parameters
+N/A
+### Request samples
+N/A
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": {}
+}
+```
 
 # 3.user
 Operations about user
-## 3.1 POST /user
-This can only be done by the logged in user.
-### Parameters
-#### body
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-body | Y | object | Created user object
-##### body
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-id | N/A | integer | N/A
-username | N/A | string | N/A
-firstName | N/A | string | N/A
-lastName | N/A | string | N/A
-email | N/A | string | N/A
-password | N/A | string | N/A
-phone | N/A | string | N/A
-userStatus | N/A | integer | User Status
-### Request samples
-#### body
-```
-{
-  "id": 0,
-  "username": "",
-  "firstName": "",
-  "lastName": "",
-  "email": "",
-  "password": "",
-  "phone": "",
-  "userStatus": 0
-}
-```
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": {}
-}
-```
-## 3.2 POST /user/createWithArray
+## 3.1 POST /user/createWithArray
 ### Parameters
 #### body
 Param | Required | Type | Remark
@@ -533,7 +515,7 @@ userStatus | N/A | integer | User Status
   "data": {}
 }
 ```
-## 3.3 POST /user/createWithList
+## 3.2 POST /user/createWithList
 ### Parameters
 #### body
 Param | Required | Type | Remark
@@ -575,43 +557,7 @@ userStatus | N/A | integer | User Status
   "data": {}
 }
 ```
-## 3.4 GET /user/login
-### Parameters
-#### query
-Param | Required | Type | Remark
----- | -------- | -------- | ----
-username | Y | string | The user name for login
-password | Y | string | The password for login in clear text
-### Request samples
-#### query
-```
-{
-  "username": "",
-  "password": ""
-}
-```
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": ""
-}
-```
-## 3.5 GET /user/logout
-### Parameters
-N/A
-### Request samples
-N/A
-### Response samples
-```
-{
-  "code": 0,
-  "msg": "success",
-  "data": {}
-}
-```
-## 3.6 GET /user/{username}
+## 3.3 GET /user/{username}
 ### Parameters
 #### path
 Param | Required | Type | Remark
@@ -641,7 +587,7 @@ username | Y | string | The name that needs to be fetched. Use user1 for testing
   }
 }
 ```
-## 3.7 PUT /user/{username}
+## 3.4 PUT /user/{username}
 This can only be done by the logged in user.
 ### Parameters
 #### path
@@ -691,7 +637,7 @@ userStatus | N/A | integer | User Status
   "data": {}
 }
 ```
-## 3.8 DELETE /user/{username}
+## 3.5 DELETE /user/{username}
 This can only be done by the logged in user.
 ### Parameters
 #### path
@@ -703,6 +649,82 @@ username | Y | string | The name that needs to be deleted
 ```
 {
   "username": ""
+}
+```
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": {}
+}
+```
+## 3.6 GET /user/login
+### Parameters
+#### query
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+username | Y | string | The user name for login
+password | Y | string | The password for login in clear text
+### Request samples
+#### query
+```
+{
+  "username": "",
+  "password": ""
+}
+```
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": ""
+}
+```
+## 3.7 GET /user/logout
+### Parameters
+N/A
+### Request samples
+N/A
+### Response samples
+```
+{
+  "code": 0,
+  "msg": "success",
+  "data": {}
+}
+```
+## 3.8 POST /user
+This can only be done by the logged in user.
+### Parameters
+#### body
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+body | Y | object | Created user object
+##### body
+Param | Required | Type | Remark
+---- | -------- | -------- | ----
+id | N/A | integer | N/A
+username | N/A | string | N/A
+firstName | N/A | string | N/A
+lastName | N/A | string | N/A
+email | N/A | string | N/A
+password | N/A | string | N/A
+phone | N/A | string | N/A
+userStatus | N/A | integer | User Status
+### Request samples
+#### body
+```
+{
+  "id": 0,
+  "username": "",
+  "firstName": "",
+  "lastName": "",
+  "email": "",
+  "password": "",
+  "phone": "",
+  "userStatus": 0
 }
 ```
 ### Response samples

@@ -199,7 +199,7 @@ class SwaggerParserV2 {
               }
             ),
             // generate response mock data
-            responses: formatMock ? formatMock(mockResponse) : mockResponse,
+            responses: formatMock ? formatMock(mockResponse, path, method) : mockResponse,
           },
           ts: [
             // group by 'in' path/body/formData
@@ -348,7 +348,7 @@ class SwaggerParserV2 {
     schema: SwaggerV2.Definition,
     options: { layer?: number; semi?: boolean; bracketSplit?: boolean } = {}
   ): string {
-    const { autoRequired = true, formatProp } = this.options;
+    const { autoRequired = true } = this.options;
     /**
      * layer: recurve layer
      * semi: endline semi
@@ -372,7 +372,7 @@ class SwaggerParserV2 {
               ? sourceSchema.required.includes(key)
               : autoRequired;
             const childAllOfSchema = sourceSchema.properties[key];
-            let propKey = formatProp ? formatProp(key) : key;
+            let propKey = key;
             if (InvalidChar.test(propKey)) {
               propKey = `"${propKey}"`;
             }
@@ -404,7 +404,7 @@ class SwaggerParserV2 {
                 ? subSchema.required.includes(key)
                 : autoRequired;
               const childSchema = subSchema.properties![key];
-              let propKey = formatProp ? formatProp(key) : key;
+              let propKey = key;
               if (InvalidChar.test(propKey)) {
                 propKey = `"${propKey}"`;
               }

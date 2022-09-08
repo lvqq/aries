@@ -5,44 +5,36 @@ import { mockServer, MockServerReturns } from '../src';
 
 jest.useFakeTimers();
 const cwd = process.cwd();
-const jsonUrl = path.resolve(cwd, './__tests__/input/swagger.json');
-const yamlUrl = path.resolve(cwd, './__tests__/input/swagger.yml');
+const url = path.resolve(cwd, './__tests__/input/swagger.json');
 
-describe('server_mock_test', () => {
-  let jsonMockServer: MockServerReturns;
-  let yamlMockServer: MockServerReturns;
+describe('server_test', () => {
+  let testMockServer: MockServerReturns;
 
   beforeAll(async () => {
-    jsonMockServer = await mockServer({
-      url: jsonUrl,
+    testMockServer = await mockServer({
+      url,
       autoMock: false,
       port: 3001,
-    });
-
-    yamlMockServer = await mockServer({
-      url: yamlUrl,
-      autoMock: false,
-      port: 3002,
     });
   });
 
   afterAll(async () => {
-    jsonMockServer?.server?.close();
-    yamlMockServer?.server?.close();
+    testMockServer?.server?.close();
   });
 
-  test('source_json', async () => {
+  test('mock_server_get', async () => {
     expect.assertions(1);
-    if (jsonMockServer) {
-      const res = await request(jsonMockServer.server).get('/v2/pet/findByStatus');
+    if (testMockServer) {
+      const res = await request(testMockServer.server).get('/v2/pet/findByStatus');
       expect(res.statusCode).toBe(200);
     }
   });
 
-  test('source_yaml', async () => {
+  test('mock_server_post', async () => {
     expect.assertions(1);
-    if (yamlMockServer) {
-      const res = await request(yamlMockServer.server).get('/v2/pet/findByStatus');
+    if (testMockServer) {
+      await request(testMockServer.server).options('/v2/pet');
+      const res = await request(testMockServer.server).post('/v2/pet');
       expect(res.statusCode).toBe(200);
     }
   });

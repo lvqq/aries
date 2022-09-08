@@ -8,3 +8,5 @@ export const DEFAULT_CONFIG_FILES = [
 ] as const;
 
 export const DEFAULT_CONFIG_OPTION_TRUE = ['autoRequired', 'autoMock'] as const;
+
+export const DEFAULT_PATTERN = ['/**/*'];

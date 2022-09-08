@@ -1,3 +1,9 @@
+## v0.12.0
+- 🌟[feature] support `pattern` config of glob rule to match url
+- 🌟[feature] `formatMock` function now support 2nd param path & 3rd param method
+- 🐞[fix] path resovle error in output, add transform from relative path to absolut path
+- ⚡[refactor] rewrite all test cases, and add new test cases for core modules
+
 ## v0.11.3
 - 🐞[fix] function call in esm/cjs will not read `.ariesrc` now
 - 🐞[fix] fix some ci errors

@@ -18,6 +18,10 @@ const createProgram = () => {
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
     .option('-o --output <output>', 'Specify output file path', './swagger.types.ts')
     .option(
+      '-p --pattern <pattern...>',
+      'Pattern to be matched for request path, support glob rule'
+    )
+    .option(
       '--no-autoRequired',
       'Do not generate the property as required automatically when there is no required array in definitions'
     )
@@ -33,6 +37,10 @@ const createProgram = () => {
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
     .option('-o --output <output>', 'Specify output file path', './swagger.request.ts')
     .option(
+      '-p --pattern <pattern...>',
+      'Pattern to be matched for request path, support glob rule'
+    )
+    .option(
       '--no-autoRequired',
       'Do not generate the property as required automatically when there is no required array in definitions'
     )
@@ -45,6 +53,10 @@ const createProgram = () => {
     .description('Convert swagger to markdown docs')
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
     .option('-o --output <output>', 'Specify output file path', './swagger.docs.md')
+    .option(
+      '-p --pattern <pattern...>',
+      'Pattern to be matched for request path, support glob rule'
+    )
     .option(
       '--no-autoMock',
       'Do not generate the mock samples automatically when there is no example in schema'
@@ -59,6 +71,10 @@ const createProgram = () => {
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
     .option('-o --output <output>', 'Specify output file path', './swagger.mock.json')
     .option(
+      '-p --pattern <pattern...>',
+      'Pattern to be matched for request path, support glob rule'
+    )
+    .option(
       '--no-autoMock',
       'Do not generate the mock response automatically when there is no example in schema'
     )
@@ -70,6 +86,10 @@ const createProgram = () => {
     .command('mock-server')
     .description('Start a local server to return the mock interface')
     .option('-u, --url <url>', 'Swagger link, support relative path or remote url')
+    .option(
+      '-p --pattern <pattern...>',
+      'Pattern to be matched for request path, support glob rule'
+    )
     .option('-p, --port <port>', 'Mock server port', '3000')
     .option(
       '--no-autoMock',

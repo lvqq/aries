@@ -1,8 +1,39 @@
 {
+  "POST /v2/pet/{petId}/uploadImage": {
+    "code": 0,
+    "msg": "success",
+    "data": {
+      "code": 0,
+      "type": "",
+      "message": ""
+    }
+  },
   "POST /v2/pet": {
     "code": 0,
     "msg": "success",
-    "data": {}
+    "data": {
+      "code": 0,
+      "type": "",
+      "message": "",
+      "data": {
+        "id": 0,
+        "category": {
+          "id": 0,
+          "name": ""
+        },
+        "name": "doggie",
+        "photoUrls": [
+          ""
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": ""
+          }
+        ],
+        "status": "available"
+      }
+    }
   },
   "PUT /v2/pet": {
     "code": 0,
@@ -89,20 +120,6 @@
     "msg": "success",
     "data": {}
   },
-  "POST /v2/pet/{petId}/uploadImage": {
-    "code": 0,
-    "msg": "success",
-    "data": {
-      "code": 0,
-      "type": "",
-      "message": ""
-    }
-  },
-  "GET /v2/store/inventory": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
   "POST /v2/store/order": {
     "code": 0,
     "msg": "success",
@@ -132,7 +149,7 @@
     "msg": "success",
     "data": {}
   },
-  "POST /v2/user": {
+  "GET /v2/store/inventory": {
     "code": 0,
     "msg": "success",
     "data": {}
@@ -143,16 +160,6 @@
     "data": {}
   },
   "POST /v2/user/createWithList": {
-    "code": 0,
-    "msg": "success",
-    "data": {}
-  },
-  "GET /v2/user/login": {
-    "code": 0,
-    "msg": "success",
-    "data": ""
-  },
-  "GET /v2/user/logout": {
     "code": 0,
     "msg": "success",
     "data": {}
@@ -177,6 +184,21 @@
     "data": {}
   },
   "DELETE /v2/user/{username}": {
+    "code": 0,
+    "msg": "success",
+    "data": {}
+  },
+  "GET /v2/user/login": {
+    "code": 0,
+    "msg": "success",
+    "data": ""
+  },
+  "GET /v2/user/logout": {
+    "code": 0,
+    "msg": "success",
+    "data": {}
+  },
+  "POST /v2/user": {
     "code": 0,
     "msg": "success",
     "data": {}
