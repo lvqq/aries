@@ -13,6 +13,7 @@
   ],
   "plugins": [
     "@typescript-eslint",
+    "import",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",

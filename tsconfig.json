@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es6",                
-    "lib": ["es5", "es6", "esnext"],
+    "target": "esnext",                
+    "lib": ["esnext"],
     "types": ["node"],
-    "module": "es2020",
+    "module": "esnext",
     "noEmit": true,
     "declaration": true, 
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "dist"
+    "noUnusedParameters": true
   },
   "include": ["src", "bin", "__tests__"],
   "exclude": ["__tests__/output.*/**/*"]

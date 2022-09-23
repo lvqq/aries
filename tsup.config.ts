@@ -10,9 +10,5 @@ export default defineConfig({
     };
   },
   target: 'node12',
-  bundle: true,
-  splitting: false,
-  sourcemap: false,
   dts: true,
-  clean: false,
 });

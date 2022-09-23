@@ -16,7 +16,7 @@ const createProgram = () => {
     .command('to-ts')
     .description('Convert swagger to typescript declaration')
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-    .option('-o --output <output>', 'Specify output file path', './swagger.types.ts')
+    .option('-o, --output <output>', 'Specify output file path', './swagger.types.ts')
     .option(
       '-p --pattern <pattern...>',
       'Pattern to be matched for request path, support glob rule'
@@ -35,9 +35,9 @@ const createProgram = () => {
       'Convert swagger to request function, generate <output> file and <output>.types file'
     )
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-    .option('-o --output <output>', 'Specify output file path', './swagger.request.ts')
+    .option('-o, --output <output>', 'Specify output file path', './swagger.request.ts')
     .option(
-      '-p --pattern <pattern...>',
+      '-p, --pattern <pattern...>',
       'Pattern to be matched for request path, support glob rule'
     )
     .option(
@@ -52,9 +52,9 @@ const createProgram = () => {
     .command('to-md')
     .description('Convert swagger to markdown docs')
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-    .option('-o --output <output>', 'Specify output file path', './swagger.docs.md')
+    .option('-o, --output <output>', 'Specify output file path', './swagger.docs.md')
     .option(
-      '-p --pattern <pattern...>',
+      '-p, --pattern <pattern...>',
       'Pattern to be matched for request path, support glob rule'
     )
     .option(
@@ -69,9 +69,9 @@ const createProgram = () => {
     .command('to-mock')
     .description('Convert swagger to mock json')
     .option('-u, --url <url>', 'Swagger link to generate, support relative path or remote url')
-    .option('-o --output <output>', 'Specify output file path', './swagger.mock.json')
+    .option('-o, --output <output>', 'Specify output file path', './swagger.mock.json')
     .option(
-      '-p --pattern <pattern...>',
+      '-p, --pattern <pattern...>',
       'Pattern to be matched for request path, support glob rule'
     )
     .option(
@@ -87,7 +87,7 @@ const createProgram = () => {
     .description('Start a local server to return the mock interface')
     .option('-u, --url <url>', 'Swagger link, support relative path or remote url')
     .option(
-      '-p --pattern <pattern...>',
+      '-p, --pattern <pattern...>',
       'Pattern to be matched for request path, support glob rule'
     )
     .option('-p, --port <port>', 'Mock server port', '3000')

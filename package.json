@@ -23,7 +23,7 @@
   "scripts": {
     "dev": "rimraf dist && tsup --sourcemap --watch",
     "build": "rimraf dist && tsup --sourcemap",
-    "build:production": "rimraf dist && tsup --treeshake",
+    "build:production": "rimraf dist && tsup --treeshake --minify",
     "prepare": "husky install",
     "prepublish": "pnpm typecheck && pnpm build:production",
     "typecheck": "tsc",
