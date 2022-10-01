@@ -1,4 +1,4 @@
-__tests__/output/**/*
+__tests__/output
 test
 node_modules
 dist

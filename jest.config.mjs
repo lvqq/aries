@@ -10,7 +10,7 @@ const config = {
   verbose: true,
   injectGlobals: true,
   testMatch: ['<rootDir>/__tests__/**/*.test.[jt]s'],
-  testPathIgnorePatterns: ['<rootDir>/__tests__/input/', '<rootDir>/__tests__/output.*/'],
+  testPathIgnorePatterns: ['<rootDir>/__tests__/input/', '<rootDir>/__tests__/output/'],
   collectCoverage: false,
   collectCoverageFrom: ['<rootDir>/src/**/*'],
   coverageDirectory: './coverage',

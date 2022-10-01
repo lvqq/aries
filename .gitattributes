@@ -2,4 +2,4 @@
 *.js text eol=lf
 
 .husky/** linguist-vendored
-__tests__/output.*/** linguist-generated
+__tests__/output/** linguist-generated
