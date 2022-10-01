@@ -4,8 +4,7 @@ import path from 'node:path';
 import { mockServer, MockServerReturns } from '../src';
 
 jest.useFakeTimers();
-const cwd = process.cwd();
-const url = path.resolve(cwd, './__tests__/input/swagger.json');
+const url = path.resolve('./__tests__/input/swagger.json');
 
 describe('server_test', () => {
   let testMockServer: MockServerReturns;

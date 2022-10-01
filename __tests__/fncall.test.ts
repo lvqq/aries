@@ -1,12 +1,19 @@
-import { describe, test, expect } from '@jest/globals';
+import { describe, test, expect, beforeAll } from '@jest/globals';
 import path from 'node:path';
+import fs from 'node:fs';
 import { toMd, toMock, toRequest, toTs } from '../src';
 
-const cwd = process.cwd();
-const url = path.resolve(cwd, './__tests__/input/swagger.json');
-const outputPrefix = path.resolve(cwd, './__tests__/output.fncall/');
+const url = path.resolve('./__tests__/input/swagger.json');
+const outputPrefix = path.resolve('./__tests__/output');
 
 describe('fncall_test', () => {
+  beforeAll(async () => {
+    if (fs.existsSync(outputPrefix)) {
+      await fs.promises.rm(outputPrefix, { recursive: true });
+    }
+    await fs.promises.mkdir(outputPrefix);
+  });
+
   test('to_ts', async () => {
     expect.assertions(1);
     await toTs({

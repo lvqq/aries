@@ -7,9 +7,8 @@ import {
   generateOutputByPlugin,
 } from '../src/core';
 
-const cwd = process.cwd();
-const jsonUrl = path.resolve(cwd, './__tests__/input/swagger.json');
-const yamlUrl = path.resolve(cwd, './__tests__/input/swagger.yml');
+const jsonUrl = path.resolve('./__tests__/input/swagger.json');
+const yamlUrl = path.resolve('./__tests__/input/swagger.yml');
 const onlineUrl = 'https://petstore.swagger.io/v2/swagger.json';
 const notFoundUrl = 'http://localhost:8080/404/not_found';
 const notFoundPath = './404/not_found';
@@ -17,7 +16,7 @@ const notFoundPath = './404/not_found';
 describe('load_config_test', () => {
   test('cjs', async () => {
     const result = await loadConfigFromBundle(
-      path.resolve(cwd, 'test-cjs'),
+      path.resolve('test-cjs'),
       'module.exports.default = 1',
       false
     );

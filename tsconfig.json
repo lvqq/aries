@@ -17,5 +17,5 @@
     "noUnusedParameters": true
   },
   "include": ["src", "bin", "__tests__"],
-  "exclude": ["__tests__/output.*/**/*"]
+  "exclude": ["__tests__/output/**/*"]
 }

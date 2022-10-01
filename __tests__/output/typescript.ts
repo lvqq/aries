@@ -1,14 +1,14 @@
 export interface ApiResponse {
-  code: number;  // int32
+  code: number; // int32
   type: string;
   message: string;
 }
 export interface Category {
-  id: number;  // int64
+  id: number; // int64
   name: string;
 }
 export interface Pet {
-  id?: number;  // int64
+  id?: number; // int64
   category?: Category;
   /**
    * example: doggie
@@ -19,25 +19,25 @@ export interface Pet {
   /**
    * pet status in the store
    */
-  status?: "available" | "pending" | "sold";
+  status?: 'available' | 'pending' | 'sold';
 }
 export interface Tag {
-  id: number;  // int64
+  id: number; // int64
   name: string;
 }
 export interface Order {
-  id: number;  // int64
-  petId: number;  // int64
-  quantity: number;  // int32
-  shipDate: string;  // date-time
+  id: number; // int64
+  petId: number; // int64
+  quantity: number; // int32
+  shipDate: string; // date-time
   /**
    * Order Status
    */
-  status: "placed" | "approved" | "delivered";
+  status: 'placed' | 'approved' | 'delivered';
   complete: boolean;
 }
 export interface User {
-  id: number;  // int64
+  id: number; // int64
   username: string;
   firstName: string;
   lastName: string;
@@ -47,7 +47,7 @@ export interface User {
   /**
    * User Status
    */
-  userStatus: number;  // int32
+  userStatus: number; // int32
 }
 
 /**
@@ -58,7 +58,7 @@ export interface PostPetPetIdUploadImageRequestPath {
   /**
    * ID of pet to update
    */
-  petId: number;  // int64
+  petId: number; // int64
 }
 export interface PostPetPetIdUploadImageRequestFormData {
   /**
@@ -77,7 +77,7 @@ export type PostPetPetIdUploadImageResponse = ApiResponse;
  */
 export type PostPetRequestBody = Pet;
 export interface PostPetResponse {
-  code: number;  // int32
+  code: number; // int32
   type: string;
   message: string;
   data: Pet;
@@ -95,7 +95,7 @@ export interface GetPetFindByStatusRequestQuery {
   /**
    * Status values that need to be considered for filter
    */
-  status: ("available" | "pending" | "sold")[];
+  status: ('available' | 'pending' | 'sold')[];
 }
 export type GetPetFindByStatusResponse = Pet[];
 /**
@@ -117,7 +117,7 @@ export interface GetPetPetIdRequestPath {
   /**
    * ID of pet to return
    */
-  petId: number;  // int64
+  petId: number; // int64
 }
 export type GetPetPetIdResponse = Pet;
 /**
@@ -128,7 +128,7 @@ export interface PostPetPetIdRequestPath {
   /**
    * ID of pet that needs to be updated
    */
-  petId: number;  // int64
+  petId: number; // int64
 }
 export interface PostPetPetIdRequestFormData {
   /**
@@ -151,7 +151,7 @@ export interface DeletePetPetIdRequestPath {
   /**
    * Pet id to delete
    */
-  petId: number;  // int64
+  petId: number; // int64
 }
 /**
  * @method post
@@ -167,7 +167,7 @@ export interface GetStoreOrderOrderIdRequestPath {
   /**
    * ID of pet that needs to be fetched
    */
-  orderId: number;  // int64
+  orderId: number; // int64
 }
 export type GetStoreOrderOrderIdResponse = Order;
 /**
@@ -178,14 +178,14 @@ export interface DeleteStoreOrderOrderIdRequestPath {
   /**
    * ID of the order that needs to be deleted
    */
-  orderId: number;  // int64
+  orderId: number; // int64
 }
 /**
  * @method get
  * @path /store/inventory
  */
 export interface GetStoreInventoryResponse {
-  [name: string]: number;  // int32
+  [name: string]: number; // int32
 }
 /**
  * @method post
@@ -203,7 +203,7 @@ export type PostUserCreateWithListRequestBody = User[];
  */
 export interface GetUserUsernameRequestPath {
   /**
-   * The name that needs to be fetched. Use user1 for testing. 
+   * The name that needs to be fetched. Use user1 for testing.
    */
   username: string;
 }

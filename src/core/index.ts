@@ -26,12 +26,12 @@ export const loadConfigFromBundle = async (
   if (isESM) {
     const esmFileTemp = `${fileTemp}.mjs`;
     const esmFileUrl = `${pathToFileURL(fileTemp)}.mjs`;
-    fs.writeFileSync(esmFileTemp, bundledCode);
+    await fs.promises.writeFile(esmFileTemp, bundledCode);
     try {
       return (await dynamicImport(esmFileUrl)).default;
     } finally {
       try {
-        fs.unlinkSync(esmFileTemp);
+        await fs.promises.unlink(esmFileTemp);
       } catch (e) {
         // catch error
       }
@@ -40,12 +40,12 @@ export const loadConfigFromBundle = async (
   // for cjs
   else {
     const cjsFileTemp = `${fileTemp}.cjs`;
-    fs.writeFileSync(cjsFileTemp, bundledCode);
+    await fs.promises.writeFile(cjsFileTemp, bundledCode);
     try {
       return _require(cjsFileTemp).default;
     } finally {
       try {
-        fs.unlinkSync(cjsFileTemp);
+        await fs.promises.unlink(cjsFileTemp);
       } catch (e) {
         // catch error
       }
@@ -63,7 +63,7 @@ export const mergeOptionsFromRc = async (options: OptionalConfig) => {
   // .ariesrc config
   let ariesrc: OptionalConfig;
   for (const filename of DEFAULT_CONFIG_FILES) {
-    const filePath = path.resolve(cwd, filename);
+    const filePath = path.resolve(filename);
     if (!fs.existsSync(filePath)) continue;
     resolvedPath = filePath;
     break;
@@ -77,7 +77,7 @@ export const mergeOptionsFromRc = async (options: OptionalConfig) => {
     } else if (/\.c[jt]s$/.test(resolvedPath)) {
       isESM = false;
     } else {
-      const pkg = _require(path.resolve(cwd, 'package.json'));
+      const pkg = _require(path.resolve('package.json'));
       isESM = !!pkg && pkg?.type === 'module';
     }
     const output = await build({
@@ -133,7 +133,7 @@ export const generateOptionsAndSwagger = async (
   const params = useRcConfig ? await mergeOptionsFromRc(options) : options;
   // transform relative path to absolute path
   if (params.output && !path.isAbsolute(params.output)) {
-    params.output = path.resolve(cwd, params.output);
+    params.output = path.resolve(params.output);
   }
   if (!params.pattern?.length) {
     params.pattern = DEFAULT_PATTERN;
@@ -157,9 +157,9 @@ export const generateOptionsAndSwagger = async (
   } else {
     try {
       if (isYaml) {
-        swagger = fs.readFileSync(path.resolve(cwd, url), 'utf-8');
+        swagger = await fs.promises.readFile(path.resolve(url), 'utf-8');
       } else {
-        swagger = _require(path.resolve(cwd, url));
+        swagger = _require(path.resolve(url));
       }
     } catch (e) {
       throw new Error(`require swagger json failed, check if url is valid: ${url}`);
@@ -201,23 +201,22 @@ export const generateOutputByPlugin = async (
       spinner = ora(chalk.blueBright('Generate file start')).start();
       const output = await fn(params);
       if (Array.isArray(output)) {
-        output.forEach((item) => {
-          fs.writeFileSync(
-            path.resolve(
-              cwd,
-              path.join(
+        await Promise.all(
+          output.map((item) =>
+            fs.promises.writeFile(
+              path.resolve(
                 params.options.output
                   ? params.options.output.split(sep).slice(0, -1).join(sep)
                   : '',
                 item.filename
-              )
-            ),
-            item.content
-          );
-        });
+              ),
+              item.content
+            )
+          )
+        );
       } else {
-        fs.writeFileSync(
-          params.options.output ? path.resolve(cwd, params.options.output) : cwd,
+        await fs.promises.writeFile(
+          params.options.output ? path.resolve(params.options.output) : cwd,
           output,
           'utf8'
         );
